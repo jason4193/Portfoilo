@@ -1,0 +1,275 @@
+{
+  "header": "Jason Poon",
+  "intro": "I'm a 2026 graduated comp sci student who focuses on both Web Dev, Cyber Security and Networking.",
+  "projects": [
+    {
+      "title": "On Going Linux Home Server Development",
+      "date": "July 2025 - Present",
+      "techStack": [
+        "Linux",
+        "Arch Distribution",
+        "Networking",
+        "Hypervisor Setup"
+      ],
+      "description": "I'm currently building a home server using my old Windows Desktop by installing Linux, acting as a main server for my home network.",
+      "achievements": [
+        "Established a DHCP routing service on the server to connect my other device in a local network",
+        "Setup a proper network configuration for forwarding network traffic between devices to internet",
+        "Documented the entire process of setting up and decision making for the server setup"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/jason4193/arch-mini-server"
+        }
+      ]
+    },
+    {
+      "title": "Network Vulnerability Investigation",
+      "date": "September - November 2024",
+      "techStack": ["Express", "Python", "Docker", "PHP", "JavaScript"],
+      "description": "A collection of CTF based demo challenges for practicing common network security vulnerabilities",
+      "achievements": [
+        "Understood the Network OSI Model, how it works and what possible security threats can be caused by each layer",
+        "Created a GitHub repository to demostrate 5 common network security vulnerabilities",
+        "Documented the writeups of each vulnerability and how to remediate the threats",
+        "Continue to explore more different vulnerabilities (ARP Spoofing, TCP Flooding, etc.)"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/jason4193/Network_Vulnerability_Investigation"
+        }
+      ]
+    },
+    {
+      "title": "Career Path way Mapping Tool Database Development and Automation",
+      "date": "September - November 2024",
+      "techStack": [
+        "LSTM Model (SpaCy)",
+        "React",
+        "TailwindCSS",
+        "TypeScript",
+        "Python",
+        "FastAPI",
+        "MySQL",
+        "Docker"
+      ],
+      "description": "A full-stack Admin Dashboard for the exiting Notion database with Machine Learning model with Natural Language Processing to explore new job roles categories from the current job market.",
+      "achievements": [
+        "Participated as a Scrum Master to lead a team of 6 to build up the project from scratch",
+        "Transformed the existing Notion database into a MySQL database with proper data modeling",
+        "Designed and implemented a web interface for the admin to manage the database",
+        "Built a Backend service to perform the similarity analysis between the job roles entries with the job post from the market using NLP model",
+        "Setup a Automated Web Scraper to scrape job post from the online job board and update the database with new job roles categories",
+        "Documented the entire process of setting up and decision making for the project"
+      ],
+      "links": [
+        {
+          "label": "Demo Video",
+          "url": "https://www.youtube.com/playlist?list=PL_RZWlyAFJZbdD56wAfa2EZUjq5htGJ7T"
+        }
+      ]
+    },
+    {
+      "title": "Linux Kali Investigation",
+      "date": "August 2021 - April 2024",
+      "techStack": ["Linux", "WireShark", "Ghidra", "Splunk"],
+      "description": "An exploration of cyber security and pentration testing through CTF compeition using Kali Linux.",
+      "achievements": [
+        "Improved knowledge of Linux OS and cyber security tools",
+        "Applied ethical hacking principle, emphasing e-commerce security and data protection"
+      ],
+      "links": []
+    },
+    {
+      "title": "Evolutionary TSP Algorithm",
+      "date": "July 2023",
+      "techStack": ["Python", "tsplib95", "Matplotlib", "PyPy"],
+      "description": "A implementation of the Genetic Algorithm to solve the Traveling Salesman Problem (TSP) with a focus on performance and scalability.",
+      "achievements": [
+        "Led a 6-person team and applied the Evolutionary Algorithm with the use of python pypy interpreter to solve the TSP problem",
+        "Implemented multiple variable operators (Inversion Mutation, PMX-Crossover, Edge Recombination) to produce new generations of solutions"
+      ],
+      "links": []
+    }
+  ],
+  "competitions": [
+    {
+      "title": "2025 DevSoc Flagship Hackathon - 1st Place (ShopLyft)",
+      "date": "29 September - 3 October 2025",
+      "role": "Full-stack Developer",
+      "description": "A 4 day hackathon organised by UNSW's Software Development Socity, and developed a webpage with a browser extension as a one-stop automated shopping assistant.",
+      "achievements": [
+        "Won the 1st Place of the whole hackathon",
+        "Automated the process of prices varying across stores by Web Scraping stock details from 3 common supermarkets",
+        "Implemented an algorithmic approach for optimal Route Generation and Natural Langugage Shoplist Input with Agentic AI"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/AZN-Intelligence/ShopLyft"
+        },
+        {
+          "label": "DevPost",
+          "url": "https://devpost.com/software/shoplyft-pu8065#updates"
+        }
+      ]
+    },
+    {
+      "title": "UNSW's AI for Progress Hackathon - Top 5 (Grade-Able)",
+      "date": "13 September - 14 September 2025",
+      "role": "Full-stack Developer",
+      "description": "A 2 day hackathon organised by UNSW Founders and developed a web extension to reorder the Google Search Results based on the website accessibility and user experience.",
+      "achievements": [
+        "Won the Top 5 of the whole hackathon",
+        "Implemented and optimised a Backend service to analyse the target website's accessibility following WCAG 2.2 standards",
+        "Implemented an AI Agentic approach to analyse the accessibility using Playwright and ConnectOnion framework to automate the testing process",
+        "Implemented a Chrome Extension to reorder and tagging the Google Search Results",
+        "Implemented a Automated Report Generator to generate a detailed report of the target website's accessibility and user experience"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/Thambolo/AZN-Intelligence"
+        }
+      ]
+    },
+    {
+      "title": "Australian Signals Directorate CTF Competition - Top 10%",
+      "date": "7 - 8 September 2023",
+      "description": "A 2 day CTF competition organised by Australian Signals Directorate and hosted in Sydney, Australia. I participated as a team member to solve the challenges and gain the top 10% of the competition.",
+      "achievements": [
+        "Solved 5 Web and Pwn challenges across the whole competition, 4 OSINT challenges"
+      ],
+      "links": []
+    },
+    {
+      "title": "DownUnderCTF 2023 - Top 19%",
+      "date": "1 - 3 September 2023",
+      "description": "A 3 day CTF competition organised by DownUnderCTF and hosted in Sydney, Australia. I participated as a team member to solve the challenges and gain the top 19% of the competition.",
+      "achievements": [
+        "Completed 7 puzzles with 1,175 points, got 397th out of 2073 teams"
+      ],
+      "links": []
+    }
+  ],
+  "communityContributions": [
+    {
+      "title": "UNSW's Software Development Socity Notangle Team",
+      "date": "March 2025 - Present",
+      "role": "Full-stack Developer",
+      "description": "An on-going society project for student to plan their weekly universty timetable with friends.",
+      "achievements": [
+        "Contributed to the development with 10+ pull requests between both frontend, backend and microservices",
+        "Implemented client side features (Frontend Colour Theme, Migration Local Storage to React Query)",
+        "Implemented server side features (Server Route Refactoring, AutoTimetabler Microservice Integration)",
+        "Collaborated with the team of 13 students both in-person and online."
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/devsoc-unsw/notangles"
+        },
+        {
+          "label": "Website",
+          "url": "notangles.devsoc.app"
+        }
+      ]
+    },
+    {
+      "title": "Arc eReuse Volunteering",
+      "date": "February 2025 - December 2025",
+      "role": "Senior Volunteer",
+      "description": "eReuse is a student-led sustainability initiative that refurbishes donated computers and tech devices to reduce e-waste and give technology a second life. These devices are then redistributed to people and organisations in need.",
+      "achievements": [
+        "Facilitated 30+ volunteering session (more than 50 hours) over the whole year",
+        "Led over 20 volunteers to participate in each refurbishing session",
+        "Collaborated with UNSW IT Department to rebuild Apple Mac device, re-purposeing old device for sustainability",
+        "Refuribished more than 450 different tech items for students and donated to more than 100 People from UNSW and our community",
+        "Saved more than $20,000 by refurbishing and diverted more than 500 kg of electronic waste"
+      ],
+      "links": [
+        {
+          "label": "Arc eReuse Website",
+          "url": "https://www.arc.unsw.edu.au/community/ereuse"
+        }
+      ]
+    },
+    {
+      "title": "Australian Cyber Conference Canberra 2025 Volunteering",
+      "date": "17 - 19 March 2025",
+      "role": "Event Assistant",
+      "description": "A 3 day conference organised by Australian Cyber Security Centre (ACSC) and hosted in Canberra, Australia. I volunteered as a event assistant to help the conference attendees to navigate the conference venue and assist with any questions they may have.",
+      "achievements": [
+        "Scheduled over 40 conference talks for the whole 2 days of the conference",
+        "Served more than 20 conference delegates by providing general conference information during the event",
+        "Contributed to the success of the conference by ensuring the attendees had a smooth experience"
+      ],
+      "links": []
+    }
+  ],
+  "workingExperience": [
+    {
+      "title": "Gate Gourmet Japan Internship (Shifts Optimisation Project)",
+      "date": "25 August - September 2025",
+      "role": "Intern",
+      "description": "A month long internship at Gate Gourmet Japan to collaborate with the transport department to provide solutions and direction to reduce the problem of overtime.",
+      "achievements": [
+        "Provided a short-term Excel program for skill matching and three long-term approaches to optimise the shifts allocation",
+        "Collaborated with the transport department using both English and Japanese to understand their current workflow",
+        "Implemented a Python program to extract the data from the existing system and consolidate for analysis and future Machine Learning model training"
+      ],
+      "links": []
+    },
+    {
+      "title": "Raffles Medical Clinic Office Assistant",
+      "date": "September 2021 - January 2022",
+      "role": "Office Assistant",
+      "description": "A part-time clinic back-office assistant to help the clinic staff to manage the clinic's daily operations.",
+      "achievements": [
+        "Scheduled over 100 patient appointments, based on doctor and patient availabilities using Outlook and Excel tools",
+        "Contacted more than 100 patients for appointment reminders or time adjustments using phone call and emails",
+        "Collaborated with other clinic branches for reloading medical stocks or collecting smaples and results",
+        "Refactored the clinic document management system to improve the efficiency of the clinic's daily operations from 10 minutes to 1 minute for each patient folder"
+      ],
+      "links": []
+    }
+  ],
+  "academic": [
+    {
+      "institution": "University of New South Wales",
+      "program": "Bachelor of Computer Science (Security Engineering)",
+      "summary": "Focused on web development, cyber security and networking.",
+      "achievements": [
+        "Going to graduate in 2026",
+        "Contributed to society project (Notangles) as a full-stack developer",
+        "Participated in multiple coding competitions and volunteering activities"
+      ]
+    },
+    {
+      "institution": "University of Adelaide",
+      "program": "Bachelor of Information Technology",
+      "summary": "Having interest on tech, exploring around different field in tech.",
+      "achievements": [
+        "Joined multiple CTF competition",
+        "Learning fundemental knowledge of programing, network, & security",
+        "Exploring my interest on different field on Tech"
+      ]
+    }
+  ],
+  "contact": {
+    "email": "hongtingpoon@gmail.com",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/jason4193"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://linkedin.com/in/hongtingpoon"
+      }
+    ]
+  },
+  "footer": "© 2025 Jason Poon. All rights reserved."
+}
