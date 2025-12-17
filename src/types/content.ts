@@ -74,11 +74,15 @@ export interface ContentSection {
   id: string;
   type:
     | "projects"
-    | "project"
+    | "projectItem"
     | "competitions"
+    | "competitionItem"
     | "communityContributions"
+    | "communityContributionItem"
     | "workingExperience"
+    | "workingExperienceItem"
     | "academic"
+    | "academicItem"
     | "footer";
   title?: string;
   content?: any;
