@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { TocItem } from "../hooks/useToc";
 import { useScrollSpy } from "../hooks/useScrollSpy";
+import { scrollToActiveSection } from "../utils/scroll";
 
 interface TocRailProps {
   tocItems: TocItem[];
@@ -9,6 +10,22 @@ interface TocRailProps {
 export function TocRail({ tocItems }: TocRailProps) {
   const { currentSectionId } = useScrollSpy(tocItems);
   const [isHovered, setIsHovered] = useState(false);
+  const tocNavRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll when current section changes while hovering
+  useEffect(() => {
+    if (isHovered && currentSectionId && tocNavRef.current) {
+      scrollToActiveSection(tocNavRef.current, currentSectionId);
+    }
+  }, [isHovered, currentSectionId]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    // Scroll to active section immediately on hover (no render cycle delay)
+    if (currentSectionId && tocNavRef.current) {
+      scrollToActiveSection(tocNavRef.current, currentSectionId);
+    }
+  };
 
   if (tocItems.length === 0) {
     return null;
@@ -48,13 +65,16 @@ export function TocRail({ tocItems }: TocRailProps) {
   return (
     <div
       className="fixed right-0 top-1/4 -translate-y-1/2 z-50 hidden lg:block"
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative flex items-center flex-row-reverse">
         {/* Hover reveal: Full TOC list - Left side */}
         {isHovered && (
-          <div className="mr-4 bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded-lg shadow-lg p-3 min-w-[200px] max-h-[400px] overflow-y-auto transition-opacity duration-150">
+          <div
+            ref={tocNavRef}
+            className="mr-4 bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded-lg shadow-lg p-3 min-w-[200px] max-h-[400px] overflow-y-auto transition-opacity duration-150"
+          >
             <div className="text-xs font-semibold text-[var(--color-text-secondary)] mb-2 uppercase tracking-wide">
               Contents
             </div>
@@ -68,6 +88,7 @@ export function TocRail({ tocItems }: TocRailProps) {
                 return (
                   <button
                     key={item.id}
+                    data-toc-item-id={item.id}
                     onClick={() => handleClick(item)}
                     className={`block w-full text-left text-sm py-1 px-2 rounded transition-colors duration-200 ${
                       isActive
