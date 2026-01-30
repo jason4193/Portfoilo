@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Layout } from "./components/Layout";
 import { ContentSection } from "./components/ContentSection";
 import { TocRail } from "./components/TocRail";
+import { MobileProgressIndicator } from "./components/MobileProgressIndicator";
 import { useContent } from "./hooks/useContent";
 import { useToc } from "./hooks/useToc";
 import { useTheme } from "./hooks/useTheme";
@@ -50,6 +51,7 @@ function App() {
         ))}
       </article>
       <TocRail tocItems={tocItems} />
+      <MobileProgressIndicator tocItems={tocItems} />
     </Layout>
   );
 }
