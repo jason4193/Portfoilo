@@ -13,12 +13,12 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative w-12 h-12 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-all duration-300 flex items-center justify-center group overflow-hidden"
+      className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-all duration-300 flex items-center justify-center group overflow-hidden"
       aria-label={`Toggle theme. Current: ${isDark ? "Dark" : "Light"}`}
       title={`Current theme: ${isDark ? "Dark" : "Light"}. Click to toggle`}
     >
       {/* Animated Sun/Moon toggle with sector transformation */}
-      <div className="relative w-6 h-6">
+      <div className="relative w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6">
         {/* Sun icon (light mode) - rotates and scales */}
         <SunIcon
           className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${
