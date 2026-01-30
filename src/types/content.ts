@@ -26,6 +26,7 @@ export interface CompetitionExperience {
   description: string;
   achievements: string[];
   links?: Link[];
+  media?: Media[];
 }
 
 export interface CommunityContributionExperience {
@@ -35,6 +36,7 @@ export interface CommunityContributionExperience {
   description: string;
   achievements: string[];
   links?: Link[];
+  media?: Media[];
 }
 
 export interface WorkingExperience {
@@ -44,6 +46,7 @@ export interface WorkingExperience {
   description: string;
   achievements: string[];
   links?: Link[];
+  media?: Media[];
 }
 
 export interface AcademicExperience {
@@ -51,6 +54,7 @@ export interface AcademicExperience {
   program: string;
   summary: string;
   achievements: string[];
+  media?: Media[];
 }
 
 export interface Contact {
