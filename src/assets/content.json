@@ -1,6 +1,6 @@
 {
   "header": "Jason Poon",
-  "intro": "I'm a 2026 graduated comp sci student who focuses on both Web Dev, Cyber Security and Networking.",
+  "intro": "Engineering smart web solutions and chasing down vulnerabilities.\nA 2026 Comp Sci grad ready to turn curiosity into code while securing and shaping the digital world.",
   "projects": [
     {
       "title": "On Going Linux Home Server Development",
@@ -96,6 +96,32 @@
   ],
   "competitions": [
     {
+      "title": "2025 ACUCyS Jingle Shells CTF Competition - 10th Place",
+      "date": "20 December - 21 December 2025",
+      "description": "A 2 day CTF competition organised by Australian Council of University Cyber Societies.",
+      "achievements": [
+        "Participated as a team member to solve the challenges and gain the 10th place of the competition.",
+        "Solved 8 out of the 10 forensic, all web, 2 OSINT challenges and 5 cryptography challenges with a total of 3,500 points."
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "ACUCYS_1.png",
+          "alt": "ACUCyS Jingle Shells CTF 2025 Poster"
+        },
+        {
+          "type": "image",
+          "src": "ACUCYS_2.PNG",
+          "alt": "ACUCyS Jingle Shells CTF 2025 Scores Board"
+        },
+        {
+          "type": "image",
+          "src": "ACUCYS_3.jpg",
+          "alt": "ACUCyS Jingle Shells CTF 2025 Team Scores"
+        }
+      ]
+    },
+    {
       "title": "2025 DevSoc Flagship Hackathon - 1st Place (ShopLyft)",
       "date": "29 September - 3 October 2025",
       "role": "Full-stack Developer",
@@ -104,6 +130,48 @@
         "Won the 1st Place of the whole hackathon",
         "Automated the process of prices varying across stores by Web Scraping stock details from 3 common supermarkets",
         "Implemented an algorithmic approach for optimal Route Generation and Natural Langugage Shoplist Input with Agentic AI"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "ShopLyft_1.png",
+          "alt": "ShopLyft Front Page"
+        },
+        {
+          "type": "video",
+          "src": "https://youtu.be/rrCXEFpsBHI",
+          "alt": "ShopLyft Demo Video"
+        },
+        {
+          "type": "image",
+          "src": "ShopLyft_3.JPG",
+          "alt": "ShopLyft Closing Ceremony"
+        },
+        {
+          "type": "image",
+          "src": "ShopLyft_4.JPG",
+          "alt": "ShopLyft Team Photo"
+        },
+        {
+          "type": "image",
+          "src": "ShopLyft_5.JPG",
+          "alt": "ShopLyft Team Photo"
+        },
+        {
+          "type": "image",
+          "src": "ShopLyft_6.JPG",
+          "alt": "ShopLyft Team Photo"
+        },
+        {
+          "type": "image",
+          "src": "ShopLyft_7.JPG",
+          "alt": "ShopLyft Team Photo"
+        },
+        {
+          "type": "video",
+          "src": "https://youtube.com/shorts/6Fmavb8Az-I?feature=share",
+          "alt": "ShopLyft Team Vibe"
+        }
       ],
       "links": [
         {
@@ -128,6 +196,28 @@
         "Implemented a Chrome Extension to reorder and tagging the Google Search Results",
         "Implemented a Automated Report Generator to generate a detailed report of the target website's accessibility and user experience"
       ],
+      "media": [
+        {
+          "type": "image",
+          "src": "Grade-Able_1.JPG",
+          "alt": "Hackathon Team Photo"
+        },
+        {
+          "type": "video",
+          "src": "https://youtu.be/1QzFh_Q6m4U",
+          "alt": "Hackathon Demo Video"
+        },
+        {
+          "type": "image",
+          "src": "Grade-Able_3.JPG",
+          "alt": "Hackathon Team Photo"
+        },
+        {
+          "type": "image",
+          "src": "Grade-Able_4.JPG",
+          "alt": "Hackathon Venue"
+        }
+      ],
       "links": [
         {
           "label": "GitHub",
@@ -142,6 +232,13 @@
       "achievements": [
         "Solved 5 Web and Pwn challenges across the whole competition, 4 OSINT challenges"
       ],
+      "media": [
+        {
+          "type": "image",
+          "src": "ASDCTF2023_1.JPG",
+          "alt": "ASD CTF Team Scores"
+        }
+      ],
       "links": []
     },
     {
@@ -150,6 +247,18 @@
       "description": "A 3 day CTF competition organised by DownUnderCTF and hosted in Sydney, Australia. I participated as a team member to solve the challenges and gain the top 19% of the competition.",
       "achievements": [
         "Completed 7 puzzles with 1,175 points, got 397th out of 2073 teams"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "DUCTF2023_1.jpeg",
+          "alt": "DownUnderCTF Entry Question"
+        },
+        {
+          "type": "image",
+          "src": "DUCTF2023_2.JPG",
+          "alt": "DownUnderCTF Team Scores"
+        }
       ],
       "links": []
     }
@@ -165,6 +274,28 @@
         "Implemented client side features (Frontend Colour Theme, Migration Local Storage to React Query)",
         "Implemented server side features (Server Route Refactoring, AutoTimetabler Microservice Integration)",
         "Collaborated with the team of 13 students both in-person and online."
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "Notangles-landing-page.png",
+          "alt": "Notangles Landing Page"
+        },
+        {
+          "type": "image",
+          "src": "Notangles-2025-Teams.png",
+          "alt": "Notangles 2025 Teams Photo"
+        },
+        {
+          "type": "image",
+          "src": "Notangles-colour-themes.png",
+          "alt": "Notangles Colour Theme feature"
+        },
+        {
+          "type": "image",
+          "src": "Notangles-backend-API.png",
+          "alt": "Notangles server refactoring with Bruno"
+        }
       ],
       "links": [
         {
@@ -189,6 +320,38 @@
         "Refuribished more than 450 different tech items for students and donated to more than 100 People from UNSW and our community",
         "Saved more than $20,000 by refurbishing and diverted more than 500 kg of electronic waste"
       ],
+      "media": [
+        {
+          "type": "image",
+          "src": "eReuse_1.jpg",
+          "alt": "eReuse T-shirt"
+        },
+        {
+          "type": "image",
+          "src": "eReuse_2.png",
+          "alt": "eReuse Fixing Computer"
+        },
+        {
+          "type": "image",
+          "src": "eReuse_6.png",
+          "alt": "eReuse volunteering session"
+        },
+        {
+          "type": "image",
+          "src": "eReuse_3.JPG",
+          "alt": "eReuse Fixing Mac"
+        },
+        {
+          "type": "image",
+          "src": "eReuse_4.JPG",
+          "alt": "eReuse Fixing iPad"
+        },
+        {
+          "type": "image",
+          "src": "eReuse_5.JPG",
+          "alt": "eReuse Reinstall Windows"
+        }
+      ],
       "links": [
         {
           "label": "Arc eReuse Website",
@@ -205,6 +368,33 @@
         "Scheduled over 40 conference talks for the whole 2 days of the conference",
         "Served more than 20 conference delegates by providing general conference information during the event",
         "Contributed to the success of the conference by ensuring the attendees had a smooth experience"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "AISA_Vol_1.png",
+          "alt": "AISA Volunteering Team Photo"
+        },
+        {
+          "type": "image",
+          "src": "AISA_Vol_2.png",
+          "alt": "AISA Conference Venue"
+        },
+        {
+          "type": "image",
+          "src": "AISA_Vol_3.png",
+          "alt": "AISA Volunteering Certificate"
+        },
+        {
+          "type": "image",
+          "src": "AISA_Vol_4.png",
+          "alt": "AISA Volunteering Session"
+        },
+        {
+          "type": "image",
+          "src": "AISA_Vol_5.png",
+          "alt": "AISA Conference Networking"
+        }
       ],
       "links": []
     }

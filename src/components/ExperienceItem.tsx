@@ -1,5 +1,6 @@
 import { useState, Activity } from "react";
 import { getSectionAnchorId } from "../utils/anchors";
+import { MediaCollection } from "./MediaCollection";
 import type {
   CompetitionExperience,
   CommunityContributionExperience,
@@ -76,6 +77,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
           <div className="mt-3 space-y-3">
+            <MediaCollection media={experience.media} />
             {experience.achievements?.length > 0 && (
               <ul className="list-disc list-inside space-y-1">
                 {experience.achievements.map(

@@ -1,5 +1,6 @@
 import { useState, Activity } from "react";
 import { getSectionAnchorId } from "../utils/anchors";
+import { MediaCollection } from "./MediaCollection";
 import type { AcademicExperience } from "../types/content";
 
 interface AcademicItemProps {
@@ -66,13 +67,20 @@ export function AcademicItem({ id, title, academic }: AcademicItemProps) {
       </div>
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
-          <ul className="mt-3 list-disc list-inside space-y-1">
-            {academic.achievements?.map((achievement: string, aIdx: number) => (
-              <li key={aIdx} className="text-sm">
-                {achievement}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-3 space-y-3">
+            <MediaCollection media={academic.media} />
+            {academic.achievements?.length > 0 && (
+              <ul className="list-disc list-inside space-y-1">
+                {academic.achievements.map(
+                  (achievement: string, aIdx: number) => (
+                    <li key={aIdx} className="text-sm">
+                      {achievement}
+                    </li>
+                  )
+                )}
+              </ul>
+            )}
+          </div>
         </Activity>
       )}
     </div>

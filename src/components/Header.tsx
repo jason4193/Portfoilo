@@ -62,7 +62,7 @@ export function Header() {
       </div>
 
       {/* Intro */}
-      <p className="text-lg text-[var(--color-text-secondary)]">
+      <p className="text-lg text-[var(--color-text-secondary)] whitespace-pre-line">
         {content.intro}
       </p>
     </div>

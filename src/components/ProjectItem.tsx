@@ -1,5 +1,6 @@
 import { useState, Activity } from "react";
 import { getSectionAnchorId } from "../utils/anchors";
+import { MediaCollection } from "./MediaCollection";
 import type { Project } from "../types/content";
 
 interface ProjectItemProps {
@@ -77,6 +78,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
           <div className="mt-4 space-y-4">
+            <MediaCollection media={project.media} />
             {project.achievements?.length > 0 && (
               <ul className="list-disc list-inside space-y-1">
                 {project.achievements.map(
