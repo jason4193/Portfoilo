@@ -1,6 +1,12 @@
 import { useState, Activity } from "react";
 import { getSectionAnchorId } from "../utils/anchors";
 import { MediaCollection } from "./MediaCollection";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  EmailIcon,
+  LinkIcon,
+} from "./icons";
 import type {
   CompetitionExperience,
   CommunityContributionExperience,
@@ -16,13 +22,29 @@ interface ExperienceItemProps {
     | WorkingExperience;
 }
 
+function getLinkIcon(label: string) {
+  const normalized = label.toLowerCase();
+
+  if (normalized.includes("github")) {
+    return GitHubIcon;
+  }
+  if (normalized.includes("linkedin")) {
+    return LinkedInIcon;
+  }
+  if (normalized.includes("email") || normalized.includes("mail")) {
+    return EmailIcon;
+  }
+
+  return LinkIcon;
+}
+
 export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
   const anchorId = getSectionAnchorId(id, title);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const hasExpandableContent =
     (experience.achievements && experience.achievements.length > 0) ||
-    (experience.links && experience.links.length > 0);
+    (experience.media && experience.media.length > 0);
 
   return (
     <div id={anchorId} className="mb-6">
@@ -45,7 +67,29 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <h4 className="text-xl font-semibold mb-2">{title}</h4>
+            <div className="flex flex-col mb-2 sm:flex-row sm:items-baseline sm:gap-3">
+              <h4 className="text-xl font-semibold">{title}</h4>
+              {experience.links && experience.links.length > 0 && (
+                <div className="mt-0 flex gap-3 flex-wrap items-center sm:mt-6">
+                  {experience.links.map((link, lIdx: number) => {
+                    const Icon = getLinkIcon(link.label);
+                    return (
+                      <a
+                        key={lIdx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-link)]"
+                        onClick={(e) => e.stopPropagation()} // don't toggle expand
+                        title={link.label}
+                      >
+                        <Icon aria-label={link.label} aria-hidden={false} />
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <p className="text-sm text-[var(--color-text-secondary)] mb-2">
               {experience.date}
               {experience.role && ` • ${experience.role}`}
@@ -56,7 +100,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-1 transition-transform duration-200 ${
+              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-4 transition-transform duration-200 ${
                 isExpanded ? "rotate-180" : ""
               }`}
               fill="none"
@@ -88,22 +132,6 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
                   )
                 )}
               </ul>
-            )}
-            {experience.links && experience.links.length > 0 && (
-              <div className="flex gap-4 flex-wrap">
-                {experience.links.map((link, lIdx: number) => (
-                  <a
-                    key={lIdx}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-link)] hover:underline text-sm"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
             )}
           </div>
         </Activity>

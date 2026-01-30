@@ -1,6 +1,12 @@
 import { useState, Activity } from "react";
 import { getSectionAnchorId } from "../utils/anchors";
 import { MediaCollection } from "./MediaCollection";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  EmailIcon,
+  LinkIcon,
+} from "./icons";
 import type { Project } from "../types/content";
 
 interface ProjectItemProps {
@@ -9,13 +15,29 @@ interface ProjectItemProps {
   project: Project;
 }
 
+function getLinkIcon(label: string) {
+  const normalized = label.toLowerCase();
+
+  if (normalized.includes("github")) {
+    return GitHubIcon;
+  }
+  if (normalized.includes("linkedin")) {
+    return LinkedInIcon;
+  }
+  if (normalized.includes("email") || normalized.includes("mail")) {
+    return EmailIcon;
+  }
+
+  return LinkIcon;
+}
+
 export function ProjectItem({ id, title, project }: ProjectItemProps) {
   const anchorId = getSectionAnchorId(id, title);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const hasExpandableContent =
     (project.achievements && project.achievements.length > 0) ||
-    (project.links && project.links.length > 0);
+    (project.media && project.media.length > 0);
 
   return (
     <div id={anchorId} className="mb-12">
@@ -38,7 +60,29 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <h3 className="text-2xl font-semibold mb-3">{title}</h3>
+            <div className="flex flex-col mb-2 sm:flex-row sm:items-baseline sm:gap-3">
+              <h4 className="text-2xl font-semibold">{title}</h4>
+              {project.links && project.links.length > 0 && (
+                <div className="mt-0 flex gap-3 flex-wrap items-center sm:mt-6">
+                  {project.links.map((link, lIdx: number) => {
+                    const Icon = getLinkIcon(link.label);
+                    return (
+                      <a
+                        key={lIdx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-link)]"
+                        onClick={(e) => e.stopPropagation()}
+                        title={link.label}
+                      >
+                        <Icon aria-label={link.label} aria-hidden={false} />
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             {project.date && (
               <p className="text-sm text-[var(--color-text-secondary)] mb-2">
                 {project.date}
@@ -57,7 +101,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-1 transition-transform duration-200 ${
+              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-4 transition-transform duration-200 ${
                 isExpanded ? "rotate-180" : ""
               }`}
               fill="none"
@@ -89,22 +133,6 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                   )
                 )}
               </ul>
-            )}
-            {project.links?.length > 0 && (
-              <div className="flex gap-4 flex-wrap">
-                {project.links.map((link, lIdx: number) => (
-                  <a
-                    key={lIdx}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-link)] hover:underline"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
             )}
           </div>
         </Activity>

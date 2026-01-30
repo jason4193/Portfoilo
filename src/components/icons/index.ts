@@ -3,4 +3,5 @@ export { GitHubIcon } from "./GitHubIcon";
 export { LinkedInIcon } from "./LinkedInIcon";
 export { SunIcon } from "./SunIcon";
 export { MoonIcon } from "./MoonIcon";
+export { LinkIcon } from "./LinkIcon";
 export type { IconProps } from "./IconProps";
