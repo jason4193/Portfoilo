@@ -1,22 +1,22 @@
-# TLDR Version Documentation
+# Markdown Version Documentation
 
-This document explains the purpose and functionality of each file in the TLDR version of the portfolio.
+This document explains the purpose and functionality of each file in the Markdown version of the portfolio.
 
 ## Directory Structure
 
 ```
-src/tldr/
-├── components/     # TLDR-specific React components
-├── hooks/         # TLDR-specific React hooks
-└── utils/         # TLDR-specific utility functions
+src/markdown/
+├── components/     # Markdown-specific React components
+├── hooks/         # Markdown-specific React hooks
+└── utils/         # Markdown-specific utility functions
 ```
 
 ## Components
 
 ### Header.tsx
-**Location**: `src/tldr/components/Header.tsx`
+**Location**: `src/markdown/components/Header.tsx`
 
-**Purpose**: The main header component for the TLDR version. Displays the portfolio owner's name, avatar, social links, theme toggle, and introduction text.
+**Purpose**: The main header component for the Markdown version. Displays the portfolio owner's name, avatar, social links, theme toggle, and introduction text.
 
 **Key Features**:
 - Uses shared `Avatar` component for profile picture
@@ -26,7 +26,7 @@ src/tldr/
 - Loading state with skeleton UI
 
 **Dependencies**:
-- `shared/hooks/useContent` - Fetches portfolio content
+- `shared/data/content` - Portfolio content data
 - `shared/components/Avatar` - Profile picture
 - `shared/components/ThemeToggle` - Theme switcher
 - `shared/components/icons` - Social media icons
@@ -34,9 +34,9 @@ src/tldr/
 ---
 
 ### Layout.tsx
-**Location**: `src/tldr/components/Layout.tsx`
+**Location**: `src/markdown/components/Layout.tsx`
 
-**Purpose**: Wrapper component that provides the overall page structure for the TLDR version.
+**Purpose**: Wrapper component that provides the overall page structure for the Markdown version.
 
 **Key Features**:
 - Includes Header component
@@ -52,7 +52,7 @@ src/tldr/
 ---
 
 ### ContentSection.tsx
-**Location**: `src/tldr/components/ContentSection.tsx`
+**Location**: `src/markdown/components/ContentSection.tsx`
 
 **Purpose**: Router component that renders different section types based on the section type.
 
@@ -72,7 +72,7 @@ src/tldr/
 ---
 
 ### ProjectItem.tsx
-**Location**: `src/tldr/components/ProjectItem.tsx`
+**Location**: `src/markdown/components/ProjectItem.tsx`
 
 **Purpose**: Displays individual project information with expandable details.
 
@@ -93,7 +93,7 @@ src/tldr/
 ---
 
 ### ExperienceItem.tsx
-**Location**: `src/tldr/components/ExperienceItem.tsx`
+**Location**: `src/markdown/components/ExperienceItem.tsx`
 
 **Purpose**: Displays competition, community contribution, or work experience entries.
 
@@ -119,7 +119,7 @@ src/tldr/
 ---
 
 ### AcademicItem.tsx
-**Location**: `src/tldr/components/AcademicItem.tsx`
+**Location**: `src/markdown/components/AcademicItem.tsx`
 
 **Purpose**: Displays academic/education information.
 
@@ -137,7 +137,7 @@ src/tldr/
 ---
 
 ### SectionHeader.tsx
-**Location**: `src/tldr/components/SectionHeader.tsx`
+**Location**: `src/markdown/components/SectionHeader.tsx`
 
 **Purpose**: Renders section headers (e.g., "Projects", "Competitions") with visual separators.
 
@@ -152,7 +152,7 @@ src/tldr/
 ---
 
 ### TocRail.tsx
-**Location**: `src/tldr/components/TocRail.tsx`
+**Location**: `src/markdown/components/TocRail.tsx`
 
 **Purpose**: Desktop table of contents navigation rail on the right side of the screen.
 
@@ -166,14 +166,14 @@ src/tldr/
 - Auto-scrolls to active section on hover
 
 **Dependencies**:
-- `tldr/hooks/useScrollSpy` - Tracks current section
-- `tldr/hooks/useToc` - TOC items
-- `tldr/utils/scroll` - Scroll utilities
+- `markdown/hooks/useScrollSpy` - Tracks current section
+- `markdown/hooks/useToc` - TOC items
+- `markdown/utils/scroll` - Scroll utilities
 
 ---
 
 ### MobileProgressIndicator.tsx
-**Location**: `src/tldr/components/MobileProgressIndicator.tsx`
+**Location**: `src/markdown/components/MobileProgressIndicator.tsx`
 
 **Purpose**: Mobile navigation bar at the bottom showing top-level sections with icons.
 
@@ -192,8 +192,8 @@ src/tldr/
 - Education → Education icon
 
 **Dependencies**:
-- `tldr/hooks/useScrollSpy` - Tracks current section
-- `tldr/hooks/useToc` - TOC items
+- `markdown/hooks/useScrollSpy` - Tracks current section
+- `markdown/hooks/useToc` - TOC items
 - `shared/components/icons/MobileNavIcons` - Section icons
 
 ---
@@ -201,7 +201,7 @@ src/tldr/
 ## Hooks
 
 ### useScrollSpy.ts
-**Location**: `src/tldr/hooks/useScrollSpy.ts`
+**Location**: `src/markdown/hooks/useScrollSpy.ts`
 
 **Purpose**: Tracks which section is currently in view based on scroll position.
 
@@ -222,7 +222,7 @@ src/tldr/
 ---
 
 ### useToc.ts
-**Location**: `src/tldr/hooks/useToc.ts`
+**Location**: `src/markdown/hooks/useToc.ts`
 
 **Purpose**: Generates table of contents items from content sections.
 
@@ -248,7 +248,7 @@ src/tldr/
 ## Utils
 
 ### scroll.ts
-**Location**: `src/tldr/utils/scroll.ts`
+**Location**: `src/markdown/utils/scroll.ts`
 
 **Purpose**: Utility functions for scrolling operations in the TOC navigation.
 
@@ -269,21 +269,24 @@ src/tldr/
 
 ```
 main.tsx
-  ├── useContent (shared) → Loads content.json
-  ├── useToc (tldr) → Generates TOC from sections
-  ├── useTheme (shared) → Manages theme
+  ├── usePortfolioModeStore (shared/stores) → Manages markdown/animated mode
+  ├── useThemeStore (shared/stores) → Manages theme
   │
-  └── Layout
-      ├── Header → Displays name, avatar, intro
-      └── Main Content
-          └── ContentSection (for each section)
-              ├── SectionHeader (parent sections)
-              ├── ProjectItem (project items)
-              ├── ExperienceItem (experience items)
-              └── AcademicItem (academic items)
+  └── MarkdownApp
+      ├── content, sections (shared/data) → Portfolio content
+      ├── useToc (markdown) → Generates TOC from sections
       │
-      ├── TocRail (desktop) → Right sidebar navigation
-      └── MobileProgressIndicator (mobile) → Bottom navigation
+      └── Layout
+          ├── Header → Displays name, avatar, intro
+          └── Main Content
+              └── ContentSection (for each section)
+                  ├── SectionHeader (parent sections)
+                  ├── ProjectItem (project items)
+                  ├── ExperienceItem (experience items)
+                  └── AcademicItem (academic items)
+          │
+          ├── TocRail (desktop) → Right sidebar navigation
+          └── MobileProgressIndicator (mobile) → Bottom navigation
 ```
 
 ## Key Design Patterns

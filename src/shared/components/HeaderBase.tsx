@@ -1,12 +1,18 @@
-import { useContent } from "../../shared/hooks/useContent";
-import { ThemeToggle } from "../../shared/components/ThemeToggle";
-import { Avatar } from "../../shared/components/Avatar";
-import { EmailIcon, GitHubIcon, LinkedInIcon } from "../../shared/components/icons";
+import { content } from "../data/content";
+import { ThemeToggle } from "./ThemeToggle";
+import { Avatar } from "./Avatar";
+import { EmailIcon, GitHubIcon, LinkedInIcon, MarkdownIcon, AnimatedIcon } from "./icons";
+import { usePortfolioModeStore } from "../stores";
 
-export function Header() {
-  const { content, loading } = useContent();
+interface HeaderBaseProps {
+  showModeToggle?: boolean;
+  children?: React.ReactNode;
+}
 
-  if (loading || !content) {
+export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps) {
+  const { mode, toggleMode } = usePortfolioModeStore();
+
+  if (!content) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-start">
@@ -17,7 +23,23 @@ export function Header() {
               <div className="h-6 w-32 bg-[var(--color-bg-secondary)] rounded animate-pulse"></div>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            {showModeToggle && (
+              <button
+                onClick={toggleMode}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
+                aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+                title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+              >
+                {mode === "markdown" ? (
+                  <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
+                ) : (
+                  <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
+                )}
+              </button>
+            )}
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     );
@@ -66,16 +88,28 @@ export function Header() {
           </div>
         </div>
 
-        {/* Theme Toggle - Top Right */}
-        <div className="ml-2 sm:ml-4">
+        {/* Theme Toggle and Mode Toggle - Top Right */}
+        <div className="ml-2 sm:ml-4 flex items-center gap-2">
+          {showModeToggle && (
+            <button
+              onClick={toggleMode}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
+              aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+              title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+            >
+              {mode === "markdown" ? (
+                <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
+              ) : (
+                <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
+              )}
+            </button>
+          )}
           <ThemeToggle />
         </div>
       </div>
 
-      {/* Intro */}
-      <p className="text-lg text-[var(--color-text-secondary)] whitespace-pre-line">
-        {content.intro}
-      </p>
+      {/* Children or custom content */}
+      {children}
     </div>
   );
 }
