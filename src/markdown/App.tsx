@@ -5,7 +5,7 @@ import { MobileProgressIndicator } from "./components/MobileProgressIndicator";
 import { content, sections, error } from "../shared/data/content";
 import { useToc } from "./hooks/useToc";
 
-export function TLDRApp() {
+export function MarkdownApp() {
   const { tocItems } = useToc(sections);
 
   if (error || !content) {

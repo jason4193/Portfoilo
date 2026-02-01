@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { usePortfolioModeStore, useThemeStore } from "./shared/stores";
 import { LoadingScreen } from "./shared/components/LoadingScreen";
-import { TLDRApp } from "./tldr/App";
+import { MarkdownApp } from "./markdown/App";
 import { AnimatedApp } from "./animated/App";
 import "./shared/styles/tailwind.css";
 import "./shared/styles/theme.css";
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      {mode === "tldr" ? <TLDRApp /> : <AnimatedApp />}
+      {mode === "markdown" ? <MarkdownApp /> : <AnimatedApp />}
     </>
   );
 }

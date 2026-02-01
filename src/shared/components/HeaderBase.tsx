@@ -1,7 +1,7 @@
 import { content } from "../data/content";
 import { ThemeToggle } from "./ThemeToggle";
 import { Avatar } from "./Avatar";
-import { EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
+import { EmailIcon, GitHubIcon, LinkedInIcon, MarkdownIcon, AnimatedIcon } from "./icons";
 import { usePortfolioModeStore } from "../stores";
 
 interface HeaderBaseProps {
@@ -27,10 +27,15 @@ export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps)
             {showModeToggle && (
               <button
                 onClick={toggleMode}
-                className="px-3 py-1.5 text-sm border border-[var(--color-border)] rounded-md bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors"
-                aria-label={`Switch to ${mode === "tldr" ? "animated" : "TLDR"} mode`}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
+                aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+                title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
               >
-                {mode === "tldr" ? "3D" : "TLDR"}
+                {mode === "markdown" ? (
+                  <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
+                ) : (
+                  <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
+                )}
               </button>
             )}
             <ThemeToggle />
@@ -88,10 +93,15 @@ export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps)
           {showModeToggle && (
             <button
               onClick={toggleMode}
-              className="px-3 py-1.5 text-sm border border-[var(--color-border)] rounded-md bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors"
-              aria-label={`Switch to ${mode === "tldr" ? "animated" : "TLDR"} mode`}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
+              aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
+              title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
             >
-              {mode === "tldr" ? "3D" : "TLDR"}
+              {mode === "markdown" ? (
+                <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
+              ) : (
+                <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
+              )}
             </button>
           )}
           <ThemeToggle />

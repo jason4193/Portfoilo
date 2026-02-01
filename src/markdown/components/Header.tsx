@@ -5,7 +5,7 @@ export function Header() {
 
   return (
     <HeaderBase showModeToggle={true}>
-      {/* Intro - TLDR specific */}
+      {/* Intro - Markdown specific */}
       {content && (
         <p className="text-lg text-[var(--color-text-secondary)] whitespace-pre-line">
           {content.intro}

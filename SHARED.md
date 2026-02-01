@@ -1,6 +1,6 @@
 # Shared Components & Utilities Documentation
 
-This document explains the purpose and functionality of shared code used by both TLDR and animated versions of the portfolio.
+This document explains the purpose and functionality of shared code used by both Markdown and animated versions of the portfolio.
 
 ## Directory Structure
 
@@ -38,7 +38,7 @@ src/shared/
 }
 ```
 
-**Used By**: Both TLDR and animated versions via direct import from `shared/data/content`.
+**Used By**: Both Markdown and animated versions via direct import from `shared/data/content`.
 
 ---
 
@@ -175,12 +175,12 @@ import { content, sections, error } from "../shared/data/content";
 ### usePortfolioModeStore.ts
 **Location**: `src/shared/stores/usePortfolioModeStore.ts`
 
-**Purpose**: Manages portfolio mode state (TLDR vs Animated) with Zustand.
+**Purpose**: Manages portfolio mode state (Markdown vs Animated) with Zustand.
 
 **Returns**:
 ```typescript
 {
-  mode: PortfolioMode                    // "tldr" | "animated"
+  mode: PortfolioMode                    // "markdown" | "animated"
   isTransitioning: boolean             // Transition state
   setMode: (mode: PortfolioMode) => void
   toggleMode: () => void
@@ -191,7 +191,7 @@ import { content, sections, error } from "../shared/data/content";
 - Persists mode in localStorage via Zustand persist middleware
 - Smooth transitions with loading screen
 - 3-second transition delay for mode switching
-- Defaults to "tldr" mode
+- Defaults to "markdown" mode
 
 **Used By**: `main.tsx`, `HeaderBase`, `AnimatedApp`
 
@@ -404,7 +404,7 @@ content.ts (shared/data) - Synchronous load
     ├── content → Components (direct import)
     └── sections → Navigation/TOC
         ↓
-    useToc (tldr/hooks) → TOC items
+    useToc (markdown/hooks) → TOC items
 
 State Management:
     usePortfolioModeStore (shared/stores) → Mode switching
@@ -423,7 +423,7 @@ State Management:
 
 ## Usage in Versions
 
-### TLDR Version Uses:
+### Markdown Version Uses:
 - All shared components (Avatar, ThemeToggle, MediaCollection, icons)
 - Shared data (content, sections) - direct imports
 - Shared stores (usePortfolioModeStore, useThemeStore)

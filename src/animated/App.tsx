@@ -1,5 +1,6 @@
 import { usePortfolioModeStore } from "../shared/stores";
 import { ThemeToggle } from "../shared/components/ThemeToggle";
+import { MarkdownIcon } from "../shared/components/icons";
 
 export function AnimatedApp() {
   const { toggleMode } = usePortfolioModeStore();
@@ -10,10 +11,11 @@ export function AnimatedApp() {
       <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
         <button
           onClick={toggleMode}
-          className="px-3 py-1.5 text-sm border border-[var(--color-border)] rounded-md bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors shadow-lg"
-          aria-label="Switch to TLDR mode"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors shadow-lg flex items-center justify-center"
+          aria-label="Switch to markdown mode"
+          title="Switch to markdown mode"
         >
-          TLDR
+          <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
         </button>
         <ThemeToggle />
       </div>
@@ -25,7 +27,7 @@ export function AnimatedApp() {
             Coming soon! The interactive 3D business card experience is under development.
           </p>
           <p className="text-sm text-[var(--color-text-secondary)] mt-4">
-            Switch back to TLDR mode using the button in the top right.
+            Switch back to markdown mode using the button in the top right.
           </p>
         </div>
       </main>

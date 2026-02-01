@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type PortfolioMode = "tldr" | "animated";
+export type PortfolioMode = "markdown" | "animated";
 
 interface PortfolioModeStore {
   mode: PortfolioMode;
@@ -17,7 +17,7 @@ function getInitialMode(): PortfolioMode {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.state?.mode === "tldr" || parsed.state?.mode === "animated") {
+        if (parsed.state?.mode === "markdown" || parsed.state?.mode === "animated") {
           return parsed.state.mode;
         }
       } catch {
@@ -25,8 +25,8 @@ function getInitialMode(): PortfolioMode {
       }
     }
   }
-  // Default to "tldr"
-  return "tldr";
+  // Default to "markdown"
+  return "markdown";
 }
 
 export const usePortfolioModeStore = create<PortfolioModeStore>()(
@@ -46,7 +46,7 @@ export const usePortfolioModeStore = create<PortfolioModeStore>()(
       },
       toggleMode: () => {
         const currentMode = get().mode;
-        const newMode = currentMode === "tldr" ? "animated" : "tldr";
+        const newMode = currentMode === "markdown" ? "animated" : "markdown";
         set({ isTransitioning: true });
         // After 3 seconds, update the mode
         setTimeout(() => {
