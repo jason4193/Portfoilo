@@ -16,9 +16,22 @@ export default defineConfig({
     // Optimize build output
     minify: "esbuild",
     target: "esnext",
+    chunkSizeWarningLimit: 1000, // Increase limit to 1MB (Three.js is inherently large)
     rollupOptions: {
       output: {
-        manualChunks: undefined, // Single bundle for small app
+        manualChunks: (id: string) => {
+          // Split Three.js and related libraries into separate chunks
+          if (id.indexOf("node_modules") !== -1) {
+            if (id.indexOf("three") !== -1 || id.indexOf("@react-three") !== -1) {
+              return "three";
+            }
+            if (id.indexOf("gsap") !== -1) {
+              return "gsap";
+            }
+            // Other node_modules go into vendor chunk
+            return "vendor";
+          }
+        },
       },
     },
   },
