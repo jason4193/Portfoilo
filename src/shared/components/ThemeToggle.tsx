@@ -1,12 +1,8 @@
-import { useTheme } from "../hooks/useTheme";
+import { useThemeStore } from "../stores";
 import { SunIcon, MoonIcon } from "./icons";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const { theme, toggleTheme } = useThemeStore();
 
   const isDark = theme === "dark";
 
