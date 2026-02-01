@@ -1,4 +1,4 @@
-import { getSectionAnchorId } from "../utils/anchors";
+import { getSectionAnchorId } from "../../shared/utils/anchors";
 
 interface SectionHeaderProps {
   id: string;

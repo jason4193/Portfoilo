@@ -1,7 +1,7 @@
 import { useState, Activity } from "react";
-import { getSectionAnchorId } from "../utils/anchors";
-import { MediaCollection } from "./MediaCollection";
-import type { AcademicExperience } from "../types/content";
+import { getSectionAnchorId } from "../../shared/utils/anchors";
+import { MediaCollection } from "../../shared/components/MediaCollection";
+import type { AcademicExperience } from "../../shared/types/content";
 
 interface AcademicItemProps {
   id: string;

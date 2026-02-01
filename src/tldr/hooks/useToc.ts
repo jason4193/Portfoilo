@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { ContentSection } from "../types/content";
-import { getSectionAnchorId } from "../utils/anchors";
+import type { ContentSection } from "../../shared/types/content";
+import { getSectionAnchorId } from "../../shared/utils/anchors";
 
 export interface TocItem {
   id: string;

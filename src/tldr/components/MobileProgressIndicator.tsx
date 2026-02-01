@@ -7,7 +7,7 @@ import {
   CommunityIcon,
   WorkIcon,
   EducationIcon,
-} from "./icons/MobileNavIcons";
+} from "../../shared/components/icons/MobileNavIcons";
 
 interface MobileProgressIndicatorProps {
   tocItems: TocItem[];

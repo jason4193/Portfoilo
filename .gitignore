@@ -29,6 +29,9 @@ Thumbs.db
 # Any dot files
 .*
 
+# specs
+specs/
+
 # Keep files
 !specs/
 !.gitignore

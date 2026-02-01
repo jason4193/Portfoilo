@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Layout } from "./components/Layout";
-import { ContentSection } from "./components/ContentSection";
-import { TocRail } from "./components/TocRail";
-import { MobileProgressIndicator } from "./components/MobileProgressIndicator";
-import { useContent } from "./hooks/useContent";
-import { useToc } from "./hooks/useToc";
-import { useTheme } from "./hooks/useTheme";
-import "./styles/tailwind.css";
-import "./styles/theme.css";
+import { Layout } from "./tldr/components/Layout";
+import { ContentSection } from "./tldr/components/ContentSection";
+import { TocRail } from "./tldr/components/TocRail";
+import { MobileProgressIndicator } from "./tldr/components/MobileProgressIndicator";
+import { useContent } from "./shared/hooks/useContent";
+import { useToc } from "./tldr/hooks/useToc";
+import { useTheme } from "./shared/hooks/useTheme";
+import "./shared/styles/tailwind.css";
+import "./shared/styles/theme.css";
 
 function App() {
   const { content, sections, loading, error } = useContent();

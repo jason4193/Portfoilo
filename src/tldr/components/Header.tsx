@@ -1,7 +1,7 @@
-import { useContent } from "../hooks/useContent";
-import { ThemeToggle } from "./ThemeToggle";
-import { Avatar } from "./Avatar";
-import { EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
+import { useContent } from "../../shared/hooks/useContent";
+import { ThemeToggle } from "../../shared/components/ThemeToggle";
+import { Avatar } from "../../shared/components/Avatar";
+import { EmailIcon, GitHubIcon, LinkedInIcon } from "../../shared/components/icons";
 
 export function Header() {
   const { content, loading } = useContent();

@@ -1,18 +1,25 @@
 import { useState, Activity } from "react";
-import { getSectionAnchorId } from "../utils/anchors";
-import { MediaCollection } from "./MediaCollection";
+import { getSectionAnchorId } from "../../shared/utils/anchors";
+import { MediaCollection } from "../../shared/components/MediaCollection";
 import {
   GitHubIcon,
   LinkedInIcon,
   EmailIcon,
   LinkIcon,
-} from "./icons";
-import type { Project } from "../types/content";
+} from "../../shared/components/icons";
+import type {
+  CompetitionExperience,
+  CommunityContributionExperience,
+  WorkingExperience,
+} from "../../shared/types/content";
 
-interface ProjectItemProps {
+interface ExperienceItemProps {
   id: string;
   title: string;
-  project: Project;
+  experience:
+    | CompetitionExperience
+    | CommunityContributionExperience
+    | WorkingExperience;
 }
 
 function getLinkIcon(label: string) {
@@ -31,16 +38,16 @@ function getLinkIcon(label: string) {
   return LinkIcon;
 }
 
-export function ProjectItem({ id, title, project }: ProjectItemProps) {
+export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
   const anchorId = getSectionAnchorId(id, title);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const hasExpandableContent =
-    (project.achievements && project.achievements.length > 0) ||
-    (project.media && project.media.length > 0);
+    (experience.achievements && experience.achievements.length > 0) ||
+    (experience.media && experience.media.length > 0);
 
   return (
-    <div id={anchorId} className="mb-12">
+    <div id={anchorId} className="mb-6">
       <div
         className={`group ${
           hasExpandableContent ? "cursor-pointer" : ""
@@ -61,10 +68,10 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex flex-col mb-2 sm:flex-row sm:items-baseline sm:gap-3">
-              <h4 className="text-2xl font-semibold">{title}</h4>
-              {project.links && project.links.length > 0 && (
+              <h4 className="text-xl font-semibold">{title}</h4>
+              {experience.links && experience.links.length > 0 && (
                 <div className="mt-0 flex gap-3 flex-wrap items-center sm:mt-6">
-                  {project.links.map((link, lIdx: number) => {
+                  {experience.links.map((link, lIdx: number) => {
                     const Icon = getLinkIcon(link.label);
                     return (
                       <a
@@ -73,7 +80,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[var(--color-text-secondary)] hover:text-[var(--color-link)]"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()} // don't toggle expand
                         title={link.label}
                       >
                         <Icon aria-label={link.label} aria-hidden={false} />
@@ -83,20 +90,12 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                 </div>
               )}
             </div>
-            {project.date && (
-              <p className="text-sm text-[var(--color-text-secondary)] mb-2">
-                {project.date}
-              </p>
-            )}
-            {project.techStack && project.techStack.length > 0 && (
-              <div className="mb-3">
-                <span className="text-sm text-[var(--color-text-secondary)]">
-                  {project.techStack.join(", ")}
-                </span>
-              </div>
-            )}
-            {project.description && (
-              <p className="mb-4">{project.description}</p>
+            <p className="text-sm text-[var(--color-text-secondary)] mb-2">
+              {experience.date}
+              {experience.role && ` • ${experience.role}`}
+            </p>
+            {experience.description && (
+              <p className="mb-3">{experience.description}</p>
             )}
           </div>
           {hasExpandableContent && (
@@ -121,11 +120,11 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
       </div>
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
-          <div className="mt-4 space-y-4">
-            <MediaCollection media={project.media} />
-            {project.achievements?.length > 0 && (
+          <div className="mt-3 space-y-3">
+            <MediaCollection media={experience.media} />
+            {experience.achievements?.length > 0 && (
               <ul className="list-disc list-inside space-y-1">
-                {project.achievements.map(
+                {experience.achievements.map(
                   (achievement: string, aIdx: number) => (
                     <li key={aIdx} className="text-sm">
                       {achievement}

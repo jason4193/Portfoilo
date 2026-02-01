@@ -1,8 +1,8 @@
 import type {
   PortfolioContent,
   ContentSection as ContentSectionType,
-} from "../types/content";
-import { getSectionAnchorId } from "../utils/anchors";
+} from "../../shared/types/content";
+import { getSectionAnchorId } from "../../shared/utils/anchors";
 import { SectionHeader } from "./SectionHeader";
 import { ExperienceItem } from "./ExperienceItem";
 import { ProjectItem } from "./ProjectItem";
