@@ -18,7 +18,8 @@ src/
 ├── shared/              # Shared code used by both versions
 │   ├── assets/         # Images and content.json
 │   ├── components/     # Shared components (Avatar, ThemeToggle, MediaCollection, icons)
-│   ├── hooks/          # Shared hooks (useContent, useTheme)
+│   ├── data/           # Shared data exports (content, sections)
+│   ├── stores/         # Zustand stores (portfolio mode, theme)
 │   ├── utils/          # Shared utilities (anchors, colorExtraction, media, youtube)
 │   ├── types/          # TypeScript type definitions
 │   ├── config/         # Configuration (sections)
@@ -43,8 +44,11 @@ src/
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Styling
-- **Three.js** (planned) - 3D graphics for animated version
-- **React Three Fiber** (planned) - React renderer for Three.js
+- **Zustand** - State management (mode, theme)
+- **Three.js** - 3D graphics for animated version
+- **React Three Fiber** - React renderer for Three.js
+- **@react-three/drei** - Three.js helpers
+- **GSAP** - Animation library with ScrollTrigger
 
 ## Getting Started
 
@@ -105,13 +109,13 @@ Portfolio content is managed through `src/shared/assets/content.json`. This sing
 - Dark/light theme toggle
 - Responsive design
 
-### Animated Version (Planned)
+### Animated Version (In Development)
 
-- Interactive 3D business cards
-- Drag and drop card interactions
-- Card expansion modals
-- Smooth transitions
-- Mobile-optimized 3D experience
+- Mode switching with loading screen transitions
+- Foundation for 3D business card experience
+- Interactive 3D business cards (planned)
+- Scroll-based card flip animations (planned)
+- Mobile-optimized 3D experience (planned)
 
 ## Documentation
 

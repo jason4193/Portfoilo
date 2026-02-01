@@ -8,7 +8,8 @@ This document explains the purpose and functionality of shared code used by both
 src/shared/
 ├── assets/         # Images and content data
 ├── components/    # Shared React components
-├── hooks/         # Shared React hooks
+├── data/          # Shared data exports (content, sections)
+├── stores/        # Zustand stores (state management)
 ├── utils/         # Shared utility functions
 ├── types/         # TypeScript type definitions
 ├── config/        # Configuration files
@@ -37,7 +38,7 @@ src/shared/
 }
 ```
 
-**Used By**: Both TLDR and animated versions via `useContent` hook.
+**Used By**: Both TLDR and animated versions via direct import from `shared/data/content`.
 
 ---
 
@@ -77,7 +78,7 @@ src/shared/
 - Accessible with ARIA labels
 
 **Dependencies**:
-- `shared/hooks/useTheme` - Theme state management
+- `shared/stores/useThemeStore` - Theme state management (Zustand)
 - `shared/components/icons` - SunIcon, MoonIcon
 
 ---
@@ -135,27 +136,24 @@ src/shared/
 
 ---
 
-## Hooks
+## Data
 
-### useContent.ts
-**Location**: `src/shared/hooks/useContent.ts`
+### content.ts
+**Location**: `src/shared/data/content.ts`
 
-**Purpose**: Loads and processes portfolio content from content.json.
+**Purpose**: Exports portfolio content and sections as constants (synchronous JSON import).
 
-**Returns**:
+**Exports**:
 ```typescript
-{
-  content: PortfolioContent | null    // Full content object
-  sections: ContentSection[]          // Processed sections for navigation
-  loading: boolean                     // Loading state
-  error: string | null                 // Error message if any
-}
+export const content: PortfolioContent | null    // Full content object
+export const sections: ContentSection[]          // Processed sections for navigation
+export const error: string | null                 // Error message if any
 ```
 
 **Features**:
-- Loads content.json on mount
+- Loads content.json synchronously at module load
 - Generates sections using configuration-driven approach
-- Handles loading and error states
+- No loading state needed (synchronous import)
 - Processes all content types (projects, competitions, etc.)
 
 **Dependencies**:
@@ -163,30 +161,63 @@ src/shared/
 - `shared/types/content` - Type definitions
 - `shared/config/sections` - Section generation config
 
+**Usage**:
+```typescript
+import { content, sections, error } from "../shared/data/content";
+```
+
 **Used By**: Both TLDR and animated versions
 
 ---
 
-### useTheme.ts
-**Location**: `src/shared/hooks/useTheme.ts`
+## Stores (Zustand)
 
-**Purpose**: Manages application theme (light/dark mode).
+### usePortfolioModeStore.ts
+**Location**: `src/shared/stores/usePortfolioModeStore.ts`
+
+**Purpose**: Manages portfolio mode state (TLDR vs Animated) with Zustand.
+
+**Returns**:
+```typescript
+{
+  mode: PortfolioMode                    // "tldr" | "animated"
+  isTransitioning: boolean             // Transition state
+  setMode: (mode: PortfolioMode) => void
+  toggleMode: () => void
+}
+```
+
+**Features**:
+- Persists mode in localStorage via Zustand persist middleware
+- Smooth transitions with loading screen
+- 3-second transition delay for mode switching
+- Defaults to "tldr" mode
+
+**Used By**: `main.tsx`, `HeaderBase`, `AnimatedApp`
+
+---
+
+### useThemeStore.ts
+**Location**: `src/shared/stores/useThemeStore.ts`
+
+**Purpose**: Manages application theme (light/dark mode) with Zustand.
 
 **Returns**:
 ```typescript
 {
   theme: ThemeMode                    // "light" | "dark"
-  setTheme: (theme: ThemeMode) => void // Set theme function
+  setTheme: (theme: ThemeMode) => void
+  toggleTheme: () => void
 }
 ```
 
 **Features**:
-- Persists theme in localStorage
+- Persists theme in localStorage via Zustand persist middleware
 - Respects system preference on first visit
 - Applies theme to document root via `data-theme` attribute
-- Defaults to light mode
+- Defaults to system preference or light mode
 
-**Used By**: `ThemeToggle` component
+**Used By**: `ThemeToggle` component, `main.tsx`
 
 ---
 
@@ -368,40 +399,47 @@ src/shared/
 ```
 content.json (shared/assets)
     ↓
-useContent (shared/hooks)
+content.ts (shared/data) - Synchronous load
     ↓
-    ├── content → Components
+    ├── content → Components (direct import)
     └── sections → Navigation/TOC
         ↓
     useToc (tldr/hooks) → TOC items
+
+State Management:
+    usePortfolioModeStore (shared/stores) → Mode switching
+    useThemeStore (shared/stores) → Theme management
 ```
 
 ## Reusability Strategy
 
 1. **Single Source of Truth**: `content.json` is the only content source
 2. **Shared Types**: Type definitions ensure consistency
-3. **Shared Hooks**: Business logic reused across versions
-4. **Shared Components**: UI components reused where applicable
-5. **Shared Utils**: Common functionality centralized
-6. **Shared Styles**: Consistent theming and design system
+3. **Shared Data**: Direct exports for static content (no hooks needed)
+4. **Shared Stores**: Zustand stores for reactive state (mode, theme)
+5. **Shared Components**: UI components reused where applicable
+6. **Shared Utils**: Common functionality centralized
+7. **Shared Styles**: Consistent theming and design system
 
 ## Usage in Versions
 
 ### TLDR Version Uses:
 - All shared components (Avatar, ThemeToggle, MediaCollection, icons)
-- All shared hooks (useContent, useTheme)
+- Shared data (content, sections) - direct imports
+- Shared stores (usePortfolioModeStore, useThemeStore)
 - All shared utils (anchors, colorExtraction, media, youtube)
 - All shared types
 - All shared config
 - All shared styles
 
-### Animated Version Will Use:
-- Shared hooks (useContent, useTheme)
+### Animated Version Uses:
+- Shared data (content, sections) - direct imports
+- Shared stores (usePortfolioModeStore, useThemeStore)
 - Shared utils (media, youtube, colorExtraction)
 - Shared types
 - Shared config
 - Shared styles
-- Shared components (MediaCollection, icons) - in card modals
+- Shared components (MediaCollection, icons, ThemeToggle) - in 3D scene
 - Shared assets (content.json)
 
 ## Best Practices

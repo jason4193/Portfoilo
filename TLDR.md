@@ -26,7 +26,7 @@ src/tldr/
 - Loading state with skeleton UI
 
 **Dependencies**:
-- `shared/hooks/useContent` - Fetches portfolio content
+- `shared/data/content` - Portfolio content data
 - `shared/components/Avatar` - Profile picture
 - `shared/components/ThemeToggle` - Theme switcher
 - `shared/components/icons` - Social media icons
@@ -269,21 +269,24 @@ src/tldr/
 
 ```
 main.tsx
-  ├── useContent (shared) → Loads content.json
-  ├── useToc (tldr) → Generates TOC from sections
-  ├── useTheme (shared) → Manages theme
+  ├── usePortfolioModeStore (shared/stores) → Manages TLDR/animated mode
+  ├── useThemeStore (shared/stores) → Manages theme
   │
-  └── Layout
-      ├── Header → Displays name, avatar, intro
-      └── Main Content
-          └── ContentSection (for each section)
-              ├── SectionHeader (parent sections)
-              ├── ProjectItem (project items)
-              ├── ExperienceItem (experience items)
-              └── AcademicItem (academic items)
+  └── TLDRApp
+      ├── content, sections (shared/data) → Portfolio content
+      ├── useToc (tldr) → Generates TOC from sections
       │
-      ├── TocRail (desktop) → Right sidebar navigation
-      └── MobileProgressIndicator (mobile) → Bottom navigation
+      └── Layout
+          ├── Header → Displays name, avatar, intro
+          └── Main Content
+              └── ContentSection (for each section)
+                  ├── SectionHeader (parent sections)
+                  ├── ProjectItem (project items)
+                  ├── ExperienceItem (experience items)
+                  └── AcademicItem (academic items)
+          │
+          ├── TocRail (desktop) → Right sidebar navigation
+          └── MobileProgressIndicator (mobile) → Bottom navigation
 ```
 
 ## Key Design Patterns
