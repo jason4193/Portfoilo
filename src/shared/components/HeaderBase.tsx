@@ -1,4 +1,4 @@
-import { useContent } from "../hooks/useContent";
+import { content } from "../data/content";
 import { ThemeToggle } from "./ThemeToggle";
 import { Avatar } from "./Avatar";
 import { EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
@@ -10,10 +10,9 @@ interface HeaderBaseProps {
 }
 
 export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps) {
-  const { content, loading } = useContent();
   const { mode, toggleMode } = usePortfolioModeStore();
 
-  if (loading || !content) {
+  if (!content) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-start">

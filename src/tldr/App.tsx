@@ -2,22 +2,11 @@ import { Layout } from "./components/Layout";
 import { ContentSection } from "./components/ContentSection";
 import { TocRail } from "./components/TocRail";
 import { MobileProgressIndicator } from "./components/MobileProgressIndicator";
-import { useContent } from "../shared/hooks/useContent";
+import { content, sections, error } from "../shared/data/content";
 import { useToc } from "./hooks/useToc";
 
 export function TLDRApp() {
-  const { content, sections, loading, error } = useContent();
   const { tocItems } = useToc(sections);
-
-  if (loading) {
-    return (
-      <Layout>
-        <div className="text-center py-12">
-          <p className="text-[var(--color-text-secondary)]">Loading...</p>
-        </div>
-      </Layout>
-    );
-  }
 
   if (error || !content) {
     return (
@@ -31,6 +20,7 @@ export function TLDRApp() {
     );
   }
 
+  // At this point, content is guaranteed to be non-null due to the check above
   return (
     <Layout>
       <article className="prose prose-lg max-w-none">
@@ -38,7 +28,7 @@ export function TLDRApp() {
           <ContentSection
             key={section.id}
             section={section}
-            content={content}
+            content={content!}
           />
         ))}
       </article>
