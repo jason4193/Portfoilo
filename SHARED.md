@@ -166,7 +166,7 @@ export const error: string | null                 // Error message if any
 import { content, sections, error } from "../shared/data/content";
 ```
 
-**Used By**: Both TLDR and animated versions
+**Used By**: Both markdown and animated versions
 
 ---
 

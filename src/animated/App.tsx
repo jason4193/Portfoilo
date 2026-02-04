@@ -1,36 +1,60 @@
+import { useEffect, useRef, useState } from "react";
 import { usePortfolioModeStore } from "../shared/stores";
-import { ThemeToggle } from "../shared/components/ThemeToggle";
-import { MarkdownIcon } from "../shared/components/icons";
+import { Layout } from "./components/Layout";
+import { AnimatedScene } from "./components/AnimatedScene";
 
 export function AnimatedApp() {
-  const { toggleMode } = usePortfolioModeStore();
+  const { isTransitioning } = usePortfolioModeStore();
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [canAnimate, setCanAnimate] = useState(false);
+  const canvasCreatedRef = useRef(false);
+  const [isLoading, setIsLoading] = useState(() => {
+    const store = usePortfolioModeStore.getState();
+    return !store.isTransitioning;
+  });
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (isTransitioning) {
+      setIsLoading(false);
+    } else if (!isTransitioning && canvasCreatedRef.current) {
+      setIsLoading(false);
+      setLoadingProgress(100);
+    } else if (!isLoading && loadingProgress === 0 && !canvasCreatedRef.current) {
+      setIsLoading(true);
+    }
+  }, [isTransitioning, isLoading, loadingProgress]);
+
+  const shouldShowInternalLoading = isLoading && !isTransitioning;
+
+  useEffect(() => {
+    if (isTransitioning || shouldShowInternalLoading) {
+      setCanAnimate(false);
+      return;
+    }
+
+    const raf = requestAnimationFrame(() => setCanAnimate(true));
+    return () => cancelAnimationFrame(raf);
+  }, [isTransitioning, shouldShowInternalLoading]);
 
   return (
-    <div className="min-h-screen flex flex-col relative">
-      {/* Minimal floating toggle buttons */}
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
-        <button
-          onClick={toggleMode}
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors shadow-lg flex items-center justify-center"
-          aria-label="Switch to markdown mode"
-          title="Switch to markdown mode"
-        >
-          <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
-        </button>
-        <ThemeToggle />
-      </div>
-
-      <main className="flex-1 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Animated 3D Portfolio</h1>
-          <p className="text-lg text-[var(--color-text-secondary)]">
-            Coming soon! The interactive 3D business card experience is under development.
-          </p>
-          <p className="text-sm text-[var(--color-text-secondary)] mt-4">
-            Switch back to markdown mode using the button in the top right.
-          </p>
-        </div>
-      </main>
-    </div>
+    <Layout
+      showLoading={shouldShowInternalLoading}
+      loadingProgress={loadingProgress}
+      onLoadingComplete={handleLoadingComplete}
+    >
+      <AnimatedScene
+        isAnimationReady={canAnimate}
+        onProgress={(progress) => {
+          setLoadingProgress(progress);
+          if (progress > 0 && !canvasCreatedRef.current) {
+            canvasCreatedRef.current = true;
+          }
+        }}
+      />
+    </Layout>
   );
 }
