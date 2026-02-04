@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { StudioLight } from "./StudioLight";
+import { Card } from "./Card";
+import { SceneRig } from "./StudioLight";
 import { TransitionProgressController } from "./TransitionProgressController";
 
 interface AnimatedSceneProps {
@@ -51,7 +52,8 @@ export function AnimatedScene({
         dpr={[1, 2]}
       >
         <TransitionProgressController onProgress={onProgress} />
-        <StudioLight isAnimationReady={isAnimationReady} />
+        <SceneRig />
+        <Card isAnimationReady={isAnimationReady} />
       </Canvas>
     </div>
   );

@@ -1,7 +1,6 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { Card } from "./Card";
 import { DirectionalLightHelper, AxesHelper, DirectionalLight } from "three";
 
 function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
@@ -16,11 +15,7 @@ function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
   return null;
 }
 
-export function StudioLight({
-  isAnimationReady = false,
-}: {
-  isAnimationReady?: boolean;
-}) {
+export function SceneRig() {
   const controlsRef = useRef<any>(null);
   const dirARef = useRef<DirectionalLight>(null);
   const dirBRef = useRef<DirectionalLight>(null);
@@ -78,8 +73,6 @@ export function StudioLight({
         
       />
 
-      {/* Business Card */}
-      <Card isAnimationReady={isAnimationReady} />
     </>
   );
 }
