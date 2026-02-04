@@ -13,11 +13,19 @@ export function LoadingScreen({
 }: LoadingScreenProps) {
   // Auto-hide when progress reaches 100%
   useEffect(() => {
+    let timeoutId: number | undefined;
+
     if (progress >= 100 && onComplete) {
-      setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         onComplete();
       }, 500);
     }
+
+    return () => {
+      if (timeoutId != null) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [progress, onComplete]);
 
   return (

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePortfolioModeStore } from "../../shared/stores";
 import { TRANSITION_MIN_DURATION_MS } from "../constants/transition";
 import { useTransitionCleanup } from "../hooks/useTransitionCleanup";
@@ -47,5 +47,15 @@ export function TransitionProgressController({
 
   useTransitionLoadProgress({ onProgress: handleTransitionProgress });
   useTransitionCleanup({ onProgress: handleTransitionProgress });
+
+  useEffect(() => {
+    return () => {
+      if (completeTimeoutRef.current != null) {
+        window.clearTimeout(completeTimeoutRef.current);
+        completeTimeoutRef.current = null;
+      }
+      transitionStartRef.current = null;
+    };
+  }, []);
   return null;
 }
