@@ -43,7 +43,6 @@ export const usePortfolioModeStore = create<PortfolioModeStore>()(
       setMode: (newMode: PortfolioMode) => {
         const currentMode = get().mode;
         if (newMode !== currentMode) {
-          console.log("[Store] setMode - current:", currentMode, "→ new:", newMode);
           // Start transition - cleanup will complete it
           set({ isTransitioning: true, transitionProgress: 0, targetMode: newMode });
         }
@@ -51,19 +50,16 @@ export const usePortfolioModeStore = create<PortfolioModeStore>()(
       toggleMode: () => {
         const currentMode = get().mode;
         const newMode: PortfolioMode = currentMode === "markdown" ? "animated" : "markdown";
-        console.log("[Store] toggleMode - current:", currentMode, "→ new:", newMode);
         // Start transition - cleanup will complete it
         set({ isTransitioning: true, transitionProgress: 0, targetMode: newMode });
       },
       setTransitionProgress: (progress: number) => {
         const clamped = Math.min(100, Math.max(0, progress));
-        console.log("[Store] setTransitionProgress:", clamped + "%");
         set({ transitionProgress: clamped });
       },
       completeTransition: () => {
         const { targetMode } = get();
         if (targetMode) {
-          console.log("[Store] completeTransition - switching to:", targetMode);
           set({ 
             mode: targetMode, 
             isTransitioning: false, 

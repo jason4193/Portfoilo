@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { usePortfolioModeStore, useThemeStore } from "./shared/stores";
 import { LoadingScreen } from "./shared/components/LoadingScreen";
@@ -13,12 +13,6 @@ function App() {
   // Initialize theme store (ensures theme is applied, store handles persistence)
   useThemeStore();
 
-  // Debug transition state
-  useEffect(() => {
-    console.log("[App] State update - mode:", mode, "isTransitioning:", isTransitioning, 
-                "targetMode:", targetMode, "progress:", transitionProgress + "%");
-  }, [mode, isTransitioning, targetMode, transitionProgress]);
-
   // Determine loading message based on transition direction
   const loadingMessage = targetMode === "animated" 
     ? "Loading 3D Portfolio..." 
@@ -26,8 +20,6 @@ function App() {
 
   // Determine which component to show - use targetMode during transition to avoid remounting
   const displayMode = (isTransitioning && targetMode) ? targetMode : mode;
-  
-  console.log("[App] Render - displayMode:", displayMode, "isTransitioning:", isTransitioning);
 
   // Show loading screen during transition with progress
   return (
