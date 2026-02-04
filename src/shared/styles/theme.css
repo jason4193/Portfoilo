@@ -42,8 +42,8 @@
   --color-text-secondary: #57606a; /* 4.5:1 contrast on white */
   --color-border: #d0d7de;
   --color-link: #0969da; /* 4.5:1 contrast on white */
-  --color-accent: #0969da;
   --color-link-hover: #0860ca; /* 4.5:1 contrast on white */
+  --color-accent: #0969da;
   --color-code-bg: rgba(175, 184, 193, 0.2);
   --color-code-text: #24292f; /* 4.5:1 contrast on code bg */
   --color-pre-bg: #f6f8fa;
@@ -59,6 +59,7 @@
   --color-border: #30363d;
   --color-link: #58a6ff; /* 4.5:1 contrast on dark bg */
   --color-link-hover: #79c0ff; /* 4.5:1 contrast on dark bg */
+  --color-accent: #58a6ff;
   --color-code-bg: rgba(110, 118, 129, 0.4);
   --color-code-text: #c9d1d9; /* 4.5:1 contrast on code bg */
   --color-pre-bg: #161b22;
