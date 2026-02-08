@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useMediaQuery } from "react-responsive";
 import PortfolioCardModel from "../models/PortfolioCardModel";
 import type { Group } from "three";
+import {
+  CARD_SCALE_DESKTOP,
+  CARD_SCALE_MOBILE,
+  DESKTOP_MIN_WIDTH,
+} from "../constants/card";
 
 function createCardTiltAndFlowAnimation(cardGroup: Group) {
   const rotation = cardGroup.rotation;
@@ -46,6 +52,8 @@ export function Card({
   isAnimationReady?: boolean;
 }) {
   const groupRef = useRef<Group | null>(null);
+  const isDesktop = useMediaQuery({ minWidth: DESKTOP_MIN_WIDTH });
+  const scale = isDesktop ? CARD_SCALE_DESKTOP : CARD_SCALE_MOBILE;
 
   // Small, slow right-tilt animation after mount (i.e. after loading screen),
   // then continuous subtle "flow" to keep the card feeling alive.
@@ -71,7 +79,7 @@ export function Card({
       // Lift card slightly above origin
       position={[0, 0.1, 0]}
     >
-      <PortfolioCardModel scale={0.2} />
+      <PortfolioCardModel scale={scale} />
     </group>
   );
 }
