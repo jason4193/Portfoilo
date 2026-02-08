@@ -1,13 +1,17 @@
 import { useState } from "react";
 
-const JASON_PHOTO_Front = new URL("../assets/Jason_1.JPG", import.meta.url).href;
-const JASON_PHOTO_Back = new URL("../assets/Jason_2.JPG", import.meta.url).href;
+const JASON_PHOTO_Front = new URL("../assets/Jason_1.webp", import.meta.url)
+  .href;
+const JASON_PHOTO_Back = new URL("../assets/Jason_2.webp", import.meta.url)
+  .href;
 
 interface AvatarProps {
   className?: string;
 }
 
-export function Avatar({ className = "w-20 h-20 sm:w-26 sm:h-26" }: AvatarProps) {
+export function Avatar({
+  className = "w-20 h-20 sm:w-26 sm:h-26",
+}: AvatarProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (

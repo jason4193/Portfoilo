@@ -106,17 +106,17 @@
       "media": [
         {
           "type": "image",
-          "src": "ACUCYS_1.png",
+          "src": "ACUCYS_1.webp",
           "alt": "ACUCyS Jingle Shells CTF 2025 Poster"
         },
         {
           "type": "image",
-          "src": "ACUCYS_2.PNG",
+          "src": "ACUCYS_2.webp",
           "alt": "ACUCyS Jingle Shells CTF 2025 Scores Board"
         },
         {
           "type": "image",
-          "src": "ACUCYS_3.jpg",
+          "src": "ACUCYS_3.webp",
           "alt": "ACUCyS Jingle Shells CTF 2025 Team Scores"
         }
       ]
@@ -134,7 +134,7 @@
       "media": [
         {
           "type": "image",
-          "src": "ShopLyft_1.png",
+          "src": "ShopLyft_1.webp",
           "alt": "ShopLyft Front Page"
         },
         {
@@ -144,27 +144,27 @@
         },
         {
           "type": "image",
-          "src": "ShopLyft_3.JPG",
+          "src": "ShopLyft_3.webp",
           "alt": "ShopLyft Closing Ceremony"
         },
         {
           "type": "image",
-          "src": "ShopLyft_4.JPG",
+          "src": "ShopLyft_4.webp",
           "alt": "ShopLyft Team Photo"
         },
         {
           "type": "image",
-          "src": "ShopLyft_5.JPG",
+          "src": "ShopLyft_5.webp",
           "alt": "ShopLyft Team Photo"
         },
         {
           "type": "image",
-          "src": "ShopLyft_6.JPG",
+          "src": "ShopLyft_6.webp",
           "alt": "ShopLyft Team Photo"
         },
         {
           "type": "image",
-          "src": "ShopLyft_7.JPG",
+          "src": "ShopLyft_7.webp",
           "alt": "ShopLyft Team Photo"
         },
         {
@@ -199,7 +199,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Grade-Able_1.JPG",
+          "src": "Grade-Able_1.webp",
           "alt": "Hackathon Team Photo"
         },
         {
@@ -209,12 +209,12 @@
         },
         {
           "type": "image",
-          "src": "Grade-Able_3.JPG",
+          "src": "Grade-Able_3.webp",
           "alt": "Hackathon Team Photo"
         },
         {
           "type": "image",
-          "src": "Grade-Able_4.JPG",
+          "src": "Grade-Able_4.webp",
           "alt": "Hackathon Venue"
         }
       ],
@@ -235,7 +235,7 @@
       "media": [
         {
           "type": "image",
-          "src": "ASDCTF2023_1.JPG",
+          "src": "ASDCTF2023_1.webp",
           "alt": "ASD CTF Team Scores"
         }
       ],
@@ -251,12 +251,12 @@
       "media": [
         {
           "type": "image",
-          "src": "DUCTF2023_1.jpeg",
+          "src": "DUCTF2023_1.webp",
           "alt": "DownUnderCTF Entry Question"
         },
         {
           "type": "image",
-          "src": "DUCTF2023_2.JPG",
+          "src": "DUCTF2023_2.webp",
           "alt": "DownUnderCTF Team Scores"
         }
       ],
@@ -278,22 +278,22 @@
       "media": [
         {
           "type": "image",
-          "src": "Notangles-landing-page.png",
+          "src": "Notangles-landing-page.webp",
           "alt": "Notangles Landing Page"
         },
         {
           "type": "image",
-          "src": "Notangles-2025-Teams.png",
+          "src": "Notangles-2025-Teams.webp",
           "alt": "Notangles 2025 Teams Photo"
         },
         {
           "type": "image",
-          "src": "Notangles-colour-themes.png",
+          "src": "Notangles-colour-themes.webp",
           "alt": "Notangles Colour Theme feature"
         },
         {
           "type": "image",
-          "src": "Notangles-backend-API.png",
+          "src": "Notangles-backend-API.webp",
           "alt": "Notangles server refactoring with Bruno"
         }
       ],
@@ -323,32 +323,32 @@
       "media": [
         {
           "type": "image",
-          "src": "eReuse_1.jpg",
+          "src": "eReuse_1.webp",
           "alt": "eReuse T-shirt"
         },
         {
           "type": "image",
-          "src": "eReuse_2.png",
+          "src": "eReuse_2.webp",
           "alt": "eReuse Fixing Computer"
         },
         {
           "type": "image",
-          "src": "eReuse_6.png",
+          "src": "eReuse_6.webp",
           "alt": "eReuse volunteering session"
         },
         {
           "type": "image",
-          "src": "eReuse_3.JPG",
+          "src": "eReuse_3.webp",
           "alt": "eReuse Fixing Mac"
         },
         {
           "type": "image",
-          "src": "eReuse_4.JPG",
+          "src": "eReuse_4.webp",
           "alt": "eReuse Fixing iPad"
         },
         {
           "type": "image",
-          "src": "eReuse_5.JPG",
+          "src": "eReuse_5.webp",
           "alt": "eReuse Reinstall Windows"
         }
       ],
@@ -372,27 +372,27 @@
       "media": [
         {
           "type": "image",
-          "src": "AISA_Vol_1.png",
+          "src": "AISA_Vol_1.webp",
           "alt": "AISA Volunteering Team Photo"
         },
         {
           "type": "image",
-          "src": "AISA_Vol_2.png",
+          "src": "AISA_Vol_2.webp",
           "alt": "AISA Conference Venue"
         },
         {
           "type": "image",
-          "src": "AISA_Vol_3.png",
+          "src": "AISA_Vol_3.webp",
           "alt": "AISA Volunteering Certificate"
         },
         {
           "type": "image",
-          "src": "AISA_Vol_4.png",
+          "src": "AISA_Vol_4.webp",
           "alt": "AISA Volunteering Session"
         },
         {
           "type": "image",
-          "src": "AISA_Vol_5.png",
+          "src": "AISA_Vol_5.webp",
           "alt": "AISA Conference Networking"
         }
       ],
