@@ -1,7 +1,15 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 import { DirectionalLightHelper, AxesHelper, DirectionalLight } from "three";
+import {
+  DESKTOP_MIN_WIDTH,
+  ORBIT_MAX_DISTANCE_DESKTOP,
+  ORBIT_MAX_DISTANCE_MOBILE,
+  ORBIT_MIN_DISTANCE_DESKTOP,
+  ORBIT_MIN_DISTANCE_MOBILE,
+} from "../constants/scene";
 
 function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
   const lastLogRef = useRef(0);
@@ -19,6 +27,10 @@ export function SceneRig() {
   const controlsRef = useRef<any>(null);
   const dirARef = useRef<DirectionalLight>(null);
   const dirBRef = useRef<DirectionalLight>(null);
+
+  const isDesktop = useMediaQuery({ minWidth: DESKTOP_MIN_WIDTH });
+  const minDistance = isDesktop ? ORBIT_MIN_DISTANCE_DESKTOP : ORBIT_MIN_DISTANCE_MOBILE;
+  const maxDistance = isDesktop ? ORBIT_MAX_DISTANCE_DESKTOP : ORBIT_MAX_DISTANCE_MOBILE;
 
   // Debug light helpers can be toggled from the browser console via:
   // window.setDebugLights(true | false)
@@ -67,10 +79,9 @@ export function SceneRig() {
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
-        minDistance={3}
-        maxDistance={10}
+        minDistance={minDistance}
+        maxDistance={maxDistance}
         autoRotate={false}
-        
       />
 
     </>
