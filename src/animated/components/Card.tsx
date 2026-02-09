@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useMediaQuery } from "react-responsive";
-import PortfolioCardModel from "../models/PortfolioCardModel_v2";
+import PortfolioCardModel from "../models/PortfolioCardModel_v3";
 import type { Group } from "three";
 import {
   CARD_SCALE_DESKTOP,
