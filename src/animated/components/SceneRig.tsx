@@ -29,8 +29,12 @@ export function SceneRig() {
   const dirBRef = useRef<DirectionalLight>(null);
 
   const isDesktop = useMediaQuery({ minWidth: DESKTOP_MIN_WIDTH });
-  const minDistance = isDesktop ? ORBIT_MIN_DISTANCE_DESKTOP : ORBIT_MIN_DISTANCE_MOBILE;
-  const maxDistance = isDesktop ? ORBIT_MAX_DISTANCE_DESKTOP : ORBIT_MAX_DISTANCE_MOBILE;
+  const minDistance = isDesktop
+    ? ORBIT_MIN_DISTANCE_DESKTOP
+    : ORBIT_MIN_DISTANCE_MOBILE;
+  const maxDistance = isDesktop
+    ? ORBIT_MAX_DISTANCE_DESKTOP
+    : ORBIT_MAX_DISTANCE_MOBILE;
 
   // Debug light helpers can be toggled from the browser console via:
   // window.setDebugLights(true | false)
@@ -55,21 +59,26 @@ export function SceneRig() {
   }, []);
 
   // `useHelper` expects a ref to an Object3D. Our light refs are nullable, so we cast for TS.
-  useHelper(debugLights ? (dirARef as any) : null, DirectionalLightHelper, 1, 0x00ff00);
-  useHelper(debugLights ? (dirBRef as any) : null, DirectionalLightHelper, 1, 0xff00ff);
+  useHelper(
+    debugLights ? (dirARef as any) : null,
+    DirectionalLightHelper,
+    1,
+    0x00ff00,
+  );
+  useHelper(
+    debugLights ? (dirBRef as any) : null,
+    DirectionalLightHelper,
+    1,
+    0xff00ff,
+  );
 
   return (
     <>
       <CameraDebug />
       {/* Lighting - very bright for pure white card appearance */}
       <ambientLight intensity={1.2} />
-      <directionalLight
-        ref={dirARef}
-        position={[1, 0, 3]}
-        intensity={1.1}
-      />
-      <directionalLight ref={dirBRef} position={[-5, 5, -5]} intensity={0.8} />
-
+      <directionalLight ref={dirARef} position={[1, 0, 3]} intensity={1.1} />
+      <directionalLight ref={dirBRef} position={[-5, 2, -2]} intensity={1.2} />
 
       {debugLights && <primitive object={new AxesHelper(2.5)} />}
 
@@ -83,7 +92,6 @@ export function SceneRig() {
         maxDistance={maxDistance}
         autoRotate={false}
       />
-
     </>
   );
 }

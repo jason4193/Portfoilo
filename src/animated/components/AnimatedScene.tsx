@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Card } from "./Card";
-import { SceneRig } from "./StudioLight";
+import { SceneRig } from "./SceneRig";
 import { TransitionProgressController } from "./TransitionProgressController";
 
 interface AnimatedSceneProps {
@@ -21,9 +21,12 @@ export function AnimatedScene({
         const canvases = sceneRef.current.querySelectorAll("canvas");
         canvases.forEach((canvas) => {
           try {
-            const gl = canvas.getContext("webgl") || canvas.getContext("webgl2");
+            const gl =
+              canvas.getContext("webgl") || canvas.getContext("webgl2");
             if (gl) {
-              const loseContext = (gl as any).getExtension("WEBGL_lose_context");
+              const loseContext = (gl as any).getExtension(
+                "WEBGL_lose_context",
+              );
               if (loseContext) {
                 loseContext.loseContext();
               }

@@ -2,14 +2,16 @@ import { useEffect } from "react";
 
 interface LoadingScreenProps {
   message?: string;
+  optionalMessage?: string;
   progress: number;
   onComplete?: () => void;
 }
 
-export function LoadingScreen({ 
-  message = "Loading...", 
+export function LoadingScreen({
+  message = "Loading...",
+  optionalMessage = "",
   progress,
-  onComplete 
+  onComplete,
 }: LoadingScreenProps) {
   // Auto-hide when progress reaches 100%
   useEffect(() => {
@@ -41,6 +43,9 @@ export function LoadingScreen({
           <div className="w-16 h-16 border-4 border-[var(--color-border)] border-t-[var(--color-accent)] rounded-full animate-spin mx-auto" />
         </div>
         <h2 className="text-2xl font-bold mb-4">{message}</h2>
+        <p className="text-sm text-[var(--color-text-secondary)] mb-4 whitespace-pre-line text-left">
+          {optionalMessage}
+        </p>
         <div className="w-64 h-2 bg-[var(--color-bg-secondary)] rounded-full overflow-hidden mx-auto">
           <div
             className="h-full bg-[var(--color-accent)] transition-all duration-300 ease-out"
