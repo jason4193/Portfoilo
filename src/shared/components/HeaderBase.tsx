@@ -1,17 +1,14 @@
 import { content } from "../data/content";
 import { ThemeToggle } from "./ThemeToggle";
+import { ModeToggle } from "./ModeToggle";
 import { Avatar } from "./Avatar";
-import { EmailIcon, GitHubIcon, LinkedInIcon, MarkdownIcon, AnimatedIcon } from "./icons";
-import { usePortfolioModeStore } from "../stores";
+import { EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
 
 interface HeaderBaseProps {
-  showModeToggle?: boolean;
   children?: React.ReactNode;
 }
 
-export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps) {
-  const { mode, toggleMode } = usePortfolioModeStore();
-
+export function HeaderBase({ children }: HeaderBaseProps) {
   if (!content) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -24,20 +21,7 @@ export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps)
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {showModeToggle && (
-              <button
-                onClick={toggleMode}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
-                aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
-                title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
-              >
-                {mode === "markdown" ? (
-                  <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
-                ) : (
-                  <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
-                )}
-              </button>
-            )}
+            <ModeToggle className="w-9 h-9 sm:w-10 sm:h-10" />
             <ThemeToggle />
           </div>
         </div>
@@ -90,20 +74,7 @@ export function HeaderBase({ showModeToggle = true, children }: HeaderBaseProps)
 
         {/* Theme Toggle and Mode Toggle - Top Right */}
         <div className="ml-2 sm:ml-4 flex items-center gap-2">
-          {showModeToggle && (
-            <button
-              onClick={toggleMode}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center"
-              aria-label={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
-              title={`Switch to ${mode === "markdown" ? "animated" : "markdown"} mode`}
-            >
-              {mode === "markdown" ? (
-                <AnimatedIcon className="w-5 h-5" aria-hidden={true} />
-              ) : (
-                <MarkdownIcon className="w-5 h-5" aria-hidden={true} />
-              )}
-            </button>
-          )}
+          <ModeToggle className="w-9 h-9 sm:w-10 sm:h-10" />
           <ThemeToggle />
         </div>
       </div>
