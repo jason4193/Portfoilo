@@ -1,9 +1,13 @@
 import { ClickableGroup } from "../ClickableGroup";
 import type { SectionProps } from "./types";
 
-export function BackAwards({ nodes, materials }: SectionProps) {
+interface BackAwardsProps extends SectionProps {
+  onSelect?: (position: [number, number, number]) => void;
+}
+
+export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
   return (
-    <ClickableGroup>
+    <ClickableGroup onClick={onSelect}>
       {/* Awards Background */}
       <group position={[-3.263, 3.842, 2.712]} scale={[1.975, 0.936, 2.352]}>
         <mesh

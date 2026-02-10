@@ -1,9 +1,13 @@
 import { ClickableGroup } from "../ClickableGroup";
 import type { SectionProps } from "./types";
 
-export function BackProjects({ nodes, materials }: SectionProps) {
+interface BackProjectsProps extends SectionProps {
+  onSelect?: (position: [number, number, number]) => void;
+}
+
+export function BackProjects({ nodes, materials, onSelect }: BackProjectsProps) {
   return (
-    <ClickableGroup>
+    <ClickableGroup onClick={onSelect}>
       <mesh
         geometry={nodes.Projects_Icon_1.geometry}
         material={materials.Red}

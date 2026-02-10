@@ -55,16 +55,36 @@ export default function PortfolioCardModel({
       <group ref={modelRef}>
         <FrontFace nodes={nodes} materials={materials} />
         <BackFaceBase nodes={nodes} materials={materials} />
-        <BackProjects nodes={nodes} materials={materials} />
-        <BackCommunity nodes={nodes} materials={materials} />
+        <BackProjects
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("projects", position)}
+        />
+        <BackCommunity
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("community", position)}
+        />
         <BackAboutMe
           nodes={nodes}
           materials={materials}
           onSelect={(position) => onSectionSelect?.("aboutMe", position)}
         />
-        <BackWorking nodes={nodes} materials={materials} />
-        <BackAwards nodes={nodes} materials={materials} />
-        <BackEducation nodes={nodes} materials={materials} />
+        <BackWorking
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("working", position)}
+        />
+        <BackAwards
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("awards", position)}
+        />
+        <BackEducation
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("education", position)}
+        />
       </group>
     </group>
   );
