@@ -3,17 +3,32 @@ import { Canvas } from "@react-three/fiber";
 import { Card } from "./Card";
 import { SceneRig } from "./SceneRig";
 import { TransitionProgressController } from "./TransitionProgressController";
+import { SectionFocusController } from "./SectionFocusController";
+import type { SectionId } from "../constants/sections";
 
 interface AnimatedSceneProps {
   onProgress?: (progress: number) => void;
   isAnimationReady?: boolean;
+  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
+  focusTarget?: [number, number, number] | null;
+  isSectionFocused?: boolean;
+  dimOverlayRef?: React.RefObject<HTMLDivElement | null>;
+  modalOverlayRef?: React.RefObject<HTMLDivElement | null>;
+  modalPanelRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export function AnimatedScene({
   onProgress,
   isAnimationReady = false,
+  onSectionSelect,
+  focusTarget = null,
+  isSectionFocused = false,
+  dimOverlayRef,
+  modalOverlayRef,
+  modalPanelRef,
 }: AnimatedSceneProps) {
   const sceneRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<any>(null);
 
   useEffect(() => {
     return () => {
@@ -55,8 +70,20 @@ export function AnimatedScene({
         dpr={[1, 2]}
       >
         <TransitionProgressController onProgress={onProgress} />
-        <SceneRig />
-        <Card isAnimationReady={isAnimationReady} />
+        <SceneRig controlsRef={controlsRef} />
+        <SectionFocusController
+          isActive={isSectionFocused}
+          focusTarget={focusTarget}
+          controlsRef={controlsRef}
+          dimOverlayRef={dimOverlayRef}
+          modalOverlayRef={modalOverlayRef}
+          modalPanelRef={modalPanelRef}
+        />
+        <Card
+          isAnimationReady={isAnimationReady}
+          onSectionSelect={onSectionSelect}
+          isSectionFocused={isSectionFocused}
+        />
       </Canvas>
     </div>
   );

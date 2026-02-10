@@ -4,6 +4,8 @@ Command: npx gltfjsx@6.5.3 src/animated/assets/Portfolio_v3.glb -t -o src/animat
 */
 
 import { useGLTF } from "@react-three/drei";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import * as THREE from "three";
 
 import modelUrl from "../../assets/Portfolio_v3.glb?url";
 import { BackAboutMe } from "./BackAboutMe";
@@ -15,19 +17,55 @@ import { BackProjects } from "./BackProjects";
 import { BackWorking } from "./BackWorking";
 import { FrontFace } from "./FrontFace";
 import type { GLTFResult } from "./types";
+import type { SectionId } from "../../constants/sections";
 
-export default function PortfolioCardModel(props: Record<string, unknown>) {
+interface PortfolioCardModelProps extends Record<string, unknown> {
+  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
+}
+
+export default function PortfolioCardModel({
+  onSectionSelect,
+  ...props
+}: PortfolioCardModelProps) {
   const { nodes, materials } = useGLTF(modelUrl) as unknown as GLTFResult;
+  const modelRef = useRef<THREE.Group | null>(null);
+
+  useMemo(() => {
+    const lightYellow = materials["Light Yellow"];
+    if (lightYellow) {
+      lightYellow.color = new THREE.Color("#FFFFFF");
+      lightYellow.needsUpdate = true;
+    }
+  }, [materials]);
+
+  useLayoutEffect(() => {
+    const group = modelRef.current;
+    if (!group) return;
+
+    const box = new THREE.Box3().setFromObject(group);
+    if (box.isEmpty()) return;
+
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    group.position.set(-center.x, -center.y, -center.z);
+  }, []);
+
   return (
     <group {...props} dispose={null}>
-      <FrontFace nodes={nodes} materials={materials} />
-      <BackFaceBase nodes={nodes} materials={materials} />
-      <BackProjects nodes={nodes} materials={materials} />
-      <BackCommunity nodes={nodes} materials={materials} />
-      <BackAboutMe nodes={nodes} materials={materials} />
-      <BackWorking nodes={nodes} materials={materials} />
-      <BackAwards nodes={nodes} materials={materials} />
-      <BackEducation nodes={nodes} materials={materials} />
+      <group ref={modelRef}>
+        <FrontFace nodes={nodes} materials={materials} />
+        <BackFaceBase nodes={nodes} materials={materials} />
+        <BackProjects nodes={nodes} materials={materials} />
+        <BackCommunity nodes={nodes} materials={materials} />
+        <BackAboutMe
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) => onSectionSelect?.("aboutMe", position)}
+        />
+        <BackWorking nodes={nodes} materials={materials} />
+        <BackAwards nodes={nodes} materials={materials} />
+        <BackEducation nodes={nodes} materials={materials} />
+      </group>
     </group>
   );
 }

@@ -10,6 +10,7 @@ interface ClickableGroupProps {
   hoverLift?: number;
   pressScale?: number;
   pressDepth?: number;
+  onClick?: (position: [number, number, number]) => void;
   onHoverChange?: (hovered: boolean) => void;
 }
 
@@ -19,6 +20,7 @@ export function ClickableGroup({
   hoverLift = -0.1,
   pressScale = 0.98,
   pressDepth = -0.02,
+  onClick,
 }: ClickableGroupProps) {
   const groupRef = useRef<Group | null>(null);
   const innerRef = useRef<Group | null>(null);
@@ -92,6 +94,11 @@ export function ClickableGroup({
       onPointerUp={(event) => {
         event.stopPropagation();
         setPressed(false);
+        const group = groupRef.current;
+        if (!group || !onClick) return;
+        const worldPos = new THREE.Vector3();
+        group.getWorldPosition(worldPos);
+        onClick([worldPos.x, worldPos.y, worldPos.z]);
       }}
     >
       <group ref={innerRef}>{children}</group>

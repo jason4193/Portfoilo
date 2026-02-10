@@ -23,8 +23,13 @@ function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
   return null;
 }
 
-export function SceneRig() {
-  const controlsRef = useRef<any>(null);
+interface SceneRigProps {
+  controlsRef?: React.RefObject<any>;
+}
+
+export function SceneRig({ controlsRef }: SceneRigProps) {
+  const internalControlsRef = useRef<any>(null);
+  const activeControlsRef = controlsRef ?? internalControlsRef;
   const dirARef = useRef<DirectionalLight>(null);
   const dirBRef = useRef<DirectionalLight>(null);
 
@@ -84,7 +89,7 @@ export function SceneRig() {
 
       {/* Camera Controls */}
       <OrbitControls
-        ref={controlsRef}
+        ref={activeControlsRef}
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
