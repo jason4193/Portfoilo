@@ -15,6 +15,7 @@ export function AnimatedApp() {
     return !store.isTransitioning;
   });
   const canvasCreatedRef = useRef(false);
+  const closeTimeoutRef = useRef<number | null>(null);
   // Section focus state
   const [selectedSection, setSelectedSection] = useState<{
     id: SectionId;
@@ -41,6 +42,10 @@ export function AnimatedApp() {
     id: SectionId,
     position: [number, number, number],
   ) => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     setSelectedSection({ id, target: position });
   };
 
@@ -76,6 +81,14 @@ export function AnimatedApp() {
     return () => cancelAnimationFrame(raf);
   }, [isTransitioning, shouldShowInternalLoading]);
 
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        window.clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <Layout
       showLoading={shouldShowInternalLoading}
@@ -110,7 +123,13 @@ export function AnimatedApp() {
           overlayRef={modalOverlayRef}
           panelRef={modalPanelRef}
           onClose={() => {
-            window.setTimeout(() => setSelectedSection(null), 500);
+            if (closeTimeoutRef.current) {
+              window.clearTimeout(closeTimeoutRef.current);
+            }
+            closeTimeoutRef.current = window.setTimeout(
+              () => setSelectedSection(null),
+              500,
+            );
           }}
         />
       )}

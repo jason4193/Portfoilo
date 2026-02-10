@@ -11,7 +11,6 @@ interface ClickableGroupProps {
   pressScale?: number;
   pressDepth?: number;
   onClick?: (position: [number, number, number]) => void;
-  onHoverChange?: (hovered: boolean) => void;
 }
 
 export function ClickableGroup({

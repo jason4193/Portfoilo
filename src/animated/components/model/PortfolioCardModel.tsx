@@ -30,7 +30,7 @@ export default function PortfolioCardModel({
   const { nodes, materials } = useGLTF(modelUrl) as unknown as GLTFResult;
   const modelRef = useRef<THREE.Group | null>(null);
 
-  useMemo(() => {
+  useLayoutEffect(() => {
     const lightYellow = materials["Light Yellow"];
     if (lightYellow) {
       lightYellow.color = new THREE.Color("#FFFFFF");
