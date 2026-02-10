@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 src/animated/assets/Portfolio_v3.glb -t -o src/animat
 */
 
 import { useGLTF } from "@react-three/drei";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 
 import modelUrl from "../../assets/Portfolio_v3.glb?url";
