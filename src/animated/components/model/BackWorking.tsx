@@ -1,9 +1,13 @@
 import { ClickableGroup } from "../ClickableGroup";
 import type { SectionProps } from "./types";
 
-export function BackWorking({ nodes, materials }: SectionProps) {
+interface BackWorkingProps extends SectionProps {
+  onSelect?: (position: [number, number, number]) => void;
+}
+
+export function BackWorking({ nodes, materials, onSelect }: BackWorkingProps) {
   return (
-    <ClickableGroup>
+    <ClickableGroup onClick={onSelect}>
       {/* Working Background */}
       <group position={[0.969, 3.841, -2.273]} scale={[1.975, 0.936, 2.352]}>
         <mesh

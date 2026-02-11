@@ -1,9 +1,13 @@
 import { ClickableGroup } from "../ClickableGroup";
 import type { SectionProps } from "./types";
 
-export function BackEducation({ nodes, materials }: SectionProps) {
+interface BackEducationProps extends SectionProps {
+  onSelect?: (position: [number, number, number]) => void;
+}
+
+export function BackEducation({ nodes, materials, onSelect }: BackEducationProps) {
   return (
-    <ClickableGroup>
+    <ClickableGroup onClick={onSelect}>
       {/* Education Background */}
       <group position={[0.969, 3.841, 2.71]} scale={[1.975, 0.936, 2.352]}>
         <mesh

@@ -1,9 +1,13 @@
 import { ClickableGroup } from "../ClickableGroup";
 import type { SectionProps } from "./types";
 
-export function BackCommunity({ nodes, materials }: SectionProps) {
+interface BackCommunityProps extends SectionProps {
+  onSelect?: (position: [number, number, number]) => void;
+}
+
+export function BackCommunity({ nodes, materials, onSelect }: BackCommunityProps) {
   return (
-    <ClickableGroup>
+    <ClickableGroup onClick={onSelect}>
       {/* Community MegaSpeaker Icon */}
       <group
         position={[-2.663, 3.691, 1.619]}

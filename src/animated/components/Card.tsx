@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { useThree } from "@react-three/fiber";
 import PortfolioCardModel from "./model/PortfolioCardModel";
-import type { SectionId } from "../constants/sections";
 import type { Group } from "three";
 import {
   BASE_ROTATION_X,
@@ -13,6 +12,7 @@ import {
   VIEWPORT_WIDTH_MAX,
   VIEWPORT_WIDTH_MIN,
 } from "../constants/card";
+import { useSectionSelectionStore } from "../../shared/stores";
 
 function createCardTiltAndFlowAnimation(cardGroup: Group) {
   const rotation = cardGroup.rotation;
@@ -53,13 +53,10 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
  */
 export function Card({
   isAnimationReady = false,
-  onSectionSelect,
-  isSectionFocused = false,
 }: {
   isAnimationReady?: boolean;
-  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
-  isSectionFocused?: boolean;
 }) {
+  const isSectionFocused = useSectionSelectionStore((state) => state.isFocused);
   const groupRef = useRef<Group | null>(null);
   const tiltTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const { size } = useThree();
@@ -111,7 +108,7 @@ export function Card({
       // Lift card slightly above origin
       position={[0, 0.1, 0]}
     >
-      <PortfolioCardModel scale={scale} onSectionSelect={onSectionSelect} />
+      <PortfolioCardModel scale={scale} />
     </group>
   );
 }

@@ -64,7 +64,8 @@ export interface Contact {
 
 export interface PortfolioContent {
   header: string;
-  intro: string;
+  introMarkdown: string;
+  introAnimated: string;
   projects: Project[];
   competitions: CompetitionExperience[];
   communityContributions: CommunityContributionExperience[];

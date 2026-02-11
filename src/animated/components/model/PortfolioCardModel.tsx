@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 src/animated/assets/Portfolio_v3.glb -t -o src/animat
 */
 
 import { useGLTF } from "@react-three/drei";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 
 import modelUrl from "../../assets/Portfolio_v3.glb?url";
@@ -17,20 +17,27 @@ import { BackProjects } from "./BackProjects";
 import { BackWorking } from "./BackWorking";
 import { FrontFace } from "./FrontFace";
 import type { GLTFResult } from "./types";
-import type { SectionId } from "../../constants/sections";
-
-interface PortfolioCardModelProps extends Record<string, unknown> {
-  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
-}
+import { useSectionSelectionStore } from "../../../shared/stores";
+import { useCameraPoseStore } from "../../../shared/stores";
+import { isCameraBehindCard } from "../../utils/focusGuard";
 
 export default function PortfolioCardModel({
-  onSectionSelect,
   ...props
-}: PortfolioCardModelProps) {
+}: Record<string, unknown>) {
   const { nodes, materials } = useGLTF(modelUrl) as unknown as GLTFResult;
   const modelRef = useRef<THREE.Group | null>(null);
+  const setSelectedSection = useSectionSelectionStore(
+    (state) => state.setSelectedSection,
+  );
+  const cameraPoseStore = useCameraPoseStore;
 
-  useMemo(() => {
+  const canFocusFromCamera = () => {
+    const { cameraPosition, hasCameraPose } = cameraPoseStore.getState();
+    if (!hasCameraPose) return false;
+    return isCameraBehindCard(cameraPosition);
+  };
+
+  useLayoutEffect(() => {
     const lightYellow = materials["Light Yellow"];
     if (lightYellow) {
       lightYellow.color = new THREE.Color("#FFFFFF");
@@ -55,16 +62,54 @@ export default function PortfolioCardModel({
       <group ref={modelRef}>
         <FrontFace nodes={nodes} materials={materials} />
         <BackFaceBase nodes={nodes} materials={materials} />
-        <BackProjects nodes={nodes} materials={materials} />
-        <BackCommunity nodes={nodes} materials={materials} />
+        <BackProjects
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "projects", target: position })
+          }
+        />
+        <BackCommunity
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "community", target: position })
+          }
+        />
         <BackAboutMe
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("aboutMe", position)}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "aboutMe", target: position })
+          }
         />
-        <BackWorking nodes={nodes} materials={materials} />
-        <BackAwards nodes={nodes} materials={materials} />
-        <BackEducation nodes={nodes} materials={materials} />
+        <BackWorking
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "working", target: position })
+          }
+        />
+        <BackAwards
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "awards", target: position })
+          }
+        />
+        <BackEducation
+          nodes={nodes}
+          materials={materials}
+          onSelect={(position) =>
+            canFocusFromCamera() &&
+            setSelectedSection({ id: "education", target: position })
+          }
+        />
       </group>
     </group>
   );

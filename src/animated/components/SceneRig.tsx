@@ -10,6 +10,7 @@ import {
   ORBIT_MIN_DISTANCE_DESKTOP,
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "../constants/scene";
+import { useCameraPoseTracker } from "../hooks/useCameraPoseTracker";
 
 function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
   const lastLogRef = useRef(0);
@@ -28,6 +29,7 @@ interface SceneRigProps {
 }
 
 export function SceneRig({ controlsRef }: SceneRigProps) {
+  useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
   const dirARef = useRef<DirectionalLight>(null);
