@@ -27,7 +27,8 @@ src/shared/
 ```typescript
 {
   header: string              // Portfolio owner's name
-  intro: string               // Introduction text
+  introMarkdown: string       // Markdown intro (supports **bold**)
+  introAnimated: string       // Animated intro (for modal/content)
   projects: Project[]         // Array of projects
   competitions: CompetitionExperience[]
   communityContributions: CommunityContributionExperience[]
@@ -80,6 +81,22 @@ src/shared/
 **Dependencies**:
 - `shared/stores/useThemeStore` - Theme state management (Zustand)
 - `shared/components/icons` - SunIcon, MoonIcon
+
+---
+
+### ModeToggle.tsx
+**Location**: `src/shared/components/ModeToggle.tsx`
+
+**Purpose**: Button to switch between Markdown and Animated modes.
+
+**Features**:
+- Animated icon swap between modes
+- Rainbow hover border effect (idle + hover tracking)
+- Accessible labels and keyboard support
+
+**Dependencies**:
+- `shared/stores/usePortfolioModeStore` - Mode state management (Zustand)
+- `shared/components/icons` - MarkdownIcon, AnimatedIcon
 
 ---
 
@@ -218,6 +235,61 @@ import { content, sections, error } from "../shared/data/content";
 - Defaults to system preference or light mode
 
 **Used By**: `ThemeToggle` component, `main.tsx`
+
+---
+
+### useLoadingProgressStore.ts
+**Location**: `src/shared/stores/useLoadingProgressStore.ts`
+
+**Purpose**: Tracks loading progress for animated transitions.
+
+**Returns**:
+```typescript
+{
+  loadingProgress: number
+  setLoadingProgress: (value: number) => void
+}
+```
+
+**Used By**: `TransitionProgressController`, loading overlays
+
+---
+
+### useSectionSelectionStore.ts
+**Location**: `src/shared/stores/useSectionSelectionStore.ts`
+
+**Purpose**: Manages selected section and focus target for animated mode.
+
+**Returns**:
+```typescript
+{
+  selectedSection: SelectedSection | null
+  focusTarget: [number, number, number] | null
+  isFocused: boolean
+  setSelectedSection: (section: SelectedSection) => void
+  clearSelectedSection: () => void
+}
+```
+
+**Used By**: `SectionFocusController`, `PortfolioCardModel`, modal flow
+
+---
+
+### useCameraPoseStore.ts
+**Location**: `src/shared/stores/useCameraPoseStore.ts`
+
+**Purpose**: Stores latest camera position for focus guard checks.
+
+**Returns**:
+```typescript
+{
+  cameraPosition: [number, number, number]
+  hasCameraPose: boolean
+  setCameraPosition: (position: [number, number, number]) => void
+}
+```
+
+**Used By**: `useCameraPoseTracker`, focus guard logic
 
 ---
 
@@ -424,7 +496,7 @@ State Management:
 ## Usage in Versions
 
 ### Markdown Version Uses:
-- All shared components (Avatar, ThemeToggle, MediaCollection, icons)
+- All shared components (Avatar, ThemeToggle, ModeToggle, MediaCollection, icons)
 - Shared data (content, sections) - direct imports
 - Shared stores (usePortfolioModeStore, useThemeStore)
 - All shared utils (anchors, colorExtraction, media, youtube)
@@ -434,12 +506,12 @@ State Management:
 
 ### Animated Version Uses:
 - Shared data (content, sections) - direct imports
-- Shared stores (usePortfolioModeStore, useThemeStore)
+- Shared stores (usePortfolioModeStore, useThemeStore, useLoadingProgressStore, useSectionSelectionStore, useCameraPoseStore)
 - Shared utils (media, youtube, colorExtraction)
 - Shared types
 - Shared config
 - Shared styles
-- Shared components (MediaCollection, icons, ThemeToggle) - in 3D scene
+- Shared components (MediaCollection, icons, ThemeToggle, ModeToggle) - in 3D scene
 - Shared assets (content.json)
 
 ## Best Practices

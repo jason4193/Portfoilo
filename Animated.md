@@ -9,7 +9,7 @@ src/animated/
 ├── components/     # Animated-specific React components
 ├── hooks/          # Animated-specific React hooks
 ├── constants/      # Animated-specific constants
-├── models/         # GLTFJSX generated models
+├── utils/          # Animated-specific utilities
 └── assets/         # GLB and related assets
 ```
 
@@ -36,19 +36,20 @@ src/animated/
 **Key Features**:
 - Wraps `<Canvas>` with camera and renderer config
 - Mounts transition progress controller
-- Renders `SceneRig` and `Card`
+- Renders `SceneRig`, `SectionFocusController`, and `Card`
 - Handles WebGL context cleanup on unmount
 
 ---
 
-### SceneRig (StudioLight.tsx)
-**Location**: `src/animated/components/StudioLight.tsx`
+### SceneRig.tsx
+**Location**: `src/animated/components/SceneRig.tsx`
 
-**Purpose**: Scene setup for lights and camera controls.
+**Purpose**: Scene setup for lights, camera controls, and pose tracking.
 
 **Key Features**:
 - Ambient + directional lighting
 - OrbitControls
+- Camera pose tracking via `useCameraPoseTracker`
 - Optional debug helpers (toggle via `window.setDebugLights`)
 
 ---
@@ -65,6 +66,54 @@ src/animated/
 
 ---
 
+### SectionFocusController.tsx
+**Location**: `src/animated/components/SectionFocusController.tsx`
+
+**Purpose**: Bridges camera focus state with GSAP focus/restore animations.
+
+**Key Features**:
+- Reads focus target + active state from `useSectionSelectionStore`
+- Orchestrates modal and dim overlay refs
+- Delegates animation logic to `useSectionFocusAnimation`
+
+---
+
+### SectionModal.tsx
+**Location**: `src/animated/components/SectionModal.tsx`
+
+**Purpose**: Modal overlay container for section content.
+
+**Key Features**:
+- Renders section title + close actions
+- Hosts section-specific content (e.g., About Me layout)
+- Supports accent background colors per section
+
+---
+
+### AboutMeModalContent.tsx
+**Location**: `src/animated/components/section-modals/AboutMeModalContent.tsx`
+
+**Purpose**: Custom layout for the About Me modal section.
+
+**Key Features**:
+- Inline 3D avatar icon using an embedded `<Canvas>`
+- Pulls intro content from `content.json` (`introAnimated`)
+- Displays photo frame using `Jason_2.webp`
+
+---
+
+### ClickableGroup.tsx
+**Location**: `src/animated/components/ClickableGroup.tsx`
+
+**Purpose**: Wrapper for pointer interactions on 3D meshes.
+
+**Key Features**:
+- Unified hover/press/click handling
+- Optional click callback passing world position
+- Pointer event normalization for 3D objects
+
+---
+
 ### TransitionProgressController.tsx
 **Location**: `src/animated/components/TransitionProgressController.tsx`
 
@@ -74,6 +123,7 @@ src/animated/
 - Calls `useTransitionLoadProgress` + `useTransitionCleanup`
 - Enforces minimum transition duration
 - Triggers `completeTransition` safely with cleanup
+- Updates shared loading progress store
 
 ---
 
@@ -102,16 +152,41 @@ src/animated/
 
 ---
 
-## Models
+### useSectionFocusAnimation.ts
+**Location**: `src/animated/hooks/useSectionFocusAnimation.ts`
+
+**Purpose**: Handles focus/restore camera animation and modal overlay timing.
+
+**Key Features**:
+- GSAP timelines for focus + reset sequences
+- Overlay and modal fade coordination
+- Cleanup guards to prevent unmounted callbacks
+
+---
+
+### useCameraPoseTracker.ts
+**Location**: `src/animated/hooks/useCameraPoseTracker.ts`
+
+**Purpose**: Tracks camera position and writes to store at a throttled rate.
+
+**Key Features**:
+- Uses `useFrame` for throttled updates
+- Epsilon check to avoid redundant writes
+- Feeds `useCameraPoseStore` for focus guard logic
+
+---
+
+## Model Components
 
 ### PortfolioCardModel.tsx
-**Location**: `src/animated/models/PortfolioCardModel.tsx`
+**Location**: `src/animated/components/model/PortfolioCardModel.tsx`
 
-**Purpose**: GLTFJSX-generated component for the card model.
+**Purpose**: Assembles the GLTF card model with interactive back sections.
 
 **Key Features**:
 - Loads `PortfolioCard.glb` via `?url`
 - Provides typed nodes/materials
+- Wires section selection callbacks to back-face components
 
 ---
 
@@ -124,6 +199,33 @@ src/animated/
 
 ---
 
+### card.ts
+**Location**: `src/animated/constants/card.ts`
+
+**Purpose**: Base rotation constants for the 3D card model.
+
+---
+
+### scene.ts
+**Location**: `src/animated/constants/scene.ts`
+
+**Purpose**: Focus animation offsets and timing values.
+
+---
+
+## Utils
+
+### focusGuard.ts
+**Location**: `src/animated/utils/focusGuard.ts`
+
+**Purpose**: Guards focus activation based on camera position.
+
+**Key Features**:
+- Simple z-threshold check for "behind card" validation
+- Used before triggering section focus animations
+
+---
+
 ## Data Flow
 
 ```
@@ -133,7 +235,14 @@ main.tsx
           └── AnimatedScene
               ├── TransitionProgressController
               ├── SceneRig (lights + controls)
+              ├── SectionFocusController (focus + modal overlays)
               └── Card (GLB + GSAP)
+
+State Management:
+  usePortfolioModeStore (shared/stores) → Mode switching
+  useLoadingProgressStore (shared/stores) → Loading UI
+  useSectionSelectionStore (shared/stores) → Focus target + selection
+  useCameraPoseStore (shared/stores) → Camera pose for focus guard
 ```
 
 ## Key Design Patterns

@@ -17,9 +17,9 @@ Both versions share the same content source and can be toggled seamlessly.
 src/
 ├── shared/              # Shared code used by both versions
 │   ├── assets/         # Images and content.json
-│   ├── components/     # Shared components (Avatar, ThemeToggle, MediaCollection, icons)
+│   ├── components/     # Shared components (Avatar, ThemeToggle, MediaCollection, ModeToggle, icons)
 │   ├── data/           # Shared data exports (content, sections)
-│   ├── stores/         # Zustand stores (portfolio mode, theme)
+│   ├── stores/         # Zustand stores (mode, theme, loading, selection, camera pose)
 │   ├── utils/          # Shared utilities (anchors, colorExtraction, media, youtube)
 │   ├── types/          # TypeScript type definitions
 │   ├── config/         # Configuration (sections)
@@ -30,9 +30,11 @@ src/
 │   ├── hooks/          # Markdown hooks (useScrollSpy, useToc)
 │   └── utils/          # Markdown utilities (scroll)
 │
-├── animated/            # Animated 3D version (to be implemented)
-│   ├── components/     # 3D scene components
-│   ├── hooks/          # 3D interaction hooks
+├── animated/            # Animated 3D version
+│   ├── assets/         # GLB assets
+│   ├── components/     # 3D scene components + section modals + model parts
+│   ├── constants/      # Scene/card/transition constants
+│   ├── hooks/          # 3D interaction + animation hooks
 │   └── utils/          # 3D utilities
 │
 └── main.tsx            # Entry point with mode routing
@@ -44,7 +46,7 @@ src/
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Styling
-- **Zustand** - State management (mode, theme)
+- **Zustand** - State management (mode, theme, loading, selection, camera pose)
 - **Three.js** - 3D graphics for animated version
 - **React Three Fiber** - React renderer for Three.js
 - **@react-three/drei** - Three.js helpers
@@ -54,7 +56,7 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -89,7 +91,7 @@ Portfolio content is managed through `src/shared/assets/content.json`. This sing
 
 ### Content Structure
 
-- **Header** - Name and introduction
+- **Header** - Name and introduction (markdown + animated variants)
 - **Projects** - Personal and academic projects
 - **Competitions** - CTF competitions and hackathons
 - **Community Contributions** - Open source and volunteering
@@ -108,18 +110,20 @@ Portfolio content is managed through `src/shared/assets/content.json`. This sing
 - Media galleries with infinite scroll
 - Dark/light theme toggle
 - Responsive design
+- Markdown intro supports **bold** keywords and mobile "Read more"
 
-### Animated Version (In Development)
+### Animated Version
 
 - Mode switching with loading screen transitions
-- Foundation for 3D business card experience
-- Interactive 3D business cards (planned)
-- Scroll-based card flip animations (planned)
-- Mobile-optimized 3D experience (planned)
+- Interactive 3D business card with tilt/flow animation
+- Section focus animation with modal overlay + dim/blur
+- Section-specific modal content (About Me layout)
+- Camera pose tracking to guard focus direction
 
 ## Documentation
 
 - **[Markdown.md](./Markdown.md)** - Detailed documentation for Markdown version files
+- **[Animated.md](./Animated.md)** - Detailed documentation for Animated version files
 - **[SHARED.md](./SHARED.md)** - Documentation for shared components and utilities
 
 ## Contributing

@@ -16,18 +16,20 @@ src/markdown/
 ### Header.tsx
 **Location**: `src/markdown/components/Header.tsx`
 
-**Purpose**: The main header component for the Markdown version. Displays the portfolio owner's name, avatar, social links, theme toggle, and introduction text.
+**Purpose**: The main header component for the Markdown version. Displays the portfolio owner's name, avatar, social links, mode toggle, theme toggle, and introduction text.
 
 **Key Features**:
 - Uses shared `Avatar` component for profile picture
-- Uses shared `ThemeToggle` component
+- Uses shared `ModeToggle` and `ThemeToggle` components
 - Displays social media icons (Email, GitHub, LinkedIn)
-- Shows introduction text from content.json
+- Renders `introMarkdown` with `**bold**` keyword support
+- Mobile view truncates content with "Read more"
 - Loading state with skeleton UI
 
 **Dependencies**:
 - `shared/data/content` - Portfolio content data
 - `shared/components/Avatar` - Profile picture
+- `shared/components/ModeToggle` - Mode switcher
 - `shared/components/ThemeToggle` - Theme switcher
 - `shared/components/icons` - Social media icons
 
@@ -277,7 +279,7 @@ main.tsx
       ├── useToc (markdown) → Generates TOC from sections
       │
       └── Layout
-          ├── Header → Displays name, avatar, intro
+          ├── Header → Displays name, avatar, introMarkdown
           └── Main Content
               └── ContentSection (for each section)
                   ├── SectionHeader (parent sections)
