@@ -8,12 +8,26 @@ export interface SectionSelection {
 
 interface SectionSelectionStore {
   selectedSection: SectionSelection | null;
+  focusTarget: [number, number, number] | null;
+  isFocused: boolean;
   setSelectedSection: (selection: SectionSelection) => void;
   clearSelectedSection: () => void;
 }
 
 export const useSectionSelectionStore = create<SectionSelectionStore>((set) => ({
   selectedSection: null,
-  setSelectedSection: (selection) => set({ selectedSection: selection }),
-  clearSelectedSection: () => set({ selectedSection: null }),
+  focusTarget: null,
+  isFocused: false,
+  setSelectedSection: (selection) =>
+    set({
+      selectedSection: selection,
+      focusTarget: selection.target,
+      isFocused: true,
+    }),
+  clearSelectedSection: () =>
+    set({
+      selectedSection: null,
+      focusTarget: null,
+      isFocused: false,
+    }),
 }));

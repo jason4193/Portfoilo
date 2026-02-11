@@ -12,6 +12,7 @@ import {
   VIEWPORT_WIDTH_MAX,
   VIEWPORT_WIDTH_MIN,
 } from "../constants/card";
+import { useSectionSelectionStore } from "../../shared/stores";
 
 function createCardTiltAndFlowAnimation(cardGroup: Group) {
   const rotation = cardGroup.rotation;
@@ -52,11 +53,10 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
  */
 export function Card({
   isAnimationReady = false,
-  isSectionFocused = false,
 }: {
   isAnimationReady?: boolean;
-  isSectionFocused?: boolean;
 }) {
+  const isSectionFocused = useSectionSelectionStore((state) => state.isFocused);
   const groupRef = useRef<Group | null>(null);
   const tiltTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const { size } = useThree();

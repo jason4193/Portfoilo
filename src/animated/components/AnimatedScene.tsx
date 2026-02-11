@@ -7,8 +7,6 @@ import { SectionFocusController } from "./SectionFocusController";
 
 interface AnimatedSceneProps {
   isAnimationReady?: boolean;
-  focusTarget?: [number, number, number] | null;
-  isSectionFocused?: boolean;
   dimOverlayRef?: React.RefObject<HTMLDivElement | null>;
   modalOverlayRef?: React.RefObject<HTMLDivElement | null>;
   modalPanelRef?: React.RefObject<HTMLDivElement | null>;
@@ -16,8 +14,6 @@ interface AnimatedSceneProps {
 
 export function AnimatedScene({
   isAnimationReady = false,
-  focusTarget = null,
-  isSectionFocused = false,
   dimOverlayRef,
   modalOverlayRef,
   modalPanelRef,
@@ -67,17 +63,12 @@ export function AnimatedScene({
         <TransitionProgressController />
         <SceneRig controlsRef={controlsRef} />
         <SectionFocusController
-          isActive={isSectionFocused}
-          focusTarget={focusTarget}
           controlsRef={controlsRef}
           dimOverlayRef={dimOverlayRef}
           modalOverlayRef={modalOverlayRef}
           modalPanelRef={modalPanelRef}
         />
-        <Card
-          isAnimationReady={isAnimationReady}
-          isSectionFocused={isSectionFocused}
-        />
+        <Card isAnimationReady={isAnimationReady} />
       </Canvas>
     </div>
   );

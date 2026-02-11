@@ -107,8 +107,6 @@ export function AnimatedApp() {
       {/* 3D scene + focus handling */}
       <AnimatedScene
         isAnimationReady={canAnimate}
-        focusTarget={selectedSection?.target ?? null}
-        isSectionFocused={Boolean(selectedSection)}
         dimOverlayRef={dimOverlayRef}
         modalOverlayRef={modalOverlayRef}
         modalPanelRef={modalPanelRef}
