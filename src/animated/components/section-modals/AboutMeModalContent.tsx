@@ -128,13 +128,6 @@ export function AboutMeModalContent({
             About Me
           </p>
         </div>
-        <button
-          className="m-0 text-sm font-medium text-[#0B2B4C]/80 transition-colors hover:text-[#0B2B4C]"
-          onClick={onClose}
-          aria-label="Close section"
-        >
-          X
-        </button>
       </div>
 
       {/* Main area: flex row - left = MainContent, right = image + Side Quests */}
