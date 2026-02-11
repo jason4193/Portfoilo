@@ -11,3 +11,4 @@ export {
 
 export { useSectionSelectionStore } from "./useSectionSelectionStore";
 export { useLoadingProgressStore } from "./useLoadingProgressStore";
+export { useCameraPoseStore } from "./useCameraPoseStore";

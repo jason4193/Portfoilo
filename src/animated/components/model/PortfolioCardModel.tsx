@@ -18,6 +18,8 @@ import { BackWorking } from "./BackWorking";
 import { FrontFace } from "./FrontFace";
 import type { GLTFResult } from "./types";
 import { useSectionSelectionStore } from "../../../shared/stores";
+import { useCameraPoseStore } from "../../../shared/stores";
+import { isCameraBehindCard } from "../../utils/focusGuard";
 
 export default function PortfolioCardModel({
   ...props
@@ -27,6 +29,13 @@ export default function PortfolioCardModel({
   const setSelectedSection = useSectionSelectionStore(
     (state) => state.setSelectedSection,
   );
+  const cameraPoseStore = useCameraPoseStore;
+
+  const canFocusFromCamera = () => {
+    const { cameraPosition, hasCameraPose } = cameraPoseStore.getState();
+    if (!hasCameraPose) return false;
+    return isCameraBehindCard(cameraPosition);
+  };
 
   useLayoutEffect(() => {
     const lightYellow = materials["Light Yellow"];
@@ -57,6 +66,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "projects", target: position })
           }
         />
@@ -64,6 +74,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "community", target: position })
           }
         />
@@ -71,6 +82,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "aboutMe", target: position })
           }
         />
@@ -78,6 +90,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "working", target: position })
           }
         />
@@ -85,6 +98,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "awards", target: position })
           }
         />
@@ -92,6 +106,7 @@ export default function PortfolioCardModel({
           nodes={nodes}
           materials={materials}
           onSelect={(position) =>
+            canFocusFromCamera() &&
             setSelectedSection({ id: "education", target: position })
           }
         />
