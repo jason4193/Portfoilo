@@ -24,7 +24,9 @@ export function Layout({
       className="h-screen flex flex-col relative"
       style={{
         backgroundColor:
-          theme === "light" ? "#DDE4EA" : "var(--color-bg-primary)",
+          theme === "light"
+            ? "var(--color-animated-bg-light)"
+            : "var(--color-bg-primary)",
       }}
     >
       {showLoading && (

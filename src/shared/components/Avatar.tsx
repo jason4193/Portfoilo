@@ -17,7 +17,7 @@ export function Avatar({
   return (
     <div
       className={`relative ${className} cursor-pointer`}
-      style={{ perspective: "1000px" }}
+      style={{ perspective: "62.5rem" }}
       onClick={() => setIsFlipped(!isFlipped)}
       role="button"
       tabIndex={0}
@@ -41,7 +41,7 @@ export function Avatar({
         <img
           src={JASON_PHOTO_Front}
           alt="Portrait of Jason Poon"
-          className="absolute inset-0 w-full h-full rounded-full object-cover border border-[var(--color-border)]"
+          className="absolute inset-0 w-full h-full rounded-full object-cover border border-border"
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -52,7 +52,7 @@ export function Avatar({
         <img
           src={JASON_PHOTO_Back}
           alt="Portrait of Jason Poon (back)"
-          className="absolute inset-0 w-full h-full rounded-full object-cover border border-[var(--color-border)]"
+          className="absolute inset-0 w-full h-full rounded-full object-cover border border-border"
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",

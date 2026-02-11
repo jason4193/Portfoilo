@@ -14,7 +14,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [dominantColors, setDominantColors] = useState<Map<string, string>>(
-    new Map()
+    new Map(),
   );
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const desktopScrollRef = useRef<HTMLDivElement>(null);
@@ -251,7 +251,9 @@ export function MediaCollection({ media }: MediaCollectionProps) {
     if (item.type === "video") return "transparent";
     const color = dominantColors.get(item.src) || "#f0f0f0";
     // Add alpha channel: 20% opacity = 0.2 * 255 = 51 = 0x33 in hex
-    const alpha = Math.round(0.2 * 255).toString(16).padStart(2, "0");
+    const alpha = Math.round(0.2 * 255)
+      .toString(16)
+      .padStart(2, "0");
     return color + alpha;
   };
 
@@ -261,12 +263,12 @@ export function MediaCollection({ media }: MediaCollectionProps) {
 
     // Standard frame with rounded corners and border
     const frameClass =
-      "w-full aspect-1/1 rounded-lg border border-[var(--color-border)] overflow-hidden";
+      "w-full aspect-1/1 rounded-lg border border-border overflow-hidden";
 
     switch (item.type) {
       case "image":
         return (
-          <div className={frameClass} style={{ backgroundColor: bgColor}}>
+          <div className={frameClass} style={{ backgroundColor: bgColor }}>
             <img
               src={mediaUrl}
               alt={item.alt}
@@ -275,46 +277,46 @@ export function MediaCollection({ media }: MediaCollectionProps) {
             />
           </div>
         );
-        case "video":
-          // Check if it's a YouTube URL
-          const videoId = extractYouTubeVideoId(mediaUrl);
-          
-          if (videoId) {
-            // YouTube video
-            const opts = {
-              width: "100%",
-              height: "100%",
-              playerVars: {
-                // https://developers.google.com/youtube/player_parameters
-                modestbranding: 1 as const,
-                rel: 0 as const, // Don't show related videos from other channels
-              },
-            };
+      case "video":
+        // Check if it's a YouTube URL
+        const videoId = extractYouTubeVideoId(mediaUrl);
 
-            return (
-              <div className={frameClass}>
-                <YouTube
-                  videoId={videoId}
-                  opts={opts}
-                  className="w-full h-full"
-                  iframeClassName="w-full h-full"
-                  title={item.alt}
-                />
-              </div>
-            );
-          }
-          
-          // Regular video file
+        if (videoId) {
+          // YouTube video
+          const opts = {
+            width: "100%",
+            height: "100%",
+            playerVars: {
+              // https://developers.google.com/youtube/player_parameters
+              modestbranding: 1 as const,
+              rel: 0 as const, // Don't show related videos from other channels
+            },
+          };
+
           return (
             <div className={frameClass}>
-              <video
-                src={mediaUrl}
-                controls
-                className="w-full h-full object-contain"
-                aria-label={item.alt}
+              <YouTube
+                videoId={videoId}
+                opts={opts}
+                className="w-full h-full"
+                iframeClassName="w-full h-full"
+                title={item.alt}
               />
             </div>
           );
+        }
+
+        // Regular video file
+        return (
+          <div className={frameClass}>
+            <video
+              src={mediaUrl}
+              controls
+              className="w-full h-full object-contain"
+              aria-label={item.alt}
+            />
+          </div>
+        );
       case "gif":
         return (
           <div className={frameClass} style={{ backgroundColor: bgColor }}>
@@ -333,7 +335,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
 
   const renderSkeleton = () => (
     <div className="animate-pulse">
-      <div className="w-full aspect-1/1 bg-[var(--color-bg-secondary)] rounded-lg border border-[var(--color-border)]" />
+      <div className="w-full aspect-1/1 bg-bg-muted rounded-lg border border-border" />
     </div>
   );
 
@@ -364,7 +366,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
               [...media, ...media, ...media].map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[200px]"
+                  className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[12.5rem]"
                 >
                   {renderMedia(item)}
                 </div>
@@ -373,7 +375,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
               media.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[200px]"
+                  className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[12.5rem]"
                 >
                   {renderMedia(item)}
                 </div>
@@ -387,9 +389,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                 key={idx}
                 onClick={() => handleDesktopDotClick(idx)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? "bg-[var(--color-link)] w-6"
-                    : "bg-[var(--color-border)]"
+                  idx === currentIndex ? "bg-link w-6" : "bg-border"
                 }`}
                 aria-label={`Go to media ${idx + 1}`}
               />
@@ -427,9 +427,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? "bg-[var(--color-link)] w-6"
-                    : "bg-[var(--color-border)]"
+                  idx === currentIndex ? "bg-link w-6" : "bg-border"
                 }`}
                 aria-label={`Go to media ${idx + 1}`}
               />

@@ -49,10 +49,8 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
   return (
     <div id={anchorId} className="mb-6">
       <div
-        className={`group ${
-          hasExpandableContent ? "cursor-pointer" : ""
-        } transition-all duration-200 ${
-          hasExpandableContent ? "hover:opacity-80" : ""
+        className={`expandable-item ${
+          hasExpandableContent ? "expandable-item--clickable" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -79,7 +77,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-link)]"
+                        className="link-icon"
                         onClick={(e) => e.stopPropagation()} // don't toggle expand
                         title={link.label}
                       >
@@ -90,7 +88,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
                 </div>
               )}
             </div>
-            <p className="text-sm text-[var(--color-text-secondary)] mb-2">
+            <p className="text-sm text-secondary mb-2">
               {experience.date}
               {experience.role && ` • ${experience.role}`}
             </p>
@@ -100,9 +98,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-4 transition-transform duration-200 ${
-                isExpanded ? "rotate-180" : ""
-              }`}
+              className={`expand-chevron mt-4 ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

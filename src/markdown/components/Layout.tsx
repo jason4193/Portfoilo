@@ -11,13 +11,11 @@ export function Layout({ children, footer }: LayoutProps) {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 pb-20 md:pb-0">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">{children}</div>
+        <div className="container-content">{children}</div>
       </main>
       {footer && (
-        <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg-primary)] mt-auto">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-[var(--color-text-secondary)]">
-            {footer}
-          </div>
+        <footer className="footer">
+          <div className="container-content footer-content">{footer}</div>
         </footer>
       )}
     </div>

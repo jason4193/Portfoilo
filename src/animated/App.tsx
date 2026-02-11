@@ -101,7 +101,7 @@ export function AnimatedApp() {
         style={{
           opacity: 0,
           backgroundColor: "rgba(0, 0, 0, 0.35)",
-          backdropFilter: "blur(0px)",
+          backdropFilter: "blur(0)",
         }}
       />
       {/* 3D scene + focus handling */}

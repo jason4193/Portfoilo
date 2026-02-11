@@ -1,7 +1,7 @@
 {
   "header": "Jason Poon",
   "introMarkdown": "Hello, I'm **Jason**, a **2026 Comp Sci Graduate** student from **UNSW Sydney**. \n\nHope you find my portfolio cool and engaging! (˶ᵔ ᵕ ᵔ˶) \nIf you find it boring here, you should check out my **3D interactive version** from the top right colourful \"3D\" button. \n\nI like making products that could help people to fill up their gaps of daily life. I often ask myself, \"Can I build something that could make my life easier?\" A swarm of ideas will come to my mind. With my knowledge and skills in both **coding, design, and security**, I'm able to build up some useful products to fill up those existing gaps. \n\n \"When a new term starts and not sure which classes should take?\"\n Me and my team in UNSW Software Development Society developed a Drag and Drop timetable planner called **\"Notangles\"** might help you save a few hours of struggle.\n\n \"Always struggle with checking the stock price of your shopping list?\"\nOur 2025 1st place hackathon project **\"ShopLyft\"**, a one-stop automated shopping assistant could sort it out for you.\n\n Check out my **Projects Section** and you might find something that might boost up your daily life!\n\n Am I just a code monkey ᧖(• ᦢ •)ᦣ? Might be? But I'm trying to be a better one!\n\n 2026 Side Quest:\n ▶ **Half Marathon** ('ω' ⊃ )⊃三二一 \n▶ **Photography Gallery Page** [ ◉¯]",
-  "introAnimated": "Hello, I'm Jason, a 2026 Comp Sci Graduate student from UNSW Sydney. \nHope you find my portfolio cool and engaging! If you find it dizzy or just used to read GitHub Docs ( ꩜ ᯅ ꩜;)⁭ ⁭, you should check out my Markdown version from the top right mode toggle button.",
+  "introAnimated": "I'm a 2026 Comp Sci Graduate student from UNSW Sydney.\n\nHope you find my portfolio cool and engaging! (˶ᵔ ᵕ ᵔ˶) If you find it dizzy or prefer reading, check out my Markdown version from the top right mode toggle button.\n\nI like making products that could help people to fill up their gaps of daily life. I often ask myself, \"Can I build something that could make my life easier?\" A swarm of ideas will come to my mind. With my knowledge and skills in both coding, design, and security, I'm able to build up some useful products to fill up those existing gaps.\n\n\"When a new term starts and not sure which classes should take?\"\nMe and my team in UNSW Software Development Society developed a Drag and Drop timetable planner called \"Notangles\" might help you save a few hours of struggle.\n\n\"Always struggle with checking the stock price of your shopping list?\"\nOur 2025 1st place hackathon project \"ShopLyft\", a one-stop automated shopping assistant could sort it out for you.\n\nCheck out my Projects Section and you might find something that might boost up your daily life!\n\nAm I just a code monkey ᧖(• ᦢ •)ᦣ? Might be? But I'm trying to be a better one!\n\n2026 Side Quest:\n▶ Half Marathon ('ω' ⊃ )⊃三二一\n▶ Photography Gallery Page [ ◉¯]",
   "projects": [
     {
       "title": "On Going Linux Home Server Development",
@@ -279,13 +279,13 @@
       "media": [
         {
           "type": "image",
-          "src": "Notangles-landing-page.webp",
-          "alt": "Notangles Landing Page"
+          "src": "Notangles-2025-Teams.webp",
+          "alt": "Notangles 2025 Teams Photo"
         },
         {
           "type": "image",
-          "src": "Notangles-2025-Teams.webp",
-          "alt": "Notangles 2025 Teams Photo"
+          "src": "Notangles-landing-page.webp",
+          "alt": "Notangles Landing Page"
         },
         {
           "type": "image",
@@ -324,8 +324,8 @@
       "media": [
         {
           "type": "image",
-          "src": "eReuse_1.webp",
-          "alt": "eReuse T-shirt"
+          "src": "eReuse_6.webp",
+          "alt": "eReuse volunteering session"
         },
         {
           "type": "image",
@@ -334,8 +334,8 @@
         },
         {
           "type": "image",
-          "src": "eReuse_6.webp",
-          "alt": "eReuse volunteering session"
+          "src": "eReuse_1.webp",
+          "alt": "eReuse T-shirt"
         },
         {
           "type": "image",

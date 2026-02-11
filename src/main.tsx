@@ -49,6 +49,7 @@ function App() {
       {displayMode === "markdown" && (
         <div
           key="markdown"
+          className="markdown-mode"
           style={{ visibility: isTransitioning ? "hidden" : "visible" }}
         >
           <MarkdownApp />
@@ -57,6 +58,7 @@ function App() {
       {displayMode === "animated" && (
         <div
           key="animated"
+          className="animated-mode"
           style={{ visibility: isTransitioning ? "hidden" : "visible" }}
         >
           <AnimatedApp />
@@ -64,7 +66,11 @@ function App() {
       )}
       {/* Keep current mode mounted during transition for cleanup (only if different from target) */}
       {isTransitioning && mode !== targetMode && mode === "animated" && (
-        <div key="animated-cleanup" style={{ visibility: "hidden" }}>
+        <div
+          key="animated-cleanup"
+          className="animated-mode"
+          style={{ visibility: "hidden" }}
+        >
           <AnimatedApp />
         </div>
       )}
