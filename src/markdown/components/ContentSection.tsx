@@ -74,7 +74,7 @@ export function ContentSection({ section, content }: ContentSectionProps) {
         return (
           <p
             id={anchorId}
-            className="text-sm text-[var(--color-text-secondary)] text-center mt-12"
+            className="text-sm text-secondary text-center mt-12"
           >
             {content.footer}
           </p>

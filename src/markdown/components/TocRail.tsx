@@ -73,9 +73,9 @@ export function TocRail({ tocItems }: TocRailProps) {
         {isHovered && (
           <div
             ref={tocNavRef}
-            className="mr-4 bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded-lg shadow-lg p-3 min-w-[200px] max-h-[400px] overflow-y-auto transition-opacity duration-150"
+            className="toc-panel mr-4 transition-opacity duration-150"
           >
-            <div className="text-xs font-semibold text-[var(--color-text-secondary)] mb-2 uppercase tracking-wide">
+            <div className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wide">
               Contents
             </div>
             <nav className="space-y-1">
@@ -90,12 +90,12 @@ export function TocRail({ tocItems }: TocRailProps) {
                     key={item.id}
                     data-toc-item-id={item.id}
                     onClick={() => handleClick(item)}
-                    className={`block w-full text-left text-sm py-1 px-2 rounded transition-colors duration-200 ${
+                    className={`toc-item ${
                       isActive
-                        ? "text-[var(--color-link)] font-medium bg-[var(--color-bg-secondary)]"
+                        ? "toc-item--active"
                         : isParentActive
-                        ? "text-[var(--color-link)] bg-[var(--color-bg-secondary)] opacity-75"
-                        : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)]"
+                        ? "toc-item--parent-active"
+                        : "toc-item--inactive"
                     } ${indent}`}
                   >
                     {item.title}
@@ -129,10 +129,8 @@ export function TocRail({ tocItems }: TocRailProps) {
                   (isParentActive && isTopLevel) ? (
                     <div className="absolute right-full mr-2 whitespace-nowrap">
                       <div
-                        className={`text-xs font-medium bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded px-2 py-0.5 shadow-sm ${
-                          isActive
-                            ? "text-[var(--color-link)]"
-                            : "text-[var(--color-link)] opacity-75"
+                        className={`text-xs font-medium bg-bg border border-border rounded px-2 py-0.5 shadow-sm ${
+                          isActive ? "text-link" : "text-link opacity-75"
                         }`}
                       >
                         {item.title}
@@ -144,10 +142,10 @@ export function TocRail({ tocItems }: TocRailProps) {
                     onClick={() => handleClick(item)}
                     className={`h-1 rounded transition-all duration-200 ${
                       isActive
-                        ? "bg-[var(--color-link)]"
+                        ? "bg-link"
                         : isParentActive
-                        ? "bg-[var(--color-link)] opacity-75"
-                        : "bg-[var(--color-border)] hover:bg-[var(--color-text-secondary)]"
+                        ? "bg-link opacity-75"
+                        : "bg-border hover:bg-secondary"
                     } ${barWidth}`}
                     aria-label={item.title}
                     title={item.title}

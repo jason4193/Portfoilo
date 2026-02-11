@@ -261,7 +261,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
 
     // Standard frame with rounded corners and border
     const frameClass =
-      "w-full aspect-1/1 rounded-lg border border-[var(--color-border)] overflow-hidden";
+      "w-full aspect-1/1 rounded-lg border border-border overflow-hidden";
 
     switch (item.type) {
       case "image":
@@ -333,7 +333,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
 
   const renderSkeleton = () => (
     <div className="animate-pulse">
-      <div className="w-full aspect-1/1 bg-[var(--color-bg-secondary)] rounded-lg border border-[var(--color-border)]" />
+      <div className="w-full aspect-1/1 bg-bg-muted rounded-lg border border-border" />
     </div>
   );
 
@@ -387,9 +387,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                 key={idx}
                 onClick={() => handleDesktopDotClick(idx)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? "bg-[var(--color-link)] w-6"
-                    : "bg-[var(--color-border)]"
+                  idx === currentIndex ? "bg-link w-6" : "bg-border"
                 }`}
                 aria-label={`Go to media ${idx + 1}`}
               />
@@ -427,9 +425,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? "bg-[var(--color-link)] w-6"
-                    : "bg-[var(--color-border)]"
+                  idx === currentIndex ? "bg-link w-6" : "bg-border"
                 }`}
                 aria-label={`Go to media ${idx + 1}`}
               />

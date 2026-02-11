@@ -20,7 +20,7 @@ export function ModeToggle({
   const button = (
     <button
       onClick={toggleMode}
-      className={`relative z-10 opacity-80 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-primary)] transition-colors flex items-center justify-center ${className}`}
+      className={`btn-icon relative z-10 opacity-80 ${className}`}
       aria-label={`Switch to ${isMarkdown ? "animated" : "markdown"} mode`}
       title={`Switch to ${isMarkdown ? "animated" : "markdown"} mode`}
     >

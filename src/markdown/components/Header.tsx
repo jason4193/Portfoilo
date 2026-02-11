@@ -23,14 +23,14 @@ export function Header() {
       {/* Intro - Markdown specific */}
       {content && (
         <>
-          <div className="hidden sm:block text-lg text-[var(--color-text-secondary)] leading-snug space-y-4">
+          <div className="hidden sm:block text-lg text-secondary leading-snug space-y-4">
             {paragraphs.map((paragraph, index) => (
               <p key={`intro-desktop-${index}`} className="whitespace-pre-line">
                 {renderBoldText(paragraph)}
               </p>
             ))}
           </div>
-          <div className="sm:hidden text-lg text-[var(--color-text-secondary)] leading-snug space-y-4">
+          <div className="sm:hidden text-lg text-secondary leading-snug space-y-4 min-w-0 break-words">
             {paragraphs.slice(0, 2).map((paragraph, index) => (
               <p key={`intro-mobile-${index}`} className="whitespace-pre-line">
                 {renderBoldText(paragraph)}
@@ -51,7 +51,7 @@ export function Header() {
             {!isExpanded && paragraphs.length > 2 && (
               <button
                 type="button"
-                className="text-sm text-[var(--color-text-secondary)] underline underline-offset-4"
+                className="link-text text-sm"
                 onClick={() => setIsExpanded(true)}
               >
                 Read more

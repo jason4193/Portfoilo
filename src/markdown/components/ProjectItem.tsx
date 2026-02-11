@@ -42,10 +42,8 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
   return (
     <div id={anchorId} className="mb-12">
       <div
-        className={`group ${
-          hasExpandableContent ? "cursor-pointer" : ""
-        } transition-all duration-200 ${
-          hasExpandableContent ? "hover:opacity-80" : ""
+        className={`expandable-item ${
+          hasExpandableContent ? "expandable-item--clickable" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -72,7 +70,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-link)]"
+                        className="link-icon"
                         onClick={(e) => e.stopPropagation()}
                         title={link.label}
                       >
@@ -84,13 +82,13 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
               )}
             </div>
             {project.date && (
-              <p className="text-sm text-[var(--color-text-secondary)] mb-2">
+              <p className="text-sm text-secondary mb-2">
                 {project.date}
               </p>
             )}
             {project.techStack && project.techStack.length > 0 && (
               <div className="mb-3">
-                <span className="text-sm text-[var(--color-text-secondary)]">
+                <span className="text-sm text-secondary">
                   {project.techStack.join(", ")}
                 </span>
               </div>
@@ -101,9 +99,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-4 transition-transform duration-200 ${
-                isExpanded ? "rotate-180" : ""
-              }`}
+              className={`expand-chevron mt-4 ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

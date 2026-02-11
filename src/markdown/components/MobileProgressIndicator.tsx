@@ -120,8 +120,8 @@ export function MobileProgressIndicator({
 
   return (
     <div className="fixed bottom-2 left-0 right-0 z-50 block md:hidden safe-area-inset-bottom mx-3">
-      <div className="bg-[var(--color-bg-primary)] opacity-85 backdrop-blur-xl border rounded-3xl border-[var(--color-border)]/50">
-        <div className="max-w-4xl mx-auto px-2 py-2">
+      <div className="nav-bar-mobile">
+        <div className="container-content px-2 py-2">
           <div className="flex items-center justify-around">
             {topLevelSections.map((item) => {
               const isActive = item.id === activeSectionId;
@@ -137,9 +137,7 @@ export function MobileProgressIndicator({
                 >
                   <div
                     className={`mb-1 transition-colors duration-200 ${
-                      isActive
-                        ? "text-[var(--color-link)]"
-                        : "text-[var(--color-text-secondary)]"
+                      isActive ? "text-link" : "text-secondary"
                     }`}
                   >
                     <Icon
@@ -149,9 +147,7 @@ export function MobileProgressIndicator({
                   </div>
                   <span
                     className={`text-[10px] font-medium transition-colors duration-200 ${
-                      isActive
-                        ? "text-[var(--color-link)]"
-                        : "text-[var(--color-text-secondary)]"
+                      isActive ? "text-link" : "text-secondary"
                     }`}
                   >
                     {shortLabel}

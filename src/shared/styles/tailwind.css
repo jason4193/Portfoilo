@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+@theme {
+  /* Colors – map to theme.css vars (respects dark mode) */
+  --color-primary: var(--color-text-primary);
+  --color-secondary: var(--color-text-secondary);
+  --color-muted: var(--color-text-secondary);
+  --color-link: var(--color-link);
+  --color-link-hover: var(--color-link-hover);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-bg: var(--color-bg-primary);
+  --color-bg-muted: var(--color-bg-secondary);
+  --color-bg-code: var(--color-code-bg);
+  --color-bg-pre: var(--color-pre-bg);
+
+  /* Animated panel (no dark swap) */
+  --color-panel-bg: var(--color-panel-bg);
+  --color-panel-text: var(--color-panel-text);
+  --color-panel-text-muted: var(--color-panel-text-muted);
+  --color-panel-text-subtle: var(--color-panel-text-subtle);
+  --color-panel-border: var(--color-panel-border);
+  --color-panel-btn: var(--color-panel-btn);
+
+  /* Font sizes */
+  --font-size-xs: var(--font-size-xs);
+  --font-size-sm: var(--font-size-sm);
+  --font-size-base: var(--font-size-base);
+  --font-size-lg: var(--font-size-lg);
+  --font-size-xl: var(--font-size-xl);
+  --font-size-2xl: var(--font-size-2xl);
+  --font-size-3xl: var(--font-size-3xl);
+  --font-size-4xl: var(--font-size-4xl);
+
+  /* Line heights */
+  --line-height-tight: var(--line-height-tight);
+  --line-height-normal: var(--line-height-normal);
+  --line-height-relaxed: var(--line-height-relaxed);
+
+  /* Spacing */
+  --spacing-1: var(--spacing-1);
+  --spacing-2: var(--spacing-2);
+  --spacing-3: var(--spacing-3);
+  --spacing-4: var(--spacing-4);
+  --spacing-5: var(--spacing-5);
+  --spacing-6: var(--spacing-6);
+  --spacing-8: var(--spacing-8);
+  --spacing-10: var(--spacing-10);
+  --spacing-12: var(--spacing-12);
+}
