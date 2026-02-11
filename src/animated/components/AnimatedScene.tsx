@@ -4,12 +4,9 @@ import { Card } from "./Card";
 import { SceneRig } from "./SceneRig";
 import { TransitionProgressController } from "./TransitionProgressController";
 import { SectionFocusController } from "./SectionFocusController";
-import type { SectionId } from "../constants/sections";
 
 interface AnimatedSceneProps {
-  onProgress?: (progress: number) => void;
   isAnimationReady?: boolean;
-  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
   focusTarget?: [number, number, number] | null;
   isSectionFocused?: boolean;
   dimOverlayRef?: React.RefObject<HTMLDivElement | null>;
@@ -18,9 +15,7 @@ interface AnimatedSceneProps {
 }
 
 export function AnimatedScene({
-  onProgress,
   isAnimationReady = false,
-  onSectionSelect,
   focusTarget = null,
   isSectionFocused = false,
   dimOverlayRef,
@@ -69,7 +64,7 @@ export function AnimatedScene({
         }}
         dpr={[1, 2]}
       >
-        <TransitionProgressController onProgress={onProgress} />
+        <TransitionProgressController />
         <SceneRig controlsRef={controlsRef} />
         <SectionFocusController
           isActive={isSectionFocused}
@@ -81,7 +76,6 @@ export function AnimatedScene({
         />
         <Card
           isAnimationReady={isAnimationReady}
-          onSectionSelect={onSectionSelect}
           isSectionFocused={isSectionFocused}
         />
       </Canvas>

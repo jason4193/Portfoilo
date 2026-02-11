@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { useThree } from "@react-three/fiber";
 import PortfolioCardModel from "./model/PortfolioCardModel";
-import type { SectionId } from "../constants/sections";
 import type { Group } from "three";
 import {
   BASE_ROTATION_X,
@@ -53,11 +52,9 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
  */
 export function Card({
   isAnimationReady = false,
-  onSectionSelect,
   isSectionFocused = false,
 }: {
   isAnimationReady?: boolean;
-  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
   isSectionFocused?: boolean;
 }) {
   const groupRef = useRef<Group | null>(null);
@@ -111,7 +108,7 @@ export function Card({
       // Lift card slightly above origin
       position={[0, 0.1, 0]}
     >
-      <PortfolioCardModel scale={scale} onSectionSelect={onSectionSelect} />
+      <PortfolioCardModel scale={scale} />
     </group>
   );
 }

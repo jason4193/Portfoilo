@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { usePortfolioModeStore } from "../shared/stores";
+import {
+  useLoadingProgressStore,
+  usePortfolioModeStore,
+  useSectionSelectionStore,
+} from "../shared/stores";
 import { Layout } from "./components/Layout";
 import { AnimatedScene } from "./components/AnimatedScene";
 import { SectionModal } from "./components/SectionModal";
-import type { SectionId } from "./constants/sections";
 
 export function AnimatedApp() {
   const { isTransitioning } = usePortfolioModeStore();
   // Loading + readiness
-  const [loadingProgress, setLoadingProgress] = useState(0);
+  const loadingProgress = useLoadingProgressStore(
+    (state) => state.loadingProgress,
+  );
   const [canAnimate, setCanAnimate] = useState(false);
   const [isLoading, setIsLoading] = useState(() => {
     const store = usePortfolioModeStore.getState();
@@ -17,10 +22,12 @@ export function AnimatedApp() {
   const canvasCreatedRef = useRef(false);
   const closeTimeoutRef = useRef<number | null>(null);
   // Section focus state
-  const [selectedSection, setSelectedSection] = useState<{
-    id: SectionId;
-    target: [number, number, number];
-  } | null>(null);
+  const selectedSection = useSectionSelectionStore(
+    (state) => state.selectedSection,
+  );
+  const clearSelectedSection = useSectionSelectionStore(
+    (state) => state.clearSelectedSection,
+  );
   // UI overlay refs
   const dimOverlayRef = useRef<HTMLDivElement>(null);
   const modalOverlayRef = useRef<HTMLDivElement>(null);
@@ -28,26 +35,6 @@ export function AnimatedApp() {
 
   // Internal loading visibility
   const shouldShowInternalLoading = isLoading && !isTransitioning;
-
-  // Loading progress handler
-  const handleProgress = (progress: number) => {
-    setLoadingProgress(progress);
-    if (progress > 0 && !canvasCreatedRef.current) {
-      canvasCreatedRef.current = true;
-    }
-  };
-
-  // Section selection handler
-  const handleSectionSelect = (
-    id: SectionId,
-    position: [number, number, number],
-  ) => {
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    setSelectedSection({ id, target: position });
-  };
 
   // Loading screen completion handler
   const handleLoadingComplete = () => {
@@ -60,7 +47,6 @@ export function AnimatedApp() {
       setIsLoading(false);
     } else if (!isTransitioning && canvasCreatedRef.current) {
       setIsLoading(false);
-      setLoadingProgress(100);
     } else if (
       !isLoading &&
       loadingProgress === 0 &&
@@ -80,6 +66,19 @@ export function AnimatedApp() {
     const raf = requestAnimationFrame(() => setCanAnimate(true));
     return () => cancelAnimationFrame(raf);
   }, [isTransitioning, shouldShowInternalLoading]);
+
+  useEffect(() => {
+    if (loadingProgress > 0 && !canvasCreatedRef.current) {
+      canvasCreatedRef.current = true;
+    }
+  }, [loadingProgress]);
+
+  useEffect(() => {
+    if (selectedSection && closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  }, [selectedSection]);
 
   useEffect(() => {
     return () => {
@@ -108,8 +107,6 @@ export function AnimatedApp() {
       {/* 3D scene + focus handling */}
       <AnimatedScene
         isAnimationReady={canAnimate}
-        onProgress={handleProgress}
-        onSectionSelect={handleSectionSelect}
         focusTarget={selectedSection?.target ?? null}
         isSectionFocused={Boolean(selectedSection)}
         dimOverlayRef={dimOverlayRef}
@@ -127,7 +124,7 @@ export function AnimatedApp() {
               window.clearTimeout(closeTimeoutRef.current);
             }
             closeTimeoutRef.current = window.setTimeout(
-              () => setSelectedSection(null),
+              () => clearSelectedSection(),
               500,
             );
           }}

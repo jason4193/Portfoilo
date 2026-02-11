@@ -1,18 +1,15 @@
 import { useEffect, useRef } from "react";
-import { usePortfolioModeStore } from "../../shared/stores";
+import { useLoadingProgressStore, usePortfolioModeStore } from "../../shared/stores";
 import { TRANSITION_MIN_DURATION_MS } from "../constants/transition";
 import { useTransitionCleanup } from "../hooks/useTransitionCleanup";
 import { useTransitionLoadProgress } from "../hooks/useTransitionLoadProgress";
 
-interface TransitionProgressControllerProps {
-  onProgress?: (progress: number) => void;
-}
-
 // Utility-like component: no UI, just wires transition hooks inside Canvas.
-export function TransitionProgressController({
-  onProgress,
-}: TransitionProgressControllerProps) {
+export function TransitionProgressController() {
   const { setTransitionProgress, completeTransition } = usePortfolioModeStore();
+  const setLoadingProgress = useLoadingProgressStore(
+    (state) => state.setLoadingProgress,
+  );
   const transitionStartRef = useRef<number | null>(null);
   const completeTimeoutRef = useRef<number | null>(null);
 
@@ -24,7 +21,7 @@ export function TransitionProgressController({
 
     const elapsed = now - transitionStartRef.current;
     setTransitionProgress(progress);
-    onProgress?.(progress);
+    setLoadingProgress(progress);
 
     if (progress < 100) return;
 

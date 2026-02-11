@@ -17,18 +17,16 @@ import { BackProjects } from "./BackProjects";
 import { BackWorking } from "./BackWorking";
 import { FrontFace } from "./FrontFace";
 import type { GLTFResult } from "./types";
-import type { SectionId } from "../../constants/sections";
-
-interface PortfolioCardModelProps extends Record<string, unknown> {
-  onSectionSelect?: (id: SectionId, position: [number, number, number]) => void;
-}
+import { useSectionSelectionStore } from "../../../shared/stores";
 
 export default function PortfolioCardModel({
-  onSectionSelect,
   ...props
-}: PortfolioCardModelProps) {
+}: Record<string, unknown>) {
   const { nodes, materials } = useGLTF(modelUrl) as unknown as GLTFResult;
   const modelRef = useRef<THREE.Group | null>(null);
+  const setSelectedSection = useSectionSelectionStore(
+    (state) => state.setSelectedSection,
+  );
 
   useLayoutEffect(() => {
     const lightYellow = materials["Light Yellow"];
@@ -58,32 +56,44 @@ export default function PortfolioCardModel({
         <BackProjects
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("projects", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "projects", target: position })
+          }
         />
         <BackCommunity
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("community", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "community", target: position })
+          }
         />
         <BackAboutMe
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("aboutMe", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "aboutMe", target: position })
+          }
         />
         <BackWorking
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("working", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "working", target: position })
+          }
         />
         <BackAwards
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("awards", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "awards", target: position })
+          }
         />
         <BackEducation
           nodes={nodes}
           materials={materials}
-          onSelect={(position) => onSectionSelect?.("education", position)}
+          onSelect={(position) =>
+            setSelectedSection({ id: "education", target: position })
+          }
         />
       </group>
     </group>
