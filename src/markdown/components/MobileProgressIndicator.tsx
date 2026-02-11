@@ -146,7 +146,7 @@ export function MobileProgressIndicator({
                     />
                   </div>
                   <span
-                    className={`text-[10px] font-medium transition-colors duration-200 ${
+                    className={`text-[0.625rem] font-medium transition-colors duration-200 ${
                       isActive ? "text-link" : "text-secondary"
                     }`}
                   >

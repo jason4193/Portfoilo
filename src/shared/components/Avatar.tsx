@@ -17,7 +17,7 @@ export function Avatar({
   return (
     <div
       className={`relative ${className} cursor-pointer`}
-      style={{ perspective: "1000px" }}
+      style={{ perspective: "62.5rem" }}
       onClick={() => setIsFlipped(!isFlipped)}
       role="button"
       tabIndex={0}

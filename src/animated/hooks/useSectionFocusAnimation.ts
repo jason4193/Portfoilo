@@ -79,7 +79,7 @@ export function useSectionFocusAnimation({
       duration: 0.5,
       ease: "power2.inOut",
       onComplete: () => {
-        overlay.style.backdropFilter = "blur(0px)";
+        overlay.style.backdropFilter = "blur(0)";
       },
     });
   };
@@ -87,7 +87,7 @@ export function useSectionFocusAnimation({
   const prepareDimOverlay = (overlay: HTMLDivElement) => {
     gsap.killTweensOf(overlay);
     gsap.set(overlay, { opacity: 0 });
-    overlay.style.backdropFilter = "blur(0px)";
+    overlay.style.backdropFilter = "blur(0)";
   };
 
   const resetOverlays = () => {
@@ -100,7 +100,7 @@ export function useSectionFocusAnimation({
       const dimOverlay = dimOverlayRef.current;
       gsap.killTweensOf(dimOverlay);
       gsap.set(dimOverlay, { opacity: 0 });
-      dimOverlay.style.backdropFilter = "blur(0px)";
+      dimOverlay.style.backdropFilter = "blur(0)";
     }
   };
 
@@ -112,7 +112,7 @@ export function useSectionFocusAnimation({
         duration: FOCUS_MOVE_DURATION,
         ease: "power2.out",
         onStart: () => {
-          overlay.style.backdropFilter = "blur(6px)";
+          overlay.style.backdropFilter = "blur(0.375rem)";
         },
       },
       BACK_MOVE_DURATION + DIM_START_OFFSET,

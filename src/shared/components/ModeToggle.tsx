@@ -64,7 +64,7 @@ export function ModeToggle({
 
   return (
     <div
-      className="rainbow-hover-wrapper rounded-md p-[1px]"
+      className="rainbow-hover-wrapper rounded-md p-[0.0625rem]"
       ref={wrapperRef}
       onPointerMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
