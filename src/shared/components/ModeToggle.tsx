@@ -56,7 +56,7 @@ export function ModeToggle({
         window.cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [isMarkdown]);
 
   if (!isMarkdown) {
     return button;
@@ -68,10 +68,10 @@ export function ModeToggle({
       ref={wrapperRef}
       onPointerMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        event.currentTarget.style.setProperty("--rx", `${x}px`);
-        event.currentTarget.style.setProperty("--ry", `${y}px`);
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        event.currentTarget.style.setProperty("--rx", `${x}%`);
+        event.currentTarget.style.setProperty("--ry", `${y}%`);
       }}
       onPointerEnter={() => {
         isHoveringRef.current = true;

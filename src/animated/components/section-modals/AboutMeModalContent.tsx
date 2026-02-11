@@ -32,7 +32,7 @@ function AboutMeIconMesh() {
         repeat: -1,
         ease: "sine.inOut",
       });
-    }, groupRef);
+    });
 
     return () => ctx.revert();
   }, []);
@@ -87,7 +87,6 @@ export function AboutMeModalContent({
               camera={{ position: [0, 0, 4], fov: 45 }}
               gl={{ antialias: true, alpha: true }}
             >
-              <axesHelper />
               <ambientLight intensity={0.9} />
               <directionalLight position={[2, 2, 4]} intensity={0.8} />
               <Suspense fallback={null}>
