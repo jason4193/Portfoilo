@@ -1,6 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { useCameraPoseStore } from "../../shared/stores";
+import { debugPerf } from "../../shared/utils/debug";
 
 interface CameraPoseTrackerOptions {
   fps?: number;
@@ -18,6 +19,8 @@ export function useCameraPoseTracker({
   const lastPositionRef = useRef<[number, number, number]>([0, 0, 0]);
   const elapsedRef = useRef(0);
   const interval = 1 / fps;
+
+  const updatesThisSecondRef = useRef(0);
 
   useFrame((_, delta) => {
     elapsedRef.current += delta;
@@ -39,5 +42,11 @@ export function useCameraPoseTracker({
 
     lastPositionRef.current = [x, y, z];
     setCameraPosition([x, y, z]);
+    updatesThisSecondRef.current += 1;
+    debugPerf(
+      "camera-pose-update",
+      { fps, updatesThisSecond: updatesThisSecondRef.current },
+      1000,
+    );
   });
 }

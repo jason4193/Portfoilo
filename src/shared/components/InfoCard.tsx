@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import gsap from "gsap";
+import { debugPerf } from "../utils/debug";
 
 interface InfoCardImage {
   src: string;
@@ -46,6 +47,8 @@ export function InfoCard({
     const wrapper = wrapperRef.current;
     const img = imgRef.current;
     if (!wrapper || !img || !image) return;
+
+    debugPerf("infocard-tilt-enabled", { src: image.src }, 1000);
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = wrapper.getBoundingClientRect();
