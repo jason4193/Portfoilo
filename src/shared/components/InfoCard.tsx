@@ -13,6 +13,8 @@ interface InfoCardProps {
   image?: InfoCardImage;
   /** Extra classes for the image container (e.g. aspect ratio, max-height) */
   imageClassName?: string;
+  /** Extra classes for the img element itself (e.g. override min-height, aspect ratio) */
+  imgClassName?: string;
   /** Optional header text shown as pill with horizontal lines */
   header?: string;
   /** Optional list items with bullet (e.g. ►) */
@@ -32,6 +34,7 @@ const TILT_STRENGTH = 10;
 export function InfoCard({
   image,
   imageClassName,
+  imgClassName,
   header,
   listItems,
   bullet = "►",
@@ -42,6 +45,17 @@ export function InfoCard({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hasContent = header || (listItems && listItems.length > 0) || children;
+
+  // Base img classes always applied
+  const baseImgClasses = "rounded-2xl w-full will-change-transform";
+  
+  // Default sizing classes - only applied when no custom imgClassName provided
+  const defaultImgSizingClasses = "object-cover aspect-[4/3] min-h-[20vh] sm:min-h-[35vh]";
+  
+  // If imgClassName is provided, consumer has full control over sizing
+  const finalImgClasses = imgClassName 
+    ? `${baseImgClasses} ${imgClassName}`
+    : `${baseImgClasses} ${defaultImgSizingClasses}`;
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -94,7 +108,7 @@ export function InfoCard({
             ref={imgRef}
             src={image.src}
             alt={image.alt}
-            className="rounded-2xl object-cover aspect-[4/3] min-h-[20vh] sm:min-h-[35vh] w-full will-change-transform"
+            className={finalImgClasses}
             style={{ transformStyle: "preserve-3d" }}
           />
         </div>
