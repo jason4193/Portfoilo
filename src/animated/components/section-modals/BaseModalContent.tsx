@@ -77,7 +77,10 @@ export function BaseModalContent({
             <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/40 sm:size-14">
               {icon}
             </div>
-            <p className="!m-0 text-xl font-bold italic sm:text-2xl md:text-3xl">
+            <p
+              className="!m-0 text-xl font-bold italic sm:text-2xl md:text-3xl lg:text-4xl"
+              style={{ color: textColor }}
+            >
               {title}
             </p>
           </div>

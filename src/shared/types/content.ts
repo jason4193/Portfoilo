@@ -22,6 +22,7 @@ export interface Project {
 export interface CompetitionExperience {
   title: string;
   date: string;
+  award?: string;
   role?: string;
   description: string;
   achievements: string[];
