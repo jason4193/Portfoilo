@@ -5,6 +5,8 @@ interface CardStackIndicatorProps {
   total: number;
   currentIndex: number;
   onDotClick?: (index: number) => void;
+  /** Delay before showing indicator (in seconds) */
+  delay?: number;
 }
 
 /**
@@ -15,8 +17,26 @@ export function CardStackIndicator({
   total,
   currentIndex,
   onDotClick,
+  delay = 0,
 }: CardStackIndicatorProps) {
   const dotsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Initial fade in animation
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        container,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, delay, ease: "power2.out" },
+      );
+    });
+
+    return () => ctx.revert();
+  }, [delay]);
 
   useEffect(() => {
     // Animate all dots on index change
@@ -46,7 +66,12 @@ export function CardStackIndicator({
   }, [currentIndex]);
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-4" role="tablist">
+    <div
+      ref={containerRef}
+      className="flex justify-center items-center gap-2 mt-4"
+      role="tablist"
+      style={{ opacity: 0 }}
+    >
       {Array.from({ length: total }).map((_, index) => (
         <button
           key={index}
