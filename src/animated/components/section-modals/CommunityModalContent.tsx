@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useCallback, type RefObject } from "react";
 import gsap from "gsap";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- GSAP Flip has Flip.d.ts vs flip.d.ts casing mismatch
 // @ts-ignore
@@ -8,15 +8,20 @@ import { content } from "../../../shared/data/content";
 import { getMediaUrl } from "../../../shared/utils/media";
 import { InfoCard } from "../../../shared/components/InfoCard";
 import communityIcon from "../../assets/CommunitySectionIcon.png";
+import { BaseModalContent } from "./BaseModalContent";
+import { useModalEntryAnimation } from "../../hooks/useModalEntryAnimation";
+import {
+  MOBILE_MAX_WIDTH,
+  SWIPE_THRESHOLD,
+  STACK_TOP_OFFSET,
+  STACK_LEFT_OFFSET,
+} from "../../constants/mobile";
 
 gsap.registerPlugin(Flip);
 
-const MOBILE_MAX_WIDTH = 639;
-const SWIPE_THRESHOLD = 20;
-const STACK_TOP_OFFSET = 5;
-const STACK_LEFT_OFFSET = 15;
-
 interface CommunityModalContentProps {
+  overlayRef: RefObject<HTMLDivElement | null>;
+  panelRef: RefObject<HTMLDivElement | null>;
   accentColor: string;
   onClose: () => void;
 }
@@ -56,6 +61,8 @@ function renderInfoCard(
 }
 
 export function CommunityModalContent({
+  overlayRef,
+  panelRef,
   accentColor,
   onClose,
 }: CommunityModalContentProps) {
@@ -110,7 +117,7 @@ export function CommunityModalContent({
           ease: "power2.out",
         }),
     });
-  }, []);
+  }, [contributions.length]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -126,30 +133,25 @@ export function CommunityModalContent({
     [cycleCard],
   );
 
-  useEffect(() => {
-    const header = headerRef.current;
-    const intro = introRef.current;
-    const cards = cardsRef.current;
-    const stack = stackRef.current;
-    const close = closeRef.current;
-    if (!header || !intro || !close) return;
+  // Animate modal entry
+  useModalEntryAnimation({
+    headerRef,
+    closeRef,
+    delay: 0.5,
+    dependencies: [isMobile],
+    customContentAnimation: (tl) => {
+      const intro = introRef.current;
+      const cards = cardsRef.current;
+      const stack = stackRef.current;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        delay: 0.5,
-      });
-
-      tl.fromTo(
-        header,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.4 },
-      ).fromTo(
-        intro,
-        { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.35 },
-        "-=0.2",
-      );
+      if (intro) {
+        tl.fromTo(
+          intro,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.35 },
+          "-=0.2",
+        );
+      }
 
       if (isMobile && stack) {
         tl.fromTo(
@@ -160,111 +162,86 @@ export function CommunityModalContent({
         );
       } else if (cards) {
         const cardEls = cards.querySelectorAll<HTMLElement>("[data-card]");
-        tl.fromTo(
-          cardEls,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.12,
-            ease: "power2.out",
-          },
-          "-=0.1",
-        );
+        if (cardEls.length > 0) {
+          tl.fromTo(
+            cardEls,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.12,
+              ease: "power2.out",
+            },
+            "-=0.1",
+          );
+        }
       }
-
-      tl.fromTo(
-        close,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.35 },
-        "-=0.15",
-      );
-    });
-
-    return () => ctx.revert();
-  }, [isMobile]);
+    },
+  });
 
   return (
-    <div className="flex size-full flex-col overflow-hidden rounded-2xl bg-[#FCE8E7] text-[#0B2B4C]">
-      {/* Header: salmon bar with megaphone + title */}
-      <div
-        ref={headerRef}
-        className="flex shrink-0 items-center rounded-t-2xl px-4 py-3 sm:px-6 sm:py-4"
-        style={{ backgroundColor: accentColor }}
+    <BaseModalContent
+      overlayRef={overlayRef}
+      panelRef={panelRef}
+      icon={<CommunityIcon className="size-18 object-contain" />}
+      title="Community"
+      accentColor={accentColor}
+      backgroundColor="#FCE8E7"
+      headerRef={headerRef}
+      closeRef={closeRef}
+      onClose={onClose}
+      contentClassName="flex min-h-0 flex-1 flex-col gap-1 sm:gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8"
+    >
+      <p
+        ref={introRef}
+        className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
       >
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/40 text-[#0B2B4C] sm:size-14">
-            <CommunityIcon className="size-18 object-contain" />
-          </div>
-          <p className="!m-0 text-xl font-bold italic text-[#0B2B4C] sm:text-2xl md:text-3xl">
-            Community
-          </p>
-        </div>
-      </div>
+        Here&apos;s how I&apos;ve engaged with various communities and
+        contributed over the years:
+      </p>
 
-      {/* Main content */}
-      <div className="flex min-h-0 flex-1 flex-col gap-1 sm:gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8">
-        <p
-          ref={introRef}
-          className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
+      {isMobile ? (
+        <div
+          ref={stackRef}
+          className="relative min-h-[min(45vh,300px)] w-full flex-1 overflow-visible pl-10 pt-10 [perspective:1000px]"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          style={{ touchAction: "pan-y" }}
+          aria-label="Swipe left to see next community contribution"
         >
-          Here&apos;s how I&apos;ve engaged with various communities and
-          contributed over the years:
-        </p>
-
-        {isMobile ? (
-          <div
-            ref={stackRef}
-            className="relative min-h-[min(45vh,300px)] w-full flex-1 overflow-visible pl-10 pt-10 [perspective:1000px]"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            style={{ touchAction: "pan-y" }}
-            aria-label="Swipe left to see next community contribution"
-          >
-            {contributions.map((item, index) => (
-              <div
-                key={item.title}
-                data-card
-                className="absolute top-0 h-full"
-                style={{
-                  left: index * STACK_LEFT_OFFSET,
-                  top: index * STACK_TOP_OFFSET,
-                  width: `calc(100% - ${contributions.length * 3}%)`,
-                  zIndex: contributions.length - index,
-                }}
-              >
-                {renderInfoCard(item)}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div
-            ref={cardsRef}
-            className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-hidden sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4"
-          >
-            {contributions.map((item) => (
-              <div
-                key={item.title}
-                data-card
-                className="w-full shrink-0 sm:min-w-0 sm:flex-1 sm:basis-[min(100%,20rem)]"
-              >
-                {renderInfoCard(item)}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Close button */}
-      <div
-        ref={closeRef}
-        className="flex shrink-0 justify-center px-4 pb-4 sm:px-6 sm:pb-6"
-      >
-        <button className="btn-panel-close" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
+          {contributions.map((item, index) => (
+            <div
+              key={item.title}
+              data-card
+              className="absolute top-0 h-full"
+              style={{
+                left: index * STACK_LEFT_OFFSET,
+                top: index * STACK_TOP_OFFSET,
+                width: `calc(100% - ${contributions.length * 3}%)`,
+                zIndex: contributions.length - index,
+              }}
+            >
+              {renderInfoCard(item)}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div
+          ref={cardsRef}
+          className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-hidden sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4"
+        >
+          {contributions.map((item) => (
+            <div
+              key={item.title}
+              data-card
+              className="w-full shrink-0 sm:min-w-0 sm:flex-1 sm:basis-[min(100%,20rem)]"
+            >
+              {renderInfoCard(item)}
+            </div>
+          ))}
+        </div>
+      )}
+    </BaseModalContent>
   );
 }

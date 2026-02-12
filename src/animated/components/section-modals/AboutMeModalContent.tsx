@@ -1,11 +1,14 @@
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, type RefObject } from "react";
 import { content } from "../../../shared/data/content";
 import jasonPhoto from "../../../shared/assets/Jason_2.webp";
 import aboutMeIcon from "../../assets/AboutMeSectionIcon.webp";
 import { InfoCard } from "../../../shared/components/InfoCard";
+import { BaseModalContent } from "./BaseModalContent";
+import { useModalEntryAnimation } from "../../hooks/useModalEntryAnimation";
 
 interface AboutMeModalContentProps {
+  overlayRef: RefObject<HTMLDivElement | null>;
+  panelRef: RefObject<HTMLDivElement | null>;
   accentColor: string;
   onClose: () => void;
 }
@@ -60,9 +63,12 @@ function AboutMeIcon() {
 }
 
 export function AboutMeModalContent({
+  overlayRef,
+  panelRef,
   accentColor,
   onClose,
 }: AboutMeModalContentProps) {
+  const headerRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLDivElement>(null);
@@ -74,157 +80,134 @@ export function AboutMeModalContent({
   const { introParagraphs, whatIDoParagraphs, sideQuests } =
     parseIntroContent(raw);
 
-  useEffect(() => {
-    const left = leftRef.current;
-    const right = rightRef.current;
-    const close = closeRef.current;
-    if (!left || !right || !close) return;
+  // Custom animation for AboutMe modal
+  useModalEntryAnimation({
+    headerRef,
+    closeRef,
+    delay: 1,
+    customContentAnimation: (tl) => {
+      const left = leftRef.current;
+      const right = rightRef.current;
 
-    const leftElements = left.querySelectorAll<HTMLElement>(
-      "[data-animate-left]",
-    );
-    if (leftElements.length === 0) return;
+      if (left) {
+        const leftElements = left.querySelectorAll<HTMLElement>(
+          "[data-animate-left]",
+        );
+        if (leftElements.length > 0) {
+          tl.fromTo(
+            leftElements,
+            { opacity: 0, x: -30 },
+            { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
+          );
+        }
+      }
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        delay: 1,
-      });
-
-      tl.fromTo(
-        leftElements,
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
-      )
-        .fromTo(
+      if (right) {
+        tl.fromTo(
           right,
           { opacity: 0, x: 30 },
           { opacity: 1, x: 0, duration: 0.5 },
           "-=0.2",
-        )
-        .fromTo(
-          close,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.35 },
-          "-=0.15",
         );
-    });
-
-    return () => ctx.revert();
-  }, []);
+      }
+    },
+  });
 
   return (
-    <div className="size-full flex flex-col overflow-hidden rounded-2xl bg-[#F7F4EC] text-[#0B2B4C]">
-      {/* Header: yellow/orange bar */}
+    <BaseModalContent
+      overlayRef={overlayRef}
+      panelRef={panelRef}
+      icon={<AboutMeIcon />}
+      title="About Me"
+      accentColor={accentColor}
+      backgroundColor="#F7F4EC"
+      headerRef={headerRef}
+      closeRef={closeRef}
+      onClose={onClose}
+      contentClassName="flex min-h-0 flex-1 flex-col items-center gap-6 overflow-y-auto px-4 py-4 sm:px-10 sm:py-10 lg:flex-row lg:items-stretch lg:gap-8"
+    >
+      {/* Left: MainContent - intro + What I Do */}
       <div
-        className="flex shrink-0 items-center justify-between px-4 py-3 sm:px-6 sm:py-4"
-        style={{ backgroundColor: accentColor }}
+        ref={leftRef}
+        className="flex flex-col justify-center min-w-0 shrink basis-full lg:basis-[65%]"
       >
-        <div className="flex items-center gap-4">
-          <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/40">
-            <AboutMeIcon />
-          </div>
-          <p className="!m-0 leading-none text-2xl font-semibold italic text-shadow-bold-lg md:text-4xl">
-            About Me
-          </p>
-        </div>
-      </div>
-
-      {/* Main area: flex row - left = MainContent, right = image + Side Quests */}
-      <div className="flex min-h-0 flex-1 flex-col items-center gap-6 overflow-y-auto px-4 py-4 sm:px-10 sm:py-10 lg:flex-row lg:items-stretch lg:gap-8">
-        {/* Left: MainContent - intro + What I Do */}
-        <div
-          ref={leftRef}
-          className="flex flex-col justify-center min-w-0 shrink basis-full lg:basis-[65%]"
-        >
-          <div className="px-2">
-            <p
-              data-animate-left
-              className="opacity-0 text-lg md:text-xl font-semibold text-shadow-bold text-[#0B2B4C] mb-4"
-            >
-              {introTitle}
-            </p>
-            {introParagraphs.map((p, i) => (
-              <p
-                key={i}
-                data-animate-left
-                className={
-                  i === 1
-                    ? "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 italic text-[#0B2B4C]/90"
-                    : "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
-                }
-              >
-                {p}
-              </p>
-            ))}
-          </div>
-
-          {/* What I Do section */}
-          <div
+        <div className="px-2">
+          <p
             data-animate-left
-            className="opacity-0 mt-6 mb-4 flex items-center gap-2 rounded-lg border border-amber-200/80 bg-[#0B2B4C] px-3 py-2 sm:px-4 sm:py-2.5"
+            className="opacity-0 text-lg md:text-xl font-semibold text-shadow-bold text-[#0B2B4C] mb-4"
           >
-            <span className="font-semibold text-yellow-400 text-shadow-bold">
-              What I Do
-            </span>
-          </div>
-          <div className="px-4">
-            {whatIDoParagraphs.map((p, i) => {
-              const prefix = QUESTION_PREFIXES.find((q) => p.startsWith(q));
-              if (prefix) {
-                const rest = p.slice(prefix.length).replace(/^\n/, "");
-                return (
-                  <p
-                    key={i}
-                    data-animate-left
-                    className="opacity-0 mb-4 text-base leading-relaxed text-[#0B2B4C]/95"
-                  >
-                    <span className="block font-semibold text-shadow-bold">
-                      {prefix}
-                    </span>
-                    {rest && (
-                      <span className="block whitespace-pre-line text-base italic">
-                        {rest}
-                      </span>
-                    )}
-                  </p>
-                );
+            {introTitle}
+          </p>
+          {introParagraphs.map((p, i) => (
+            <p
+              key={i}
+              data-animate-left
+              className={
+                i === 1
+                  ? "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 italic text-[#0B2B4C]/90"
+                  : "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
               }
+            >
+              {p}
+            </p>
+          ))}
+        </div>
+
+        {/* What I Do section */}
+        <div
+          data-animate-left
+          className="opacity-0 mt-6 mb-4 flex items-center gap-2 rounded-lg border border-amber-200/80 bg-[#0B2B4C] px-3 py-2 sm:px-4 sm:py-2.5"
+        >
+          <span className="font-semibold text-yellow-400 text-shadow-bold">
+            What I Do
+          </span>
+        </div>
+        <div className="px-4">
+          {whatIDoParagraphs.map((p, i) => {
+            const prefix = QUESTION_PREFIXES.find((q) => p.startsWith(q));
+            if (prefix) {
+              const rest = p.slice(prefix.length).replace(/^\n/, "");
               return (
                 <p
                   key={i}
                   data-animate-left
-                  className="opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
+                  className="opacity-0 mb-4 text-base leading-relaxed text-[#0B2B4C]/95"
                 >
-                  {p}
+                  <span className="block font-semibold text-shadow-bold">
+                    {prefix}
+                  </span>
+                  {rest && (
+                    <span className="block whitespace-pre-line text-base italic">
+                      {rest}
+                    </span>
+                  )}
                 </p>
               );
-            })}
-          </div>
-        </div>
-
-        {/* Right: image + Side Quests card */}
-        <div
-          ref={rightRef}
-          className="opacity-0 flex min-w-0 shrink flex-col justify-center max-w-full mx-auto w-full basis-full lg:mx-0 lg:basis-[35%]"
-        >
-          <InfoCard
-            image={{ src: jasonPhoto, alt: "Jason portrait" }}
-            header={sideQuests.length > 0 ? "2026 Side Quests" : undefined}
-            listItems={sideQuests.length > 0 ? sideQuests : undefined}
-          />
+            }
+            return (
+              <p
+                key={i}
+                data-animate-left
+                className="opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
+              >
+                {p}
+              </p>
+            );
+          })}
         </div>
       </div>
 
-      {/* Close button */}
+      {/* Right: image + Side Quests card */}
       <div
-        ref={closeRef}
-        className="opacity-0 flex shrink-0 justify-center px-4 pb-4 sm:px-6 sm:pb-6"
+        ref={rightRef}
+        className="opacity-0 flex min-w-0 shrink flex-col justify-center max-w-full mx-auto w-full basis-full lg:mx-0 lg:basis-[35%]"
       >
-        <button className="btn-panel-close" onClick={onClose}>
-          Close
-        </button>
+        <InfoCard
+          image={{ src: jasonPhoto, alt: "Jason portrait" }}
+          header={sideQuests.length > 0 ? "2026 Side Quests" : undefined}
+          listItems={sideQuests.length > 0 ? sideQuests : undefined}
+        />
       </div>
-    </div>
+    </BaseModalContent>
   );
 }
