@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import gsap from "gsap";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- GSAP Flip has Flip.d.ts vs flip.d.ts casing mismatch
 // @ts-ignore
@@ -19,6 +19,7 @@ gsap.registerPlugin(Flip);
 export function useStackCardCycle(itemsLength: number) {
   const stackRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const cycleCard = useCallback(() => {
     const stack = stackRef.current;
@@ -26,6 +27,9 @@ export function useStackCardCycle(itemsLength: number) {
 
     const cards = stack.querySelectorAll<HTMLElement>("[data-card]");
     if (cards.length <= 1) return;
+
+    // Update current index (cycles through: 0, 1, 2, ..., length-1, 0, ...)
+    setCurrentIndex((prev) => (prev + 1) % itemsLength);
 
     const state = Flip.getState(cards);
     const first = cards[0];
@@ -76,5 +80,11 @@ export function useStackCardCycle(itemsLength: number) {
     [cycleCard],
   );
 
-  return { stackRef, cycleCard, handleTouchStart, handleTouchEnd };
+  return {
+    stackRef,
+    cycleCard,
+    handleTouchStart,
+    handleTouchEnd,
+    currentIndex,
+  };
 }

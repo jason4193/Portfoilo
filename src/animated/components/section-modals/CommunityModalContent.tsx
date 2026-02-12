@@ -44,10 +44,10 @@ function renderCommunityCard(item: CommunityItem) {
       header={item.role}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] text-xs sm:text-base">
+      <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] !text-sm sm:text-base">
         {item.title}
       </h3>
-      <p className="text-xs leading-relaxed text-[#0B2B4C]/90">
+      <p className="text-[0.5rem] sm:text-base leading-relaxed text-[#0B2B4C]/90">
         {item.description}
       </p>
     </InfoCard>
