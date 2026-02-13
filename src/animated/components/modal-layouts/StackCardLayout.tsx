@@ -36,7 +36,7 @@ export function StackCardLayout<T>({
   useSwipeHintAnimation({
     stackRef,
     shouldAnimate: items.length > 1 && showInstruction,
-    delay: 2.2,
+    delay: 1.8,
   });
 
   return (
@@ -85,7 +85,7 @@ export function StackCardLayout<T>({
           <CardStackIndicator
             total={items.length}
             currentIndex={currentIndex}
-            delay={instructionComplete ? 0 : 5.2}
+            delay={instructionComplete ? 0 : 5}
           />
         </div>
       )}
