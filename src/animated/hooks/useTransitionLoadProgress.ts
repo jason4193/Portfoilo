@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import { ACESFilmicToneMapping, SRGBColorSpace } from "three";
 import { usePortfolioModeStore } from "../../shared/stores";
+import { debugPerf } from "../../shared/utils/debug";
 import { TRANSITION_MIN_DURATION_MS } from "../constants/transition";
 
 interface TransitionProgressOptions {
@@ -80,5 +81,10 @@ export function useTransitionLoadProgress({ onProgress }: TransitionProgressOpti
       clampedReal > 0 ? Math.min(clampedReal, timeCap) : timeCap;
 
     onProgressRef.current?.(display);
+    debugPerf(
+      "transition-load-progress",
+      { display, real: clampedReal, timeCap },
+      500,
+    );
   });
 }

@@ -97,7 +97,8 @@
   ],
   "competitions": [
     {
-      "title": "2025 ACUCyS Jingle Shells CTF Competition - 10th Place",
+      "title": "2025 ACUCyS Jingle Shells CTF Competition",
+      "award": "10th Place",
       "date": "20 December - 21 December 2025",
       "description": "A 2 day CTF competition organised by Australian Council of University Cyber Societies.",
       "achievements": [
@@ -123,7 +124,8 @@
       ]
     },
     {
-      "title": "2025 DevSoc Flagship Hackathon - 1st Place (ShopLyft)",
+      "title": "2025 DevSoc Flagship Hackathon (ShopLyft)",
+      "award": "1st Place",
       "date": "29 September - 3 October 2025",
       "role": "Full-stack Developer",
       "description": "A 4 day hackathon organised by UNSW's Software Development Socity, and developed a webpage with a browser extension as a one-stop automated shopping assistant.",
@@ -186,7 +188,8 @@
       ]
     },
     {
-      "title": "UNSW's AI for Progress Hackathon - Top 5 (Grade-Able)",
+      "title": "UNSW's AI for Progress Hackathon (Grade-Able)",
+      "award": "Top 5",
       "date": "13 September - 14 September 2025",
       "role": "Full-stack Developer",
       "description": "A 2 day hackathon organised by UNSW Founders and developed a web extension to reorder the Google Search Results based on the website accessibility and user experience.",
@@ -227,7 +230,8 @@
       ]
     },
     {
-      "title": "Australian Signals Directorate CTF Competition - Top 10%",
+      "title": "Australian Signals Directorate CTF Competition",
+      "award": "Top 10%",
       "date": "7 - 8 September 2023",
       "description": "A 2 day CTF competition organised by Australian Signals Directorate and hosted in Sydney, Australia. I participated as a team member to solve the challenges and gain the top 10% of the competition.",
       "achievements": [
@@ -243,7 +247,8 @@
       "links": []
     },
     {
-      "title": "DownUnderCTF 2023 - Top 19%",
+      "title": "DownUnderCTF 2023",
+      "award": "Top 19%",
       "date": "1 - 3 September 2023",
       "description": "A 3 day CTF competition organised by DownUnderCTF and hosted in Sydney, Australia. I participated as a team member to solve the challenges and gain the top 19% of the competition.",
       "achievements": [
@@ -364,7 +369,7 @@
       "title": "Australian Cyber Conference Canberra 2025 Volunteering",
       "date": "17 - 19 March 2025",
       "role": "Event Assistant",
-      "description": "A 3 day conference organised by Australian Cyber Security Centre (ACSC) and hosted in Canberra, Australia. I volunteered as a event assistant to help the conference attendees to navigate the conference venue and assist with any questions they may have.",
+      "description": "A 3 day conference organised by Australian Cyber Security Centre (ACSC) and hosted in Canberra, Australia. I help the conference attendees to navigate the conference venue and assist with any questions they may have.",
       "achievements": [
         "Scheduled over 40 conference talks for the whole 2 days of the conference",
         "Served more than 20 conference delegates by providing general conference information during the event",

@@ -1,11 +1,18 @@
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, type RefObject } from "react";
+import { useMediaQuery } from "react-responsive";
 import { content } from "../../../shared/data/content";
 import { getMediaUrl } from "../../../shared/utils/media";
 import { InfoCard } from "../../../shared/components/InfoCard";
 import communityIcon from "../../assets/CommunitySectionIcon.png";
+import { BaseModalContent } from "./BaseModalContent";
+import { useModalContentAnimation } from "../../hooks/useModalContentAnimation";
+import { StackCardLayout } from "../modal-layouts/StackCardLayout";
+import { GridCardLayout } from "../modal-layouts/GridCardLayout";
+import { MOBILE_MAX_WIDTH } from "../../constants/mobile";
 
 interface CommunityModalContentProps {
+  overlayRef: RefObject<HTMLDivElement | null>;
+  panelRef: RefObject<HTMLDivElement | null>;
   accentColor: string;
   onClose: () => void;
 }
@@ -15,142 +22,104 @@ function CommunityIcon({ className }: { className?: string }) {
   return <img src={communityIcon} alt="" className={className} />;
 }
 
+type CommunityItem = NonNullable<
+  typeof content
+>["communityContributions"][number];
+
+function renderCommunityCard(item: CommunityItem) {
+  const firstImage = item.media?.find((m) => m.type === "image");
+  return (
+    <InfoCard
+      className="size-full"
+      imageClassName="max-h-[60%]"
+      imgClassName="h-full object-cover object-center"
+      image={
+        firstImage
+          ? {
+              src: getMediaUrl(firstImage.src),
+              alt: firstImage.alt ?? item.title,
+            }
+          : undefined
+      }
+      header={item.role}
+      contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
+    >
+      <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] !text-sm sm:text-base">
+        {item.title}
+      </h3>
+      <p className="text-[0.5rem] sm:text-base leading-relaxed text-[#0B2B4C]/90">
+        {item.description}
+      </p>
+    </InfoCard>
+  );
+}
+
 export function CommunityModalContent({
+  overlayRef,
+  panelRef,
   accentColor,
   onClose,
 }: CommunityModalContentProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLDivElement>(null);
 
+  const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
   const contributions = content?.communityContributions ?? [];
 
-  useEffect(() => {
-    const header = headerRef.current;
-    const intro = introRef.current;
-    const cards = cardsRef.current;
-    const close = closeRef.current;
-    if (!header || !intro || !cards || !close) return;
-
-    const cardEls = cards.querySelectorAll<HTMLElement>("[data-card]");
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        delay: 0.5,
-      });
-
-      tl.fromTo(
-        header,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.4 },
-      )
-        .fromTo(
-          intro,
-          { opacity: 0, y: 8 },
-          { opacity: 1, y: 0, duration: 0.35 },
-          "-=0.2",
-        )
-        .fromTo(
-          cardEls,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.12,
-            ease: "power2.out",
-          },
-          "-=0.1",
-        )
-        .fromTo(
-          close,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.35 },
-          "-=0.15",
-        );
-    });
-
-    return () => ctx.revert();
-  }, []);
+  // Standardized modal content animation
+  useModalContentAnimation({
+    headerRef,
+    closeRef,
+    introRef,
+    cardsRef,
+    stackRef,
+    isMobile,
+  });
 
   return (
-    <div className="flex size-full flex-col overflow-hidden rounded-2xl bg-[#FCE8E7] text-[#0B2B4C]">
-      {/* Header: salmon bar with megaphone + title */}
-      <div
-        ref={headerRef}
-        className="flex shrink-0 items-center rounded-t-2xl px-4 py-3 sm:px-6 sm:py-4"
-        style={{ backgroundColor: accentColor }}
+    <BaseModalContent
+      overlayRef={overlayRef}
+      panelRef={panelRef}
+      icon={<CommunityIcon className="size-18 object-contain" />}
+      title="Community"
+      accentColor={accentColor}
+      backgroundColor="#FCE8E7"
+      headerRef={headerRef}
+      closeRef={closeRef}
+      onClose={onClose}
+      contentClassName="flex min-h-0 flex-1 flex-col gap-1 sm:gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8"
+    >
+      <p
+        ref={introRef}
+        className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
       >
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/40 text-[#0B2B4C] sm:size-14">
-            <CommunityIcon className="size-18 object-contain" />
-          </div>
-          <p className="!m-0 text-xl font-bold italic text-[#0B2B4C] sm:text-2xl md:text-3xl">
-            Community
-          </p>
+        Here&apos;s how I&apos;ve engaged with various communities and
+        contributed over the years:
+      </p>
+
+      {isMobile ? (
+        <div ref={stackRef} className="flex-1 min-h-0">
+          <StackCardLayout
+            items={contributions}
+            renderCard={renderCommunityCard}
+            getItemKey={(item) => item.title}
+            swipeLabel="Swipe left to see next community contribution"
+          />
         </div>
-      </div>
-
-      {/* Main content */}
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8">
-        <p
-          ref={introRef}
-          className="text-base leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
-        >
-          Here&apos;s how I&apos;ve engaged with various communities and
-          contributed over the years:
-        </p>
-
-        <div
-          ref={cardsRef}
-          className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-hidden sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4"
-        >
-          {contributions.map((item) => {
-            const firstImage = item.media?.find((m) => m.type === "image");
-            return (
-              <div
-                key={item.title}
-                data-card
-                className="w-full shrink-0 sm:min-w-0 sm:flex-1 sm:basis-[min(100%,20rem)]"
-              >
-                <InfoCard
-                  className="size-full"
-                  imageClassName="[&>img]:!max-h-[min(12vh,8rem)]"
-                  image={
-                    firstImage
-                      ? {
-                          src: getMediaUrl(firstImage.src),
-                          alt: firstImage.alt ?? item.title,
-                        }
-                      : undefined
-                  }
-                  header={item.role}
-                  contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
-                >
-                  <h3 className="mb-1 font-bold text-[#0B2B4C] sm:text-base">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-[#0B2B4C]/90">
-                    {item.description}
-                  </p>
-                </InfoCard>
-              </div>
-            );
-          })}
+      ) : (
+        <div ref={cardsRef} className="flex-1 min-h-0">
+          <GridCardLayout
+            items={contributions}
+            renderCard={renderCommunityCard}
+            getItemKey={(item) => item.title}
+            gridMode="equal"
+            enforceAspectRatio={false}
+          />
         </div>
-      </div>
-
-      {/* Close button */}
-      <div
-        ref={closeRef}
-        className="flex shrink-0 justify-center px-4 pb-4 sm:px-6 sm:pb-6"
-      >
-        <button className="btn-panel-close" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
+      )}
+    </BaseModalContent>
   );
 }

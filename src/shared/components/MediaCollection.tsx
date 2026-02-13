@@ -4,6 +4,7 @@ import { getMediaUrl } from "../utils/media";
 import { getDominantColor } from "../utils/colorExtraction";
 import YouTube from "react-youtube";
 import { extractYouTubeVideoId } from "../utils/youtube";
+import { debugPerf } from "../utils/debug";
 
 interface MediaCollectionProps {
   media?: Media[];
@@ -120,6 +121,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
         // Jump logic: when we're near the edges, jump to the middle set
         // Jump when we're less than one item width from the start of first set
         if (currentSet === 0 && positionInSet < itemWidthWithGap) {
+          debugPerf("media-scroll-jump", { direction: "start" }, 500);
           isScrollingRef.current = true;
           // Jump to same position in second set
           desktopContainer.scrollLeft = singleSetWidth + positionInSet;
@@ -134,6 +136,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
             positionInSet > singleSetWidth - itemWidthWithGap * 3) ||
           distanceFromEnd < itemWidthWithGap * 3
         ) {
+          debugPerf("media-scroll-jump", { direction: "end" }, 500);
           isScrollingRef.current = true;
           // Calculate position in the current set and jump to same position in second set
           const normalizedPosition = scrollLeft % singleSetWidth;
@@ -226,6 +229,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
     if (!hasMedia) return;
 
     const extractColors = async () => {
+      debugPerf("media-color-extract-start", { count: media.length });
       const colorMap = new Map<string, string>();
 
       for (const item of media) {
@@ -242,6 +246,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
       }
 
       setDominantColors(colorMap);
+      debugPerf("media-color-extract-done", { count: colorMap.size });
     };
 
     extractColors();

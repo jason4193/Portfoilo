@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import * as THREE from "three";
+import { debugPerf } from "../../shared/utils/debug";
 import {
   BACK_MOVE_DURATION,
   CAMERA_BACK_POSITION,
@@ -46,7 +47,7 @@ export function useSectionFocusAnimation({
     gsap.killTweensOf(overlay);
     gsap.to(overlay, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.025,
       ease: "power2.inOut",
       onComplete: () => {
         overlay.style.pointerEvents = "none";
@@ -59,7 +60,10 @@ export function useSectionFocusAnimation({
     gsap.set(overlay, { opacity: 0, pointerEvents: "none" });
   };
 
-  const showModalOverlay = (overlay: HTMLDivElement, timeline: gsap.core.Timeline) => {
+  const showModalOverlay = (
+    overlay: HTMLDivElement,
+    timeline: gsap.core.Timeline,
+  ) => {
     timeline.set(
       overlay,
       { pointerEvents: "auto" },
@@ -76,7 +80,7 @@ export function useSectionFocusAnimation({
     gsap.killTweensOf(overlay);
     gsap.to(overlay, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.025,
       ease: "power2.inOut",
       onComplete: () => {
         overlay.style.backdropFilter = "blur(0)";
@@ -104,7 +108,10 @@ export function useSectionFocusAnimation({
     }
   };
 
-  const showDimOverlay = (overlay: HTMLDivElement, timeline: gsap.core.Timeline) => {
+  const showDimOverlay = (
+    overlay: HTMLDivElement,
+    timeline: gsap.core.Timeline,
+  ) => {
     timeline.to(
       overlay,
       {
@@ -158,13 +165,17 @@ export function useSectionFocusAnimation({
 
     // --- Restore flow: return camera + hide overlays ---
     if (!focusTarget || !isActive) {
+      debugPerf("focus-restore-start", {
+        isActive,
+        hasFocusTarget: Boolean(focusTarget),
+      });
       const restorePos =
         lastCameraPositionRef.current ?? defaultPositionRef.current;
       const restoreTarget = lastTargetRef.current ?? defaultTargetRef.current;
       if (!restorePos) return;
 
       resetTimelineRef.current = gsap.timeline({
-        defaults: { duration: 0.6, ease: "power2.out" },
+        defaults: { duration: 1, ease: "power2.out" },
       });
 
       resetTimelineRef.current.to(camera.position, {
@@ -208,6 +219,9 @@ export function useSectionFocusAnimation({
 
     // --- Focus flow: move camera + show overlays ---
     const target = new THREE.Vector3(...focusTarget);
+    debugPerf("focus-animate-start", {
+      focusTarget: focusTarget.join(","),
+    });
     if (!lastCameraPositionRef.current) {
       lastCameraPositionRef.current = camera.position.clone();
     }
