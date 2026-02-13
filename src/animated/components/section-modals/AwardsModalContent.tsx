@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import { content } from "../../../shared/data/content";
 import { getMediaUrl } from "../../../shared/utils/media";
 import { InfoCard } from "../../../shared/components/InfoCard";
-import awardIcon from "../../assets/AwardSectionIcon.png";
+import awardIcon from "../../assets/AwardSectionIcon.webp";
 import { BaseModalContent } from "./BaseModalContent";
 import { useModalContentAnimation } from "../../hooks/useModalContentAnimation";
 import { StackCardLayout } from "../modal-layouts/StackCardLayout";
