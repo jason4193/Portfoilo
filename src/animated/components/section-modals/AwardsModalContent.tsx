@@ -150,7 +150,7 @@ export function AwardsModalContent({
           <StackCardLayout
             items={competitions}
             renderCard={renderMobileCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             swipeLabel="Swipe left to see next award"
           />
         </div>
@@ -160,7 +160,7 @@ export function AwardsModalContent({
             items={competitions}
             groupFn={groupCardsForRows}
             renderCard={renderDesktopCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

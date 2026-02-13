@@ -112,7 +112,7 @@ export function WorkingModalContent({
           <StackCardLayout
             items={workExperiences}
             renderCard={renderWorkingCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             swipeLabel="Swipe left to see next experience"
           />
         </div>
@@ -121,7 +121,7 @@ export function WorkingModalContent({
           <GridCardLayout
             items={workExperiences}
             renderCard={renderWorkingCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

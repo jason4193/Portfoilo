@@ -63,7 +63,7 @@ export function CardStackIndicator({
         });
       }
     });
-  }, [currentIndex]);
+  }, [currentIndex, total]);
 
   return (
     <div

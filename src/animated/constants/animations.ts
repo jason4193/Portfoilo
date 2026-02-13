@@ -87,11 +87,11 @@ export const MODAL = {
 export const INTERACTION_3D = {
   /** Hover scale multiplier */
   HOVER_SCALE: 1.02,
-  /** Hover lift distance (negative = up) */
+  /** Hover lift distance in Y-axis (negative = up/toward camera) */
   HOVER_LIFT: -0.1,
   /** Press scale multiplier */
   PRESS_SCALE: 0.98,
-  /** Press depth (negative = down) */
+  /** Press depth in Y-axis (negative = up/toward camera) */
   PRESS_DEPTH: -0.02,
   /** Image tilt strength (degrees) */
   TILT_STRENGTH: 10,

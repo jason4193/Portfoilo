@@ -110,7 +110,7 @@ export function EducationModalContent({
           <StackCardLayout
             items={academics}
             renderCard={renderEducationCard}
-            getItemKey={(item) => item.institution}
+            getItemKey={(item, index) => `${item.institution}-${index}`}
             swipeLabel="Swipe left to see next institution"
           />
         </div>
@@ -119,7 +119,7 @@ export function EducationModalContent({
           <GridCardLayout
             items={academics}
             renderCard={renderEducationCard}
-            getItemKey={(item) => item.institution}
+            getItemKey={(item, index) => `${item.institution}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

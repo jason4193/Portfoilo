@@ -44,7 +44,7 @@ export function useCardStack(itemsLength: number) {
     });
 
     Flip.from(state, {
-      targets: cards,
+      targets: updatedCards,
       ease: "sine.inOut",
       absolute: true,
       duration: 0.4,

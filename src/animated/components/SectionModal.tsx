@@ -84,7 +84,7 @@ export function SectionModal({
         />
       );
     default:
-      // TODO: Implement default modal content for other sections
+      // Safety net for unexpected SectionId values (all valid sections handled above)
       return null;
   }
 }

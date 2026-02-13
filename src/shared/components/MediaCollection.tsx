@@ -282,7 +282,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
             />
           </div>
         );
-      case "video":
+      case "video": {
         // Check if it's a YouTube URL
         const videoId = extractYouTubeVideoId(mediaUrl);
 
@@ -322,6 +322,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
             />
           </div>
         );
+      }
       case "gif":
         return (
           <div className={frameClass} style={{ backgroundColor: bgColor }}>

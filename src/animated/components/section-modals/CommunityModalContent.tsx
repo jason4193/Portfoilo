@@ -106,7 +106,7 @@ export function CommunityModalContent({
           <StackCardLayout
             items={contributions}
             renderCard={renderCommunityCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             swipeLabel="Swipe left to see next community contribution"
           />
         </div>
@@ -115,7 +115,7 @@ export function CommunityModalContent({
           <GridCardLayout
             items={contributions}
             renderCard={renderCommunityCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

@@ -120,7 +120,7 @@ export function ProjectsModalContent({
           <StackCardLayout
             items={projects}
             renderCard={renderProjectCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             swipeLabel="Swipe left to see next project"
           />
         </div>
@@ -129,7 +129,7 @@ export function ProjectsModalContent({
           <GridCardLayout
             items={projects}
             renderCard={renderProjectCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

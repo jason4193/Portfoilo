@@ -49,5 +49,6 @@ export function useCameraTracker({
       { fps, updatesThisSecond: updatesThisSecondRef.current },
       1000,
     );
+    updatesThisSecondRef.current = 0;
   });
 }
