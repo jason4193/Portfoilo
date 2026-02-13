@@ -33,6 +33,8 @@ export function useModalContent({
   isMobile,
   delay = 0.5,
 }: UseModalContentAnimationOptions) {
+  const runBlurMorph = useBlurMorph({ cardsRef });
+
   useModalEntry({
     headerRef,
     closeRef,
@@ -58,8 +60,8 @@ export function useModalContent({
           { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
           "-=0.1",
         );
-      } else if (cardsRef) {
-        useBlurMorph({ cardsRef, timeline: tl });
+      } else {
+        runBlurMorph(tl);
       }
     },
   });
