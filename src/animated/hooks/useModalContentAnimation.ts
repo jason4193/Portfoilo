@@ -1,5 +1,6 @@
 import { type RefObject } from "react";
 import { useModalEntryAnimation } from "./useModalEntryAnimation";
+import { useBlurMorphAnimation } from "./useCardAnimations";
 
 interface UseModalContentAnimationOptions {
   /** Ref to the modal header element */
@@ -38,7 +39,6 @@ export function useModalContentAnimation({
     dependencies: [isMobile],
     customContentAnimation: (tl) => {
       const intro = introRef.current;
-      const cards = cardsRef?.current;
       const stack = stackRef?.current;
 
       if (intro) {
@@ -57,22 +57,8 @@ export function useModalContentAnimation({
           { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
           "-=0.1",
         );
-      } else if (cards) {
-        const cardEls = cards.querySelectorAll<HTMLElement>("[data-card]");
-        if (cardEls.length > 0) {
-          tl.fromTo(
-            cardEls,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              stagger: 0.12,
-              ease: "power2.out",
-            },
-            "-=0.1",
-          );
-        }
+      } else if (cardsRef) {
+        useBlurMorphAnimation({ cardsRef, timeline: tl });
       }
     },
   });
