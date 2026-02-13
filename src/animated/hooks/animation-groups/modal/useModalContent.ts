@@ -1,4 +1,4 @@
-import { type RefObject } from "react";
+import { useCallback, type RefObject } from "react";
 
 import { useModalEntry } from "./useModalEntry";
 import { useBlurMorph } from "./useCardGrid";
@@ -34,13 +34,8 @@ export function useModalContent({
   delay = 0.5,
 }: UseModalContentAnimationOptions) {
   const runBlurMorph = useBlurMorph({ cardsRef });
-
-  useModalEntry({
-    headerRef,
-    closeRef,
-    delay,
-    dependencies: [isMobile],
-    customContentAnimation: (tl) => {
+  const customContentAnimation = useCallback(
+    (tl: gsap.core.Timeline) => {
       const intro = introRef.current;
       const stack = stackRef?.current;
 
@@ -64,5 +59,14 @@ export function useModalContent({
         runBlurMorph(tl);
       }
     },
+    [introRef, stackRef, isMobile, runBlurMorph],
+  );
+
+  useModalEntry({
+    headerRef,
+    closeRef,
+    delay,
+    dependencies: [isMobile],
+    customContentAnimation,
   });
 }

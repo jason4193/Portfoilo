@@ -1,4 +1,4 @@
-import { type RefObject } from "react";
+import { useCallback, type RefObject } from "react";
 
 interface CardAnimationOptions {
   /** Ref to the cards container (desktop) */
@@ -11,7 +11,7 @@ interface CardAnimationOptions {
  * Creates a soft, elegant, modern effect like objects materializing from fog
  */
 export function useBlurMorph({ cardsRef }: CardAnimationOptions) {
-  return (timeline?: gsap.core.Timeline) => {
+  return useCallback((timeline?: gsap.core.Timeline) => {
     if (!timeline) return;
 
     const cards = cardsRef?.current;
@@ -42,5 +42,5 @@ export function useBlurMorph({ cardsRef }: CardAnimationOptions) {
       },
       "-=0.1",
     );
-  };
+  }, [cardsRef]);
 }

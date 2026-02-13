@@ -22,6 +22,7 @@ export function useCameraTracker({
   const interval = 1 / fps;
 
   const updatesThisSecondRef = useRef(0);
+  const lastResetRef = useRef(0);
 
   useFrame((_, delta) => {
     elapsedRef.current += delta;
@@ -44,11 +45,20 @@ export function useCameraTracker({
     lastPositionRef.current = [x, y, z];
     setCameraPosition([x, y, z]);
     updatesThisSecondRef.current += 1;
-    debugPerf(
-      "camera-pose-update",
-      { fps, updatesThisSecond: updatesThisSecondRef.current },
-      1000,
-    );
-    updatesThisSecondRef.current = 0;
+
+    const now = Date.now();
+    if (lastResetRef.current === 0) {
+      lastResetRef.current = now;
+    }
+
+    if (now - lastResetRef.current >= 1000) {
+      debugPerf(
+        "camera-pose-update",
+        { fps, updatesThisSecond: updatesThisSecondRef.current },
+        1000,
+      );
+      updatesThisSecondRef.current = 0;
+      lastResetRef.current = now;
+    }
   });
 }

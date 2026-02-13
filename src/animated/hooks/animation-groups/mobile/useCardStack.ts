@@ -21,6 +21,8 @@ export function useCardStack(itemsLength: number) {
   const stackRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const safeItemsLength =
+    Number.isInteger(itemsLength) && itemsLength > 0 ? itemsLength : 1;
 
   const cycleCard = useCallback(() => {
     const stack = stackRef.current;
@@ -28,9 +30,10 @@ export function useCardStack(itemsLength: number) {
 
     const cards = stack.querySelectorAll<HTMLElement>("[data-card]");
     if (cards.length <= 1) return;
+    if (!Number.isInteger(itemsLength) || itemsLength <= 0) return;
 
     // Update current index (cycles through: 0, 1, 2, ..., length-1, 0, ...)
-    setCurrentIndex((prev) => (prev + 1) % itemsLength);
+    setCurrentIndex((prev) => (prev + 1) % safeItemsLength);
 
     const state = Flip.getState(cards);
     const first = cards[0];
@@ -40,7 +43,7 @@ export function useCardStack(itemsLength: number) {
     updatedCards.forEach((card, index) => {
       card.style.left = `${index * STACK_LEFT_OFFSET}px`;
       card.style.top = `${index * STACK_TOP_OFFSET}px`;
-      card.style.zIndex = `${itemsLength - index}`;
+      card.style.zIndex = `${safeItemsLength - index}`;
     });
 
     Flip.from(state, {
@@ -65,7 +68,7 @@ export function useCardStack(itemsLength: number) {
           ease: "power2.out",
         }),
     });
-  }, [itemsLength]);
+  }, [itemsLength, safeItemsLength]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;

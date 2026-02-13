@@ -38,7 +38,7 @@ export function useModalEntry({
     const header = headerRef?.current;
     const content = contentRef?.current;
     const close = closeRef.current;
-    
+
     if (!close) return;
 
     const ctx = gsap.context(() => {
@@ -60,7 +60,8 @@ export function useModalEntry({
       if (customContentAnimation) {
         customContentAnimation(tl);
       } else if (content && contentSelector && stagger) {
-        const contentItems = content.querySelectorAll<HTMLElement>(contentSelector);
+        const contentItems =
+          content.querySelectorAll<HTMLElement>(contentSelector);
         if (contentItems.length > 0) {
           tl.fromTo(
             contentItems,
@@ -94,6 +95,14 @@ export function useModalEntry({
     });
 
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, dependencies);
+  }, [
+    headerRef,
+    contentRef,
+    closeRef,
+    contentSelector,
+    stagger,
+    customContentAnimation,
+    delay,
+    ...dependencies,
+  ]);
 }
