@@ -1,9 +1,12 @@
 import { type ReactNode, useState } from "react";
-import { useStackCardCycle } from "../../hooks/useStackCardCycle";
-import { STACK_LEFT_OFFSET, STACK_TOP_OFFSET } from "../../constants/mobile";
+
+import { useStackCardCycle, useSwipeHintAnimation } from "@animated/hooks";
+import {
+  STACK_LEFT_OFFSET,
+  STACK_TOP_OFFSET,
+} from "@animated/constants/mobile";
 import { CardStackIndicator } from "./CardStackIndicator";
 import { SwipeInstruction } from "./SwipeInstruction";
-import { useSwipeHintAnimation } from "../../hooks/useSwipeHintAnimation";
 
 interface StackCardLayoutProps<T> {
   /** Array of items to render in the stack */

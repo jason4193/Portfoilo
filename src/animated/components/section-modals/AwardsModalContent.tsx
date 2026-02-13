@@ -1,17 +1,18 @@
 import { useRef, type RefObject } from "react";
 import { useMediaQuery } from "react-responsive";
-import { content } from "../../../shared/data/content";
-import { getMediaUrl } from "../../../shared/utils/media";
-import { InfoCard } from "../../../shared/components/InfoCard";
-import awardIcon from "../../assets/AwardSectionIcon.webp";
+
+import { content } from "@shared/data/content";
+import { getMediaUrl } from "@shared/utils/media";
+import { InfoCard } from "@shared/components/InfoCard";
+import awardIcon from "@animated/assets/AwardSectionIcon.webp";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalContentAnimation } from "../../hooks/useModalContentAnimation";
-import { StackCardLayout } from "../modal-layouts/StackCardLayout";
+import { useModalContentAnimation } from "@animated/hooks";
+import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import {
   GridCardLayout,
   type GridPlacement,
-} from "../modal-layouts/GridCardLayout";
-import { MOBILE_MAX_WIDTH } from "../../constants/mobile";
+} from "@animated/components/modal-layouts/GridCardLayout";
+import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
 
 interface AwardsModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;

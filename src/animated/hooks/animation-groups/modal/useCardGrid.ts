@@ -12,10 +12,7 @@ interface CardAnimationOptions {
  * Cards fade in with blur reduction and subtle scale
  * Creates a soft, elegant, modern effect like objects materializing from fog
  */
-export function useBlurMorphAnimation({
-  cardsRef,
-  timeline,
-}: CardAnimationOptions) {
+export function useBlurMorph({ cardsRef, timeline }: CardAnimationOptions) {
   const cards = cardsRef.current;
   if (!cards) return;
 

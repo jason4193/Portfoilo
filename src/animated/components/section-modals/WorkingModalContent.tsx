@@ -1,14 +1,15 @@
 import { useRef, type RefObject } from "react";
 import { useMediaQuery } from "react-responsive";
-import { content } from "../../../shared/data/content";
-import { getMediaUrl } from "../../../shared/utils/media";
-import { InfoCard } from "../../../shared/components/InfoCard";
+
+import { content } from "@shared/data/content";
+import { getMediaUrl } from "@shared/utils/media";
+import { InfoCard } from "@shared/components/InfoCard";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalContentAnimation } from "../../hooks/useModalContentAnimation";
-import { StackCardLayout } from "../modal-layouts/StackCardLayout";
-import { GridCardLayout } from "../modal-layouts/GridCardLayout";
-import { MOBILE_MAX_WIDTH } from "../../constants/mobile";
-import workingIcon from "../../assets/WorkingSectionIcon.webp";
+import { useModalContentAnimation } from "@animated/hooks";
+import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
+import { GridCardLayout } from "@animated/components/modal-layouts/GridCardLayout";
+import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
+import workingIcon from "@animated/assets/WorkingSectionIcon.webp";
 
 interface WorkingModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;

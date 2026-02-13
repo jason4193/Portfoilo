@@ -3,14 +3,15 @@ import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { DirectionalLightHelper, AxesHelper, DirectionalLight } from "three";
+
 import {
   DESKTOP_MIN_WIDTH,
   ORBIT_MAX_DISTANCE_DESKTOP,
   ORBIT_MAX_DISTANCE_MOBILE,
   ORBIT_MIN_DISTANCE_DESKTOP,
   ORBIT_MIN_DISTANCE_MOBILE,
-} from "../constants/scene";
-import { useCameraPoseTracker } from "../hooks/useCameraPoseTracker";
+} from "@animated/constants/scene";
+import { useCameraPoseTracker } from "@animated/hooks";
 
 function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
   const lastLogRef = useRef(0);

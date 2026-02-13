@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { useLoadingProgressStore, usePortfolioModeStore } from "../../shared/stores";
-import { TRANSITION_MIN_DURATION_MS } from "../constants/transition";
-import { useTransitionCleanup } from "../hooks/useTransitionCleanup";
-import { useTransitionLoadProgress } from "../hooks/useTransitionLoadProgress";
+
+import { useLoadingProgressStore, usePortfolioModeStore } from "@shared/stores";
+import { TRANSITION_MIN_DURATION_MS } from "@animated/constants/transition";
+import { useTransitionCleanup } from "@animated/hooks/useTransitionCleanup";
+import { useSceneTransition as useTransitionLoadProgress } from "@animated/hooks";
 
 // Utility-like component: no UI, just wires transition hooks inside Canvas.
 export function TransitionProgressController() {

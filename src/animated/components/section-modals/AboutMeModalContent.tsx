@@ -1,10 +1,11 @@
 import { useRef, type RefObject } from "react";
-import { content } from "../../../shared/data/content";
-import jasonPhoto from "../../../shared/assets/Jason_2.webp";
-import aboutMeIcon from "../../assets/AboutMeSectionIcon.webp";
-import { InfoCard } from "../../../shared/components/InfoCard";
+
+import { content } from "@shared/data/content";
+import jasonPhoto from "@shared/assets/Jason_2.webp";
+import aboutMeIcon from "@animated/assets/AboutMeSectionIcon.webp";
+import { InfoCard } from "@shared/components/InfoCard";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalEntryAnimation } from "../../hooks/useModalEntryAnimation";
+import { useModalEntryAnimation } from "@animated/hooks";
 
 interface AboutMeModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -85,7 +86,7 @@ export function AboutMeModalContent({
     headerRef,
     closeRef,
     delay: 1,
-    customContentAnimation: (tl) => {
+    customContentAnimation: (tl: gsap.core.Timeline) => {
       const left = leftRef.current;
       const right = rightRef.current;
 

@@ -1,6 +1,7 @@
 import { useThree } from "@react-three/fiber";
-import { useSectionFocusAnimation } from "../hooks/useSectionFocusAnimation";
-import { useSectionSelectionStore } from "../../shared/stores";
+
+import { useSectionFocusAnimation } from "@animated/hooks";
+import { useSectionSelectionStore } from "@shared/stores";
 
 interface SectionFocusControllerProps {
   controlsRef: React.RefObject<any>; // Orbit controls ref for updates
