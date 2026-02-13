@@ -13,7 +13,7 @@ interface SwipeInstructionProps {
  * Shows "← Swipe to see more" hint
  */
 export function SwipeInstruction({
-  delay = 1.8,
+  delay = 1.5,
   onComplete,
 }: SwipeInstructionProps) {
   const textRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ export function SwipeInstruction({
       force3D: true,
     });
     // Hold for a moment
-    tl.to(text, { duration: 1 });
+    tl.to(text, { duration: 0.5 });
     // Fade out
     tl.to(text, {
       opacity: 0,
@@ -86,7 +86,7 @@ export function SwipeInstruction({
   return (
     <div
       ref={textRef}
-      className="absolute left-0 right-0 bottom-14 flex items-center justify-center gap-2 text-sm text-[#0B2B4C]/70 pointer-events-none"
+      className="absolute left-0 right-0 bottom-1 flex items-center justify-center gap-2 text-sm text-[#0B2B4C]/70 pointer-events-none"
       style={{ isolation: "isolate" }}
     >
       <span className="text-base">←</span>

@@ -14,7 +14,7 @@ interface UseSwipeHintAnimationOptions {
  * Hook for animating a swipe hint on the card stack
  * Demonstrates left-swipe gesture by moving the front card slightly left and back
  */
-export function useSwipeHintAnimation({
+export function useSwipeHint({
   stackRef,
   shouldAnimate,
   delay = 2,

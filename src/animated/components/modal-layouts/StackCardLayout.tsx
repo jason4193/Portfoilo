@@ -1,9 +1,12 @@
 import { type ReactNode, useState } from "react";
-import { useStackCardCycle } from "../../hooks/useStackCardCycle";
-import { STACK_LEFT_OFFSET, STACK_TOP_OFFSET } from "../../constants/mobile";
+
+import { useCardStack, useSwipeHint } from "@animated/hooks";
+import {
+  STACK_LEFT_OFFSET,
+  STACK_TOP_OFFSET,
+} from "@animated/constants/mobile";
 import { CardStackIndicator } from "./CardStackIndicator";
 import { SwipeInstruction } from "./SwipeInstruction";
-import { useSwipeHintAnimation } from "../../hooks/useSwipeHintAnimation";
 
 interface StackCardLayoutProps<T> {
   /** Array of items to render in the stack */
@@ -27,16 +30,16 @@ export function StackCardLayout<T>({
   swipeLabel,
 }: StackCardLayoutProps<T>) {
   const { stackRef, handleTouchStart, handleTouchEnd, currentIndex } =
-    useStackCardCycle(items.length);
+    useCardStack(items.length);
 
   const [instructionComplete, setInstructionComplete] = useState(false);
   const [showInstruction, setShowInstruction] = useState(true);
 
   // Swipe hint animation - runs after modal entry animation completes
-  useSwipeHintAnimation({
+  useSwipeHint({
     stackRef,
     shouldAnimate: items.length > 1 && showInstruction,
-    delay: 2.2,
+    delay: 1.8,
   });
 
   return (
@@ -85,7 +88,7 @@ export function StackCardLayout<T>({
           <CardStackIndicator
             total={items.length}
             currentIndex={currentIndex}
-            delay={instructionComplete ? 0 : 5.2}
+            delay={instructionComplete ? 0 : 5}
           />
         </div>
       )}

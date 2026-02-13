@@ -1,7 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import type { ReactNode } from "react";
-import gsap from "gsap";
-import { debugPerf } from "../utils/debug";
+
+import { useImageTilt } from "@animation-hooks/interactive/useImageTilt";
 
 interface InfoCardImage {
   src: string;
@@ -29,8 +29,6 @@ interface InfoCardProps {
   contentSectionClassName?: string;
 }
 
-const TILT_STRENGTH = 10;
-
 export function InfoCard({
   image,
   imageClassName,
@@ -46,53 +44,24 @@ export function InfoCard({
   const imgRef = useRef<HTMLImageElement>(null);
   const hasContent = header || (listItems && listItems.length > 0) || children;
 
+  // Use the extracted tilt animation hook
+  useImageTilt({
+    wrapperRef,
+    imgRef,
+    hasImage: !!image,
+  });
+
   // Base img classes always applied
   const baseImgClasses = "rounded-2xl w-full will-change-transform";
-  
+
   // Default sizing classes - only applied when no custom imgClassName provided
-  const defaultImgSizingClasses = "object-cover aspect-[4/3] min-h-[20vh] sm:min-h-[35vh]";
-  
+  const defaultImgSizingClasses =
+    "object-cover aspect-[4/3] min-h-[20vh] sm:min-h-[35vh]";
+
   // If imgClassName is provided, consumer has full control over sizing
-  const finalImgClasses = imgClassName 
+  const finalImgClasses = imgClassName
     ? `${baseImgClasses} ${imgClassName}`
     : `${baseImgClasses} ${defaultImgSizingClasses}`;
-
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    const img = imgRef.current;
-    if (!wrapper || !img || !image) return;
-
-    debugPerf("infocard-tilt-enabled", { src: image.src }, 1000);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = wrapper.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(img, {
-        rotateY: x * TILT_STRENGTH,
-        rotateX: -y * TILT_STRENGTH,
-        duration: 0.4,
-        ease: "power2.out",
-        overwrite: true,
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(img, {
-        rotateX: 0,
-        rotateY: 0,
-        duration: 0.6,
-        ease: "power2.out",
-      });
-    };
-
-    wrapper.addEventListener("mousemove", handleMouseMove);
-    wrapper.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      wrapper.removeEventListener("mousemove", handleMouseMove);
-      wrapper.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, [image]);
 
   return (
     <div

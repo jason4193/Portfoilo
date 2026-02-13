@@ -1,17 +1,18 @@
 import { useRef, type RefObject } from "react";
 import { useMediaQuery } from "react-responsive";
-import { content } from "../../../shared/data/content";
-import { getMediaUrl } from "../../../shared/utils/media";
-import { InfoCard } from "../../../shared/components/InfoCard";
-import awardIcon from "../../assets/AwardSectionIcon.webp";
+
+import { content } from "@shared/data/content";
+import { getMediaUrl } from "@shared/utils/media";
+import { InfoCard } from "@shared/components/InfoCard";
+import awardIcon from "@animated/assets/AwardSectionIcon.webp";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalContentAnimation } from "../../hooks/useModalContentAnimation";
-import { StackCardLayout } from "../modal-layouts/StackCardLayout";
+import { useModalContent } from "@animated/hooks";
+import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import {
   GridCardLayout,
   type GridPlacement,
-} from "../modal-layouts/GridCardLayout";
-import { MOBILE_MAX_WIDTH } from "../../constants/mobile";
+} from "@animated/components/modal-layouts/GridCardLayout";
+import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
 
 interface AwardsModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -114,7 +115,7 @@ export function AwardsModalContent({
   const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
 
   // Standardized modal content animation
-  useModalContentAnimation({
+  useModalContent({
     headerRef,
     closeRef,
     introRef,
@@ -149,7 +150,7 @@ export function AwardsModalContent({
           <StackCardLayout
             items={competitions}
             renderCard={renderMobileCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             swipeLabel="Swipe left to see next award"
           />
         </div>
@@ -159,7 +160,7 @@ export function AwardsModalContent({
             items={competitions}
             groupFn={groupCardsForRows}
             renderCard={renderDesktopCard}
-            getItemKey={(item) => item.title}
+            getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}
           />

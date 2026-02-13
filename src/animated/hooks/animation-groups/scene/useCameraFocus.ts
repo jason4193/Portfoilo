@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import * as THREE from "three";
-import { debugPerf } from "../../shared/utils/debug";
+
+import { debugPerf } from "@shared/utils/debug";
 import {
   BACK_MOVE_DURATION,
   CAMERA_BACK_POSITION,
@@ -12,7 +13,7 @@ import {
   FOCUS_Z,
   MODAL_EXPAND_DURATION,
   MODAL_START_OFFSET,
-} from "../constants/scene";
+} from "@animated/constants/scene";
 
 interface UseSectionFocusAnimationProps {
   camera: THREE.Camera; // Three.js camera instance reference
@@ -24,7 +25,7 @@ interface UseSectionFocusAnimationProps {
   modalPanelRef?: React.RefObject<HTMLDivElement | null>; // Modal panel container ref
 }
 
-export function useSectionFocusAnimation({
+export function useCameraFocus({
   camera,
   focusTarget,
   isActive,

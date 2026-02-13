@@ -2,11 +2,23 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/Portfoilo/",
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@animated": path.resolve(__dirname, "./src/animated"),
+      "@shared": path.resolve(__dirname, "./src/shared"),
+      "@markdown": path.resolve(__dirname, "./src/markdown"),
+      "@animation-hooks": path.resolve(
+        __dirname,
+        "./src/animated/hooks/animation-groups",
+      ),
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",
@@ -22,7 +34,10 @@ export default defineConfig({
         manualChunks: (id: string) => {
           // Split Three.js and related libraries into separate chunks
           if (id.indexOf("node_modules") !== -1) {
-            if (id.indexOf("three") !== -1 || id.indexOf("@react-three") !== -1) {
+            if (
+              id.indexOf("three") !== -1 ||
+              id.indexOf("@react-three") !== -1
+            ) {
               return "three";
             }
             if (id.indexOf("gsap") !== -1) {

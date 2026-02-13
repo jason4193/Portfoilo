@@ -1,6 +1,7 @@
 import { useThree } from "@react-three/fiber";
-import { useSectionFocusAnimation } from "../hooks/useSectionFocusAnimation";
-import { useSectionSelectionStore } from "../../shared/stores";
+
+import { useCameraFocus } from "@animated/hooks";
+import { useSectionSelectionStore } from "@shared/stores";
 
 interface SectionFocusControllerProps {
   controlsRef: React.RefObject<any>; // Orbit controls ref for updates
@@ -18,7 +19,7 @@ export function SectionFocusController({
   const { camera } = useThree();
   const focusTarget = useSectionSelectionStore((state) => state.focusTarget);
   const isActive = useSectionSelectionStore((state) => state.isFocused);
-  useSectionFocusAnimation({
+  useCameraFocus({
     camera,
     focusTarget,
     isActive,

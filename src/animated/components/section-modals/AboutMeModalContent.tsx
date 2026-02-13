@@ -1,10 +1,11 @@
-import { useRef, type RefObject } from "react";
-import { content } from "../../../shared/data/content";
-import jasonPhoto from "../../../shared/assets/Jason_2.webp";
-import aboutMeIcon from "../../assets/AboutMeSectionIcon.webp";
-import { InfoCard } from "../../../shared/components/InfoCard";
+import { useCallback, useRef, type RefObject } from "react";
+
+import { content } from "@shared/data/content";
+import jasonPhoto from "@shared/assets/Jason_2.webp";
+import aboutMeIcon from "@animated/assets/AboutMeSectionIcon.webp";
+import { InfoCard } from "@shared/components/InfoCard";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalEntryAnimation } from "../../hooks/useModalEntryAnimation";
+import { useModalEntryAnimation } from "@animated/hooks";
 
 interface AboutMeModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -81,36 +82,38 @@ export function AboutMeModalContent({
     parseIntroContent(raw);
 
   // Custom animation for AboutMe modal
+  const customContentAnimation = useCallback((tl: gsap.core.Timeline) => {
+    const left = leftRef.current;
+    const right = rightRef.current;
+
+    if (left) {
+      const leftElements = left.querySelectorAll<HTMLElement>(
+        "[data-animate-left]",
+      );
+      if (leftElements.length > 0) {
+        tl.fromTo(
+          leftElements,
+          { opacity: 0, x: -30 },
+          { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
+        );
+      }
+    }
+
+    if (right) {
+      tl.fromTo(
+        right,
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 0.5 },
+        "-=0.2",
+      );
+    }
+  }, [leftRef, rightRef]);
+
   useModalEntryAnimation({
     headerRef,
     closeRef,
     delay: 1,
-    customContentAnimation: (tl) => {
-      const left = leftRef.current;
-      const right = rightRef.current;
-
-      if (left) {
-        const leftElements = left.querySelectorAll<HTMLElement>(
-          "[data-animate-left]",
-        );
-        if (leftElements.length > 0) {
-          tl.fromTo(
-            leftElements,
-            { opacity: 0, x: -30 },
-            { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
-          );
-        }
-      }
-
-      if (right) {
-        tl.fromTo(
-          right,
-          { opacity: 0, x: 30 },
-          { opacity: 1, x: 0, duration: 0.5 },
-          "-=0.2",
-        );
-      }
-    },
+    customContentAnimation,
   });
 
   return (

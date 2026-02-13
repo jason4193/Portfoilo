@@ -4,30 +4,34 @@ import { useMediaQuery } from "react-responsive";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
 import { InfoCard } from "@shared/components/InfoCard";
-import communityIcon from "@animated/assets/CommunitySectionIcon.webp";
 import { BaseModalContent } from "./BaseModalContent";
 import { useModalContent } from "@animated/hooks";
 import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import { GridCardLayout } from "@animated/components/modal-layouts/GridCardLayout";
 import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
+import workingIcon from "@animated/assets/WorkingSectionIcon.webp";
 
-interface CommunityModalContentProps {
+interface WorkingModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
   panelRef: RefObject<HTMLDivElement | null>;
   accentColor: string;
   onClose: () => void;
 }
 
-/** Megaphone icon - Community section */
-function CommunityIcon({ className }: { className?: string }) {
-  return <img src={communityIcon} alt="" className={className} />;
+/** Briefcase icon - Working Experience section */
+function WorkingIcon({ className }: { className?: string }) {
+  return (
+    <img
+      src={workingIcon}
+      alt=""
+      className={`size-18 object-contain ${className ?? ""}`}
+    />
+  );
 }
 
-type CommunityItem = NonNullable<
-  typeof content
->["communityContributions"][number];
+type WorkingItem = NonNullable<typeof content>["workingExperience"][number];
 
-function renderCommunityCard(item: CommunityItem) {
+function renderWorkingCard(item: WorkingItem) {
   const firstImage = item.media?.find((m) => m.type === "image");
   return (
     <InfoCard
@@ -48,6 +52,9 @@ function renderCommunityCard(item: CommunityItem) {
       <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] !text-sm sm:text-base">
         {item.title}
       </h3>
+      <p className="text-[0.45rem] sm:text-xs leading-relaxed text-[#0B2B4C]/70 mb-1">
+        {item.date}
+      </p>
       <p className="text-[0.5rem] sm:text-base leading-relaxed text-[#0B2B4C]/90">
         {item.description}
       </p>
@@ -55,12 +62,12 @@ function renderCommunityCard(item: CommunityItem) {
   );
 }
 
-export function CommunityModalContent({
+export function WorkingModalContent({
   overlayRef,
   panelRef,
   accentColor,
   onClose,
-}: CommunityModalContentProps) {
+}: WorkingModalContentProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -68,7 +75,7 @@ export function CommunityModalContent({
   const closeRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
-  const contributions = content?.communityContributions ?? [];
+  const workExperiences = content?.workingExperience ?? [];
 
   // Standardized modal content animation
   useModalContent({
@@ -84,8 +91,8 @@ export function CommunityModalContent({
     <BaseModalContent
       overlayRef={overlayRef}
       panelRef={panelRef}
-      icon={<CommunityIcon className="size-18 object-contain" />}
-      title="Community"
+      icon={<WorkingIcon className="size-18 object-contain" />}
+      title="Working Experience"
       accentColor={accentColor}
       backgroundColor="#FCE8E7"
       headerRef={headerRef}
@@ -97,24 +104,23 @@ export function CommunityModalContent({
         ref={introRef}
         className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
       >
-        Here&apos;s how I&apos;ve engaged with various communities and
-        contributed over the years:
+        Here&apos;s my professional experience and work history:
       </p>
 
       {isMobile ? (
         <div ref={stackRef} className="flex-1 min-h-0">
           <StackCardLayout
-            items={contributions}
-            renderCard={renderCommunityCard}
+            items={workExperiences}
+            renderCard={renderWorkingCard}
             getItemKey={(item, index) => `${item.title}-${index}`}
-            swipeLabel="Swipe left to see next community contribution"
+            swipeLabel="Swipe left to see next experience"
           />
         </div>
       ) : (
         <div ref={cardsRef} className="flex-1 min-h-0">
           <GridCardLayout
-            items={contributions}
-            renderCard={renderCommunityCard}
+            items={workExperiences}
+            renderCard={renderWorkingCard}
             getItemKey={(item, index) => `${item.title}-${index}`}
             gridMode="equal"
             enforceAspectRatio={false}

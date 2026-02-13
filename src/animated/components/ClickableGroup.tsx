@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { useRef } from "react";
 import type { ReactNode } from "react";
 import * as THREE from "three";
 import type { Group } from "three";
+
+import { use3DHover } from "@animation-hooks/interactive/use3DHover";
 
 interface ClickableGroupProps {
   children: ReactNode;
@@ -23,82 +24,33 @@ export function ClickableGroup({
 }: ClickableGroupProps) {
   const groupRef = useRef<Group | null>(null);
   const innerRef = useRef<Group | null>(null);
-  const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  const baseYRef = useRef<number | null>(null);
-  const pivotReadyRef = useRef(false);
 
-  useLayoutEffect(() => {
+  // Use the extracted 3D hover animation hook
+  const { handlers } = use3DHover({
+    groupRef,
+    innerRef,
+    hoverScale,
+    hoverLift,
+    pressScale,
+    pressDepth,
+  });
+
+  const handlePointerUp = (event: any) => {
+    handlers.onPointerUp(event);
     const group = groupRef.current;
-    const inner = innerRef.current;
-    if (!group || !inner || pivotReadyRef.current) return;
-
-    const box = new THREE.Box3().setFromObject(inner);
-    if (box.isEmpty()) return;
-
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-
-    group.position.copy(center);
-    inner.position.set(-center.x, -center.y, -center.z);
-    baseYRef.current = group.position.y;
-    pivotReadyRef.current = true;
-  }, []);
-
-  useEffect(() => {
-    const group = groupRef.current;
-    if (!group) return;
-
-    if (baseYRef.current == null) {
-      baseYRef.current = group.position.y;
-    }
-
-    const targetScale = pressed ? pressScale : hovered ? hoverScale : 1;
-    const targetLift =
-      (baseYRef.current ?? 0) +
-      (hovered ? hoverLift : 0) +
-      (pressed ? pressDepth : 0);
-
-    gsap.to(group.scale, {
-      x: targetScale,
-      y: targetScale,
-      z: targetScale,
-      duration: 0.15,
-      ease: "power2.out",
-    });
-
-    gsap.to(group.position, {
-      y: targetLift,
-      duration: 0.15,
-      ease: "power2.out",
-    });
-  }, [hovered, pressed, hoverScale, hoverLift, pressScale, pressDepth]);
+    if (!group || !onClick) return;
+    const worldPos = new THREE.Vector3();
+    group.getWorldPosition(worldPos);
+    onClick([worldPos.x, worldPos.y, worldPos.z]);
+  };
 
   return (
     <group
       ref={groupRef}
-      onPointerOver={(event) => {
-        event.stopPropagation();
-        setHovered(true);
-      }}
-      onPointerOut={(event) => {
-        event.stopPropagation();
-        setHovered(false);
-        setPressed(false);
-      }}
-      onPointerDown={(event) => {
-        event.stopPropagation();
-        setPressed(true);
-      }}
-      onPointerUp={(event) => {
-        event.stopPropagation();
-        setPressed(false);
-        const group = groupRef.current;
-        if (!group || !onClick) return;
-        const worldPos = new THREE.Vector3();
-        group.getWorldPosition(worldPos);
-        onClick([worldPos.x, worldPos.y, worldPos.z]);
-      }}
+      onPointerOver={handlers.onPointerOver}
+      onPointerOut={handlers.onPointerOut}
+      onPointerDown={handlers.onPointerDown}
+      onPointerUp={handlePointerUp}
     >
       <group ref={innerRef}>{children}</group>
     </group>

@@ -18,7 +18,16 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path aliases */
+    "baseUrl": "./",
+    "paths": {
+      "@animated/*": ["src/animated/*"],
+      "@shared/*": ["src/shared/*"],
+      "@markdown/*": ["src/markdown/*"],
+      "@animation-hooks/*": ["src/animated/hooks/animation-groups/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

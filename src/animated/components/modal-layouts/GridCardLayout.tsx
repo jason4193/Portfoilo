@@ -83,8 +83,9 @@ export function GridCardLayout<T>({
   const layout = computeGridLayout(items, groupFn);
 
   // Calculate number of rows for explicit grid-template-rows
-  const numRows =
-    Math.max(...layout.map(({ placement }) => placement.rowIdx)) + 1;
+  const numRows = layout.length === 0
+    ? 0
+    : Math.max(...layout.map(({ placement }) => placement.rowIdx)) + 1;
 
   const gridRowClass =
     gridMode === "equal"

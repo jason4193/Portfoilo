@@ -24,7 +24,7 @@ interface AnimationConfig {
  * Reusable hook for modal entry animations
  * Animates header, content, and close button in sequence
  */
-export function useModalEntryAnimation({
+export function useModalEntry({
   headerRef,
   contentRef,
   closeRef,
@@ -38,7 +38,7 @@ export function useModalEntryAnimation({
     const header = headerRef?.current;
     const content = contentRef?.current;
     const close = closeRef.current;
-    
+
     if (!close) return;
 
     const ctx = gsap.context(() => {
@@ -60,7 +60,8 @@ export function useModalEntryAnimation({
       if (customContentAnimation) {
         customContentAnimation(tl);
       } else if (content && contentSelector && stagger) {
-        const contentItems = content.querySelectorAll<HTMLElement>(contentSelector);
+        const contentItems =
+          content.querySelectorAll<HTMLElement>(contentSelector);
         if (contentItems.length > 0) {
           tl.fromTo(
             contentItems,
@@ -94,6 +95,14 @@ export function useModalEntryAnimation({
     });
 
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, dependencies);
+  }, [
+    headerRef,
+    contentRef,
+    closeRef,
+    contentSelector,
+    stagger,
+    customContentAnimation,
+    delay,
+    ...dependencies,
+  ]);
 }

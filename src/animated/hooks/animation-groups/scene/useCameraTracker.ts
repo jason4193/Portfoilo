@@ -1,14 +1,15 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import { useCameraPoseStore } from "../../shared/stores";
-import { debugPerf } from "../../shared/utils/debug";
+
+import { useCameraPoseStore } from "@shared/stores";
+import { debugPerf } from "@shared/utils/debug";
 
 interface CameraPoseTrackerOptions {
   fps?: number;
   epsilon?: number;
 }
 
-export function useCameraPoseTracker({
+export function useCameraTracker({
   fps = 30,
   epsilon = 0.001,
 }: CameraPoseTrackerOptions = {}) {
@@ -21,6 +22,7 @@ export function useCameraPoseTracker({
   const interval = 1 / fps;
 
   const updatesThisSecondRef = useRef(0);
+  const lastResetRef = useRef(0);
 
   useFrame((_, delta) => {
     elapsedRef.current += delta;
@@ -43,10 +45,20 @@ export function useCameraPoseTracker({
     lastPositionRef.current = [x, y, z];
     setCameraPosition([x, y, z]);
     updatesThisSecondRef.current += 1;
-    debugPerf(
-      "camera-pose-update",
-      { fps, updatesThisSecond: updatesThisSecondRef.current },
-      1000,
-    );
+
+    const now = Date.now();
+    if (lastResetRef.current === 0) {
+      lastResetRef.current = now;
+    }
+
+    if (now - lastResetRef.current >= 1000) {
+      debugPerf(
+        "camera-pose-update",
+        { fps, updatesThisSecond: updatesThisSecondRef.current },
+        1000,
+      );
+      updatesThisSecondRef.current = 0;
+      lastResetRef.current = now;
+    }
   });
 }

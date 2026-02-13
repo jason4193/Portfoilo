@@ -2,23 +2,25 @@ import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import { ACESFilmicToneMapping, SRGBColorSpace } from "three";
-import { usePortfolioModeStore } from "../../shared/stores";
-import { debugPerf } from "../../shared/utils/debug";
-import { TRANSITION_MIN_DURATION_MS } from "../constants/transition";
+
+import { usePortfolioModeStore } from "@shared/stores";
+import { debugPerf } from "@shared/utils/debug";
+import { TRANSITION_MIN_DURATION_MS } from "@animated/constants/transition";
 
 interface TransitionProgressOptions {
   onProgress?: (progress: number) => void;
 }
 
 // Configures the renderer and drives loading progress during transitions.
-export function useTransitionLoadProgress({ onProgress }: TransitionProgressOptions) {
+export function useSceneTransition({ onProgress }: TransitionProgressOptions) {
   const { gl } = useThree();
   const { progress } = useProgress(); // 0 → 100 based on real asset loading
   const progressRef = useRef(0);
   const { isTransitioning, targetMode, mode } = usePortfolioModeStore();
   const prevIsTransitionToAnimatedRef = useRef(false);
 
-  const onProgressRef = useRef<TransitionProgressOptions["onProgress"]>(onProgress);
+  const onProgressRef =
+    useRef<TransitionProgressOptions["onProgress"]>(onProgress);
 
   useEffect(() => {
     onProgressRef.current = onProgress;
@@ -40,8 +42,7 @@ export function useTransitionLoadProgress({ onProgress }: TransitionProgressOpti
 
   // Track phase changes explicitly so timing doesn't reset every frame.
   useEffect(() => {
-    const isTransitionToAnimated =
-      isTransitioning && targetMode === "animated";
+    const isTransitionToAnimated = isTransitioning && targetMode === "animated";
     const isDirectAnimated = !isTransitioning && mode === "animated";
 
     if (isTransitionToAnimated && !prevIsTransitionToAnimatedRef.current) {
@@ -77,8 +78,7 @@ export function useTransitionLoadProgress({ onProgress }: TransitionProgressOpti
     );
     const clampedReal = progressRef.current;
 
-    const display =
-      clampedReal > 0 ? Math.min(clampedReal, timeCap) : timeCap;
+    const display = clampedReal > 0 ? Math.min(clampedReal, timeCap) : timeCap;
 
     onProgressRef.current?.(display);
     debugPerf(

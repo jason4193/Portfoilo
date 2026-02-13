@@ -1,5 +1,7 @@
-import { type RefObject } from "react";
-import { useModalEntryAnimation } from "./useModalEntryAnimation";
+import { useCallback, type RefObject } from "react";
+
+import { useModalEntry } from "./useModalEntry";
+import { useBlurMorph } from "./useCardGrid";
 
 interface UseModalContentAnimationOptions {
   /** Ref to the modal header element */
@@ -22,7 +24,7 @@ interface UseModalContentAnimationOptions {
  * Standardized modal content animation hook
  * Handles intro text → stack (mobile) or cards (desktop) entry animations
  */
-export function useModalContentAnimation({
+export function useModalContent({
   headerRef,
   closeRef,
   introRef,
@@ -31,14 +33,10 @@ export function useModalContentAnimation({
   isMobile,
   delay = 0.5,
 }: UseModalContentAnimationOptions) {
-  useModalEntryAnimation({
-    headerRef,
-    closeRef,
-    delay,
-    dependencies: [isMobile],
-    customContentAnimation: (tl) => {
+  const runBlurMorph = useBlurMorph({ cardsRef });
+  const customContentAnimation = useCallback(
+    (tl: gsap.core.Timeline) => {
       const intro = introRef.current;
-      const cards = cardsRef?.current;
       const stack = stackRef?.current;
 
       if (intro) {
@@ -57,23 +55,18 @@ export function useModalContentAnimation({
           { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
           "-=0.1",
         );
-      } else if (cards) {
-        const cardEls = cards.querySelectorAll<HTMLElement>("[data-card]");
-        if (cardEls.length > 0) {
-          tl.fromTo(
-            cardEls,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              stagger: 0.12,
-              ease: "power2.out",
-            },
-            "-=0.1",
-          );
-        }
+      } else {
+        runBlurMorph(tl);
       }
     },
+    [introRef, stackRef, isMobile, runBlurMorph],
+  );
+
+  useModalEntry({
+    headerRef,
+    closeRef,
+    delay,
+    dependencies: [isMobile],
+    customContentAnimation,
   });
 }
