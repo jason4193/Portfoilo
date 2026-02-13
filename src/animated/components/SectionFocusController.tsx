@@ -1,6 +1,6 @@
 import { useThree } from "@react-three/fiber";
 
-import { useSectionFocusAnimation } from "@animated/hooks";
+import { useCameraFocus } from "@animated/hooks";
 import { useSectionSelectionStore } from "@shared/stores";
 
 interface SectionFocusControllerProps {
@@ -19,7 +19,7 @@ export function SectionFocusController({
   const { camera } = useThree();
   const focusTarget = useSectionSelectionStore((state) => state.focusTarget);
   const isActive = useSectionSelectionStore((state) => state.isFocused);
-  useSectionFocusAnimation({
+  useCameraFocus({
     camera,
     focusTarget,
     isActive,

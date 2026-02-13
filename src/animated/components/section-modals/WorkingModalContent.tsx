@@ -5,7 +5,7 @@ import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
 import { InfoCard } from "@shared/components/InfoCard";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalContentAnimation } from "@animated/hooks";
+import { useModalContent } from "@animated/hooks";
 import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import { GridCardLayout } from "@animated/components/modal-layouts/GridCardLayout";
 import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
@@ -78,7 +78,7 @@ export function WorkingModalContent({
   const workExperiences = content?.workingExperience ?? [];
 
   // Standardized modal content animation
-  useModalContentAnimation({
+  useModalContent({
     headerRef,
     closeRef,
     introRef,

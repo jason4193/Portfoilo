@@ -6,7 +6,7 @@ import { getMediaUrl } from "@shared/utils/media";
 import { InfoCard } from "@shared/components/InfoCard";
 import awardIcon from "@animated/assets/AwardSectionIcon.webp";
 import { BaseModalContent } from "./BaseModalContent";
-import { useModalContentAnimation } from "@animated/hooks";
+import { useModalContent } from "@animated/hooks";
 import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import {
   GridCardLayout,
@@ -115,7 +115,7 @@ export function AwardsModalContent({
   const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
 
   // Standardized modal content animation
-  useModalContentAnimation({
+  useModalContent({
     headerRef,
     closeRef,
     introRef,
