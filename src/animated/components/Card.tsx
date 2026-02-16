@@ -209,7 +209,6 @@ export function Card({
     // Start idle immediately on first entry, otherwise wait 10s after interaction
     if (idleStartModeRef.current === "resume") {
       idleTimeoutRef.current = window.setTimeout(() => {
-        idleStartModeRef.current = "resume";
         setIsIdleActive(true);
       }, 10000);
     } else {

@@ -26,13 +26,16 @@ export function EntryGuideOverlay({
       return;
     }
 
-    gsap.set(overlayRef.current, {
+    const el = overlayRef.current;
+    setIsExiting(false);
+
+    gsap.set(el, {
       opacity: 0,
       y: 8,
       scale: 0.99,
     });
 
-    gsap.to(overlayRef.current, {
+    gsap.to(el, {
       opacity: 1,
       y: 0,
       scale: 1,
@@ -40,6 +43,10 @@ export function EntryGuideOverlay({
       ease: EASING.DEFAULT,
       delay: 0,
     });
+
+    return () => {
+      gsap.killTweensOf(el);
+    };
   }, [isVisible]);
 
   const handleEnter = () => {

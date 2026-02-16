@@ -141,28 +141,6 @@ export function useCameraFocus({
     };
   }, []);
 
-  // --- Real-time card rotation logging ---
-  useEffect(() => {
-    if (!cardObject) return;
-
-    let lastLogTime = 0;
-    const LOG_INTERVAL = 500; // Log every 500ms
-
-    let animationId: number;
-    const logRotation = () => {
-      const now = performance.now();
-      if (now - lastLogTime >= LOG_INTERVAL) {
-        lastLogTime = now;
-      }
-      animationId = requestAnimationFrame(logRotation);
-    };
-    animationId = requestAnimationFrame(logRotation);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [cardObject]);
-
   // --- Initialize default camera + controls target + card rotation once ---
   useEffect(() => {
     if (!defaultPositionRef.current) {
