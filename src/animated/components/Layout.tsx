@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useThemeStore } from "../../shared/stores";
 import { ThemeToggle } from "../../shared/components/ThemeToggle";
 import { ModeToggle } from "../../shared/components/ModeToggle";
-import { LoadingScreen } from "../../shared/components/LoadingScreen";
+import { AnimatedLoadingScreen } from "../../shared/components/LoadingScreen";
 
 interface LayoutProps {
   children: ReactNode;
@@ -30,7 +30,7 @@ export function Layout({
       }}
     >
       {showLoading && (
-        <LoadingScreen
+        <AnimatedLoadingScreen
           message="Loading 3D Portfolio"
           progress={loadingProgress}
           onComplete={onLoadingComplete}
