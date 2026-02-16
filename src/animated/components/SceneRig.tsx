@@ -84,18 +84,18 @@ export function SceneRig({ controlsRef }: SceneRigProps) {
     <>
       <CameraDebug />
       {/* Lighting - very bright for pure white card appearance */}
-      <ambientLight intensity={1.2} />
-      <directionalLight ref={dirARef} position={[1, 0, 3]} intensity={1.1} />
-      <directionalLight ref={dirBRef} position={[-5, 2, -2]} intensity={1.2} />
+      <ambientLight intensity={0.7} />
+      <directionalLight ref={dirARef} position={[4, 0, 5]} intensity={1} />
+      {/* <directionalLight ref={dirBRef} position={[-5, 2, -2]} intensity={1.2} /> */}
 
       {debugLights && <primitive object={new AxesHelper(2.5)} />}
 
-      {/* Camera Controls */}
+      {/* Camera Controls - rotation disabled, object rotates instead */}
       <OrbitControls
         ref={activeControlsRef}
         enablePan={true}
         enableZoom={true}
-        enableRotate={true}
+        enableRotate={false}
         minDistance={minDistance}
         maxDistance={maxDistance}
         autoRotate={false}

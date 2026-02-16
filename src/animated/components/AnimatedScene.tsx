@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
+import type { Group } from "three";
 import { Card } from "./Card";
 import { SceneRig } from "./SceneRig";
 import { TransitionProgressController } from "./TransitionProgressController";
@@ -20,6 +21,7 @@ export function AnimatedScene({
 }: AnimatedSceneProps) {
   const sceneRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<any>(null);
+  const cardRef = useRef<Group | null>(null);
 
   useEffect(() => {
     return () => {
@@ -64,11 +66,12 @@ export function AnimatedScene({
         <SceneRig controlsRef={controlsRef} />
         <SectionFocusController
           controlsRef={controlsRef}
+          cardRef={cardRef}
           dimOverlayRef={dimOverlayRef}
           modalOverlayRef={modalOverlayRef}
           modalPanelRef={modalPanelRef}
         />
-        <Card isAnimationReady={isAnimationReady} />
+        <Card cardRef={cardRef} isAnimationReady={isAnimationReady} />
       </Canvas>
     </div>
   );

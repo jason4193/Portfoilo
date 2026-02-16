@@ -1,10 +1,12 @@
 import { useThree } from "@react-three/fiber";
+import type { Group } from "three";
 
 import { useCameraFocus } from "@animated/hooks";
 import { useSectionSelectionStore } from "@shared/stores";
 
 interface SectionFocusControllerProps {
   controlsRef: React.RefObject<any>; // Orbit controls ref for updates
+  cardRef: React.RefObject<Group | null>; // Card group ref for rotation
   dimOverlayRef?: React.RefObject<HTMLDivElement | null>; // Dim and blur layer ref
   modalOverlayRef?: React.RefObject<HTMLDivElement | null>; // Modal backdrop overlay ref
   modalPanelRef?: React.RefObject<HTMLDivElement | null>; // Modal panel container ref
@@ -12,6 +14,7 @@ interface SectionFocusControllerProps {
 
 export function SectionFocusController({
   controlsRef,
+  cardRef,
   dimOverlayRef,
   modalOverlayRef,
   modalPanelRef,
@@ -21,6 +24,7 @@ export function SectionFocusController({
   const isActive = useSectionSelectionStore((state) => state.isFocused);
   useCameraFocus({
     camera,
+    cardObject: cardRef.current,
     focusTarget,
     isActive,
     controlsRef,
