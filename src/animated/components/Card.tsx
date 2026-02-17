@@ -15,6 +15,7 @@ import {
 } from "../constants/card";
 import { useSectionSelectionStore, useDebugStore } from "../../shared/stores";
 import { useObjectRotation } from "../hooks/useObjectRotation";
+import { isBackFaceVisible } from "../utils/cardDetection";
 
 function createCardTiltAndFlowAnimation(cardGroup: Group) {
   const rotation = cardGroup.rotation;
@@ -74,9 +75,18 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
     ">-0.1",
   );
 
-  // 2) Continuous subtle "flow" – tiny rocking around that idle angle
+  // 2) Continuous subtle "flow" – tiny rocking around that idle angle + vertical bob
   timeline.to(rotation, {
     x: `+=0.05`,
+    duration: 3.5,
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
+
+  // Add vertical position bobbing in sync with rotation
+  timeline.to(cardGroup.position, {
+    y: `+=0.05`,
     duration: 3.5,
     yoyo: true,
     repeat: -1,
@@ -94,18 +104,44 @@ function createCardIdleResumeAnimation(cardGroup: Group) {
 
   const timeline = gsap.timeline();
 
-  // Ease back toward the base pose before resuming idle flow
+  // Check if back face is visible, if so flip it back to front
+  const backIsVisible = isBackFaceVisible(cardGroup);
+  console.log(`Resuming idle animation. Back face visible: ${backIsVisible}`);
+  const targetRotationY = backIsVisible
+    ? // rotate toward back side
+      BASE_ROTATION_Y + Math.PI
+    : BASE_ROTATION_Y; // Already facing front, just reset to base Y
+
+  // Ease back toward the base pose with some variation, and reset position
   timeline.to(rotation, {
-    x: BASE_ROTATION_X,
-    y: BASE_ROTATION_Y,
-    z: BASE_ROTATION_Z,
+    x: BASE_ROTATION_X - 0.02, // Slight tilt variation
+    y: targetRotationY,
+    z: BASE_ROTATION_Z + 0.03, // Add subtle side tilt
     duration: 0.8,
     ease: "power2.out",
   });
 
-  // Continuous subtle "flow" – tiny rocking around that idle angle
+  // Reset position back to initial
+  timeline.to(cardGroup.position, {
+    x: 0,
+    y: 0,
+    z: 0,
+    duration: 0.5,
+    ease: "power2.out",
+  });
+
+  // Continuous subtle "flow" with varied rotation and tilt + vertical bob
   timeline.to(rotation, {
     x: `+=0.05`,
+    duration: 3.5,
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
+
+  // Add vertical position bobbing in sync with rotation
+  timeline.to(cardGroup.position, {
+    y: `+=0.05`,
     duration: 3.5,
     yoyo: true,
     repeat: -1,
