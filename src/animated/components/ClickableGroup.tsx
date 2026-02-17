@@ -5,6 +5,7 @@ import type { Group } from "three";
 import { useThree } from "@react-three/fiber";
 
 import { use3DHover } from "@animation-hooks/interactive/use3DHover";
+import { useDebugStore } from "@shared/stores/useDebugStore";
 
 interface ClickableGroupProps {
   children: ReactNode;
@@ -26,6 +27,7 @@ export function ClickableGroup({
   const groupRef = useRef<Group | null>(null);
   const innerRef = useRef<Group | null>(null);
   const { camera } = useThree();
+  const debugEnabled = useDebugStore((state) => state.enabled);
 
   // Use the extracted 3D hover animation hook
   const { handlers } = use3DHover({
@@ -65,14 +67,26 @@ export function ClickableGroup({
     }
 
     // Check if card rotation indicates back is visible
-    // When back is visible: x ≈ -π/2 (negative ~-90°) AND y ≈ π/2 (positive ~90°)
-    // The key is that x is NEGATIVE and y is POSITIVE
+    // Back is visible when card has rotated more than 90 degrees (π/2)
+    // This handles rotation in both directions on Y axis
     const x = rotatedParent.rotation.x;
     const y = rotatedParent.rotation.y;
 
-    const PI_4 = Math.PI / 4; // ~0.785 (45°)
-    // Back is visible when x is negative AND large, AND y is positive AND large
-    const isBackVisible = x < -PI_4 && y > PI_4;
+    const PI_2 = Math.PI / 2; // ~1.5708 (90°)
+    const OFF_SET = 0.5; // Small offset to ensure back face is clearly visible, not edge-on
+
+    // Back is visible when |y| > π/2 (rotated more than 90 degrees from front)
+    const isBackVisible = Math.abs(y) > PI_2 + OFF_SET;
+
+    if (debugEnabled) {
+      console.log("[isBackFacingCamera] Check:", {
+        x: x.toFixed(4),
+        y: y.toFixed(4),
+        absY: Math.abs(y).toFixed(4),
+        "π/2 + offset": (PI_2 + OFF_SET).toFixed(4),
+        "IsBackVisible: |y| > π/2 + offset": isBackVisible,
+      });
+    }
 
     return isBackVisible;
   };
@@ -82,18 +96,45 @@ export function ClickableGroup({
 
     const isBackVisible = isBackFacingCamera();
 
+    // Debug logging
+    if (debugEnabled) {
+      console.log("[ClickableGroup] Click event:", {
+        isBackVisible,
+        hasGroup: !!groupRef.current,
+        hasOnClick: !!onClick,
+      });
+    }
+
     // Only process click if back face is facing camera
     if (!isBackVisible) {
+      if (debugEnabled) {
+        console.log("[ClickableGroup] Click blocked: back face not visible");
+      }
       return;
     }
 
     const group = groupRef.current;
     if (!group || !onClick) {
+      if (debugEnabled) {
+        console.log(
+          "[ClickableGroup] Click blocked: no group or onClick handler",
+        );
+      }
       return;
     }
 
     const worldPos = new THREE.Vector3();
     group.getWorldPosition(worldPos);
+    if (debugEnabled) {
+      console.log(
+        "[ClickableGroup] Click processed, calling onClick with position:",
+        {
+          x: worldPos.x.toFixed(2),
+          y: worldPos.y.toFixed(2),
+          z: worldPos.z.toFixed(2),
+        },
+      );
+    }
     onClick([worldPos.x, worldPos.y, worldPos.z]);
   };
 

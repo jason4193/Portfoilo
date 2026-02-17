@@ -23,9 +23,10 @@ interface UseSectionFocusAnimationProps {
 }
 
 // Card rotation constants - straight back view
+// Updated to match new card model position: x ≈ 0, y ≈ π
 const CARD_BACK_ROTATION = {
-  x: -1.5708, // -π/2 (back side)
-  y: 1.5708, // π/2 (back side)
+  x: 0, // Straight (back view)
+  y: Math.PI, // π radians - back face visible
   z: 0,
 };
 
@@ -283,6 +284,8 @@ export function useCameraFocus({
     }
     if (controls && !lastTargetRef.current) {
       lastTargetRef.current = controls.target.clone();
+      if (lastTargetRef.current) {
+      }
     }
     if (cardObject && !lastCardRotationRef.current) {
       lastCardRotationRef.current = cardObject.rotation.clone();

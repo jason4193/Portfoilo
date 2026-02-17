@@ -14,20 +14,22 @@ interface SectionSelectionStore {
   clearSelectedSection: () => void;
 }
 
-export const useSectionSelectionStore = create<SectionSelectionStore>((set) => ({
-  selectedSection: null,
-  focusTarget: null,
-  isFocused: false,
-  setSelectedSection: (selection) =>
-    set({
-      selectedSection: selection,
-      focusTarget: selection.target,
-      isFocused: true,
-    }),
-  clearSelectedSection: () =>
-    set({
-      selectedSection: null,
-      focusTarget: null,
-      isFocused: false,
-    }),
-}));
+export const useSectionSelectionStore = create<SectionSelectionStore>(
+  (set) => ({
+    selectedSection: null,
+    focusTarget: null,
+    isFocused: false,
+    setSelectedSection: (selection) =>
+      set({
+        selectedSection: selection,
+        focusTarget: selection.target,
+        isFocused: true,
+      }),
+    clearSelectedSection: () =>
+      set({
+        selectedSection: null,
+        focusTarget: null,
+        isFocused: false,
+      }),
+  }),
+);
