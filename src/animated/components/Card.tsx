@@ -106,7 +106,6 @@ function createCardIdleResumeAnimation(cardGroup: Group) {
 
   // Check if back face is visible, if so flip it back to front
   const backIsVisible = isBackFaceVisible(cardGroup);
-  console.log(`Resuming idle animation. Back face visible: ${backIsVisible}`);
   const targetRotationY = backIsVisible
     ? // rotate toward back side
       BASE_ROTATION_Y + Math.PI
