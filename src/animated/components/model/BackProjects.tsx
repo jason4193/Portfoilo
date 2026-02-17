@@ -5,83 +5,111 @@ interface BackProjectsProps extends SectionProps {
   onSelect?: (position: [number, number, number]) => void;
 }
 
-export function BackProjects({ nodes, materials, onSelect }: BackProjectsProps) {
+export function BackProjects({
+  nodes,
+  materials,
+  onSelect,
+}: BackProjectsProps) {
   return (
     <ClickableGroup onClick={onSelect}>
       <mesh
         geometry={nodes.Projects_Icon_1.geometry}
         material={materials.Red}
-        position={[2.077, 3.691, -6.032]}
+        position={[5.924, 7.988, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.738}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_Background.geometry}
         material={materials["Light Yellow"]}
-        position={[1.841, 3.738, -6.312]}
+        position={[6.204, 8.223, -1.434]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.588}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_5.geometry}
         material={materials["Dark Blue"]}
-        position={[1.545, 3.691, -6.032]}
+        position={[5.924, 8.519, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={-0.225}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_6.geometry}
         material={materials["Dark Blue"]}
-        position={[1.495, 3.691, -6.65]}
+        position={[6.542, 8.57, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_7.geometry}
         material={materials.Yellow}
-        position={[1.944, 3.691, -6.65]}
+        position={[6.542, 8.121, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_4.geometry}
         material={materials.Yellow}
-        position={[2.091, 3.691, -6.65]}
+        position={[6.542, 7.974, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_3.geometry}
         material={materials.Yellow}
-        position={[2.224, 3.691, -6.65]}
+        position={[6.542, 7.841, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Icon_2.geometry}
         material={materials.Yellow}
-        position={[2.37, 3.691, -6.65]}
+        position={[6.542, 7.695, -1.48]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
+        castShadow
       />
 
       {/* Projects Background */}
-      <group position={[0.969, 3.841, -7.255]} scale={[1.975, 0.936, 2.352]}>
+      <group
+        position={[7.148, 9.096, -1.331]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+        scale={[1.975, 0.936, 2.352]}
+      >
         <mesh
           geometry={nodes.Plane034.geometry}
           material={materials["Light Yellow"]}
+          castShadow
         />
         <mesh
           geometry={nodes.Plane034_1.geometry}
           material={materials.Yellow}
+          castShadow
         />
       </group>
 
       <mesh
         geometry={nodes.Projects_Info.geometry}
         material={materials["Dark Blue"]}
-        position={[3.189, 3.747, -7.056]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[6.949, 6.876, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.52}
+        castShadow
       />
       <mesh
         geometry={nodes.Projects_Header.geometry}
         material={materials["Dark Blue"]}
-        position={[2.119, 3.747, -5.46]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[5.353, 7.946, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.208}
+        castShadow
       />
     </ClickableGroup>
   );

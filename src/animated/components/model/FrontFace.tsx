@@ -1,147 +1,188 @@
 import type { SectionProps } from "./types";
 
-export function FrontFace({ nodes, materials }: SectionProps) {
+interface FrontFaceProps extends SectionProps {
+  cardPosition: [number, number, number];
+}
+
+export function FrontFace({ nodes, materials, cardPosition }: FrontFaceProps) {
   return (
     <>
       <mesh
         geometry={nodes.Card.geometry}
         material={materials["Light Yellow"]}
-        position={[0.908, 3.972, 0]}
-        rotation={[-Math.PI, 0, 0]}
+        position={cardPosition}
+        rotation={[-Math.PI / 2, Math.PI / 2, 0]}
         scale={[-4.823, -6, -8.001]}
+        castShadow
       />
       <mesh
         geometry={nodes.Circle_FL_1.geometry}
         material={materials["Dark Blue"]}
-        position={[5.726, 3.972, 5.007]}
+        position={[-5.114, 4.338, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.571}
+        castShadow
       />
-      <group position={[-2.664, 4.172, 5.954]} rotation={[0, -1.379, Math.PI]}>
+      <group
+        position={[-6.062, 12.729, -1]}
+        rotation={[-Math.PI / 2, -0.192, 0]}
+      >
         <mesh
           geometry={nodes.BézierCurve002.geometry}
           material={materials["Light Yellow"]}
+          castShadow
         />
         <mesh
           geometry={nodes.BézierCurve002_1.geometry}
           material={materials["Dark Blue"]}
+          castShadow
         />
         <mesh
           geometry={nodes.BézierCurve002_2.geometry}
           material={materials.Yellow}
+          castShadow
         />
       </group>
       <mesh
         geometry={nodes.Title_F_1.geometry}
         material={materials["Dark Blue"]}
-        position={[0.343, 4.072, 4.465]}
-        rotation={[0, Math.PI / 2, 0]}
+        position={[-4.572, 9.721, -1.1]}
+        rotation={[Math.PI / 2, 0, 0]}
         scale={1.546}
+        castShadow
       />
       <mesh
         geometry={nodes.Plane_FR_1.geometry}
         material={materials.Yellow}
-        position={[0.11, 3.972, -6.376]}
+        position={[6.269, 9.955, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.827}
+        castShadow
       />
       <mesh
         geometry={nodes.Cross_FL.geometry}
         material={materials["Dark Blue"]}
-        position={[5.732, 4.072, 6.047]}
-        rotation={[0, 0, -Math.PI]}
+        position={[-6.285, 7.38, -1.114]}
+        rotation={[-Math.PI / 2, -Math.PI / 2, 0]}
         scale={[2.641, 0.11, 0.042]}
+        castShadow
       />
       <mesh
         geometry={nodes.Plane_FL_1.geometry}
         material={materials["Dark Blue"]}
-        position={[-3.898, 3.972, 5.979]}
+        position={[-6.086, 13.963, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[4.815, 0.999, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.Plane_FL_2.geometry}
         material={materials.Red}
-        position={[-3.898, 3.972, 5.979]}
+        position={[-6.086, 13.963, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[4.815, 0.999, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.Plane_FR_2.geometry}
         material={materials["Dark Blue"]}
-        position={[5.732, 4.105, -8.001]}
+        position={[7.894, 4.333, -1.067]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes["Plane-R-001"].geometry}
         material={materials["Dark Blue"]}
-        position={[3.293, 3.972, -5.563]}
+        position={[5.456, 6.771, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Title_F_2.geometry}
         material={materials["Dark Blue"]}
-        position={[1.872, 4.072, 2.087]}
-        rotation={[0, Math.PI / 2, 0]}
+        position={[-2.194, 8.193, -1.1]}
+        rotation={[Math.PI / 2, 0, 0]}
         scale={0.974}
+        castShadow
       />
       <mesh
         geometry={nodes.Star_F.geometry}
         material={materials["Dark Blue"]}
-        position={[-2.322, 3.972, -6.457]}
+        position={[6.35, 12.387, -1.2]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FL_1.geometry}
         material={materials.Yellow}
-        position={[-3.915, 3.972, 8.001]}
+        position={[-8.109, 13.979, -1.2]}
+        rotation={[Math.PI / 2, -1.571, 0]}
         scale={1.499}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_1.geometry}
         material={materials.Yellow}
-        position={[3.293, 4.113, -8.001]}
+        position={[7.894, 6.771, -1.059]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_2.geometry}
         material={materials.Red}
-        position={[-3.102, 4.113, -3.938]}
-        rotation={[0, 0, -Math.PI]}
+        position={[3.83, 13.167, -1.059]}
+        rotation={[-Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_3.geometry}
         material={materials.Red}
-        position={[4.919, 4.113, -4.75]}
+        position={[4.643, 5.146, -1.059]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_4.geometry}
         material={materials.Red}
-        position={[4.919, 4.113, -3.125]}
+        position={[3.018, 5.146, -1.059]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_5.geometry}
         material={materials["Dark Blue"]}
-        position={[4.106, 4.113, -3.938]}
-        rotation={[-Math.PI, 1.571, 0]}
+        position={[3.83, 5.959, -1.059]}
+        rotation={[Math.PI / 2, 0, -Math.PI]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_6.geometry}
         material={materials.Yellow}
-        position={[4.919, 4.113, -6.376]}
+        position={[6.269, 5.146, -1.059]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_7.geometry}
         material={materials["Dark Blue"]}
-        position={[-3.915, 4.113, -5.563]}
-        rotation={[-Math.PI, 1.571, 0]}
+        position={[5.456, 13.979, -1.059]}
+        rotation={[Math.PI / 2, 0, -Math.PI]}
         scale={0.813}
+        castShadow
       />
       <mesh
         geometry={nodes.Tri_FR_8.geometry}
         material={materials["Dark Blue"]}
-        position={[3.436, 3.972, -3.924]}
-        rotation={[0, Math.PI / 2, 0]}
+        position={[3.817, 6.629, -1.2]}
+        rotation={[Math.PI / 2, 0, 0]}
         scale={2.237}
       />
     </>

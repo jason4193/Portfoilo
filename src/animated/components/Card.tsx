@@ -13,7 +13,7 @@ import {
   VIEWPORT_WIDTH_MAX,
   VIEWPORT_WIDTH_MIN,
 } from "../constants/card";
-import { useSectionSelectionStore } from "../../shared/stores";
+import { useSectionSelectionStore, useDebugStore } from "../../shared/stores";
 import { useObjectRotation } from "../hooks/useObjectRotation";
 
 function createCardTiltAndFlowAnimation(cardGroup: Group) {
@@ -32,7 +32,7 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
   // 1) Initial tilt-in
   timeline.to(rotation, {
     x: `-=0.05`,
-    z: `-=0.10`,
+    z: `+=0.10`,
     y: `+=0.10`,
     duration: 0.8,
     ease: "power2.out",
@@ -47,11 +47,11 @@ function createCardTiltAndFlowAnimation(cardGroup: Group) {
   // 1b) Flip hint so users know the card is rotatable (full 360 on Z)
   const flipProxy = { angle: 0 };
   const startQuat = new THREE.Quaternion();
-  const localAxis = new THREE.Vector3(1, 0, 0);
+  const localAxis = new THREE.Vector3(0, 1, 0);
   timeline.to(
     flipProxy,
     {
-      angle: -Math.PI * 2,
+      angle: Math.PI * 2,
       duration: 2,
       ease: "power2.inOut",
       onStart: () => {
@@ -133,6 +133,7 @@ export function Card({
   const idleStartModeRef = useRef<"initial" | "resume">("initial");
   const clearVelocityRef = useRef<(() => void) | null>(null);
   const [isIdleActive, setIsIdleActive] = useState(false);
+  const debugRotationMode = useDebugStore((state) => state.rotationMode);
   const { size, gl } = useThree();
   const scale = useMemo(() => {
     const width = size.width;
@@ -147,8 +148,7 @@ export function Card({
     return CARD_SCALE_MIN + (CARD_SCALE_MAX - CARD_SCALE_MIN) * t;
   }, [size.width]);
 
-  // Enable object rotation only when not animating and not focused on a section
-  const rotationEnabled = isAnimationReady && !isSectionFocused;
+  const rotationEnabled = debugRotationMode === "object";
 
   const { isInteracting, clearRotationVelocity } = useObjectRotation({
     object: groupRef.current,
@@ -243,8 +243,7 @@ export function Card({
       ref={groupRef}
       // Base orientation (card facing camera)
       rotation={[BASE_ROTATION_X, BASE_ROTATION_Y, BASE_ROTATION_Z]}
-      // Lift card slightly above origin
-      position={[0, 0.1, 0]}
+      position={[0, 0, 0]}
     >
       <PortfolioCardModel scale={scale} />
     </group>

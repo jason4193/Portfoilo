@@ -9,8 +9,7 @@ export const ORBIT_MAX_DISTANCE_DESKTOP = 10;
 export const ORBIT_MIN_DISTANCE_MOBILE = 2.5;
 export const ORBIT_MAX_DISTANCE_MOBILE = 7;
 
-export const CAMERA_FRONT_POSITION: [number, number, number] = [0, 0, 5];
-export const CAMERA_BACK_POSITION: [number, number, number] = [0, 0, -5];
+export const CAMERA_FRONT_POSITION: [number, number, number] = [0, 2, 7];
 
 export const FOCUS_Z = -0.2;
 export const FOCUS_Y_OFFSET = -0.2;

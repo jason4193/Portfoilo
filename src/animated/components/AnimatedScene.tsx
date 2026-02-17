@@ -5,6 +5,8 @@ import { Card } from "./Card";
 import { SceneRig } from "./SceneRig";
 import { TransitionProgressController } from "./TransitionProgressController";
 import { SectionFocusController } from "./SectionFocusController";
+import { StaticBackground } from "./StaticBackground";
+import { CAMERA_FRONT_POSITION } from "@animated/constants/scene";
 
 interface AnimatedSceneProps {
   isAnimationReady?: boolean;
@@ -51,8 +53,8 @@ export function AnimatedScene({
     <div ref={sceneRef} className="w-full h-full">
       <Canvas
         camera={{
-          position: [0, 0, 5],
-          fov: 50,
+          position: CAMERA_FRONT_POSITION,
+          fov: 35,
         }}
         gl={{
           antialias: true,
@@ -60,10 +62,11 @@ export function AnimatedScene({
           preserveDrawingBuffer: false,
           powerPreference: "high-performance",
         }}
+        shadows
         dpr={[1, 2]}
       >
         <TransitionProgressController />
-        <SceneRig controlsRef={controlsRef} />
+        <SceneRig controlsRef={controlsRef} cardRef={cardRef} />
         <SectionFocusController
           controlsRef={controlsRef}
           cardRef={cardRef}
@@ -72,6 +75,7 @@ export function AnimatedScene({
           modalPanelRef={modalPanelRef}
         />
         <Card cardRef={cardRef} isAnimationReady={isAnimationReady} />
+        <StaticBackground />
       </Canvas>
     </div>
   );

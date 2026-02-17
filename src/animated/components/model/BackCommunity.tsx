@@ -5,13 +5,17 @@ interface BackCommunityProps extends SectionProps {
   onSelect?: (position: [number, number, number]) => void;
 }
 
-export function BackCommunity({ nodes, materials, onSelect }: BackCommunityProps) {
+export function BackCommunity({
+  nodes,
+  materials,
+  onSelect,
+}: BackCommunityProps) {
   return (
     <ClickableGroup onClick={onSelect}>
       {/* Community MegaSpeaker Icon */}
       <group
-        position={[-2.663, 3.691, 1.619]}
-        rotation={[0, -0.275, 0]}
+        position={[-1.726, 12.728, -1.48]}
+        rotation={[-Math.PI / 2, -1.296, Math.PI]}
         scale={0.215}
       >
         <mesh geometry={nodes.Plane046.geometry} material={materials.Yellow} />
@@ -26,7 +30,11 @@ export function BackCommunity({ nodes, materials, onSelect }: BackCommunityProps
       </group>
 
       {/* Community Background */}
-      <group position={[-3.265, 3.841, -2.273]} scale={[1.975, 0.936, 2.352]}>
+      <group
+        position={[2.166, 13.329, -1.331]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+        scale={[1.975, 0.936, 2.352]}
+      >
         <mesh
           geometry={nodes.Plane032.geometry}
           material={materials["Light Yellow"]}
@@ -37,15 +45,15 @@ export function BackCommunity({ nodes, materials, onSelect }: BackCommunityProps
       <mesh
         geometry={nodes.Community_Header.geometry}
         material={materials["Dark Blue"]}
-        position={[-2.101, 3.747, -2.165]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[2.058, 12.165, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.208}
       />
       <mesh
         geometry={nodes.Community_Info.geometry}
         material={materials["Dark Blue"]}
-        position={[-0.947, 3.747, -2.061]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[1.954, 11.011, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.52}
       />
     </ClickableGroup>

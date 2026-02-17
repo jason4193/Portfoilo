@@ -8,6 +8,11 @@ import { Layout } from "./components/Layout";
 import { AnimatedScene } from "./components/AnimatedScene";
 import { SectionModal } from "./components/SectionModal";
 import { EntryGuideOverlay } from "./components/EntryGuideOverlay";
+import { DebugPanel } from "./components/DebugPanel";
+import { initDebugWindowBridge } from "./utils/debugWindowBridge";
+
+// Initialize debug console bridge
+initDebugWindowBridge();
 
 export function AnimatedApp() {
   const { isTransitioning } = usePortfolioModeStore();
@@ -164,6 +169,8 @@ export function AnimatedApp() {
         modalOverlayRef={modalOverlayRef}
         modalPanelRef={modalPanelRef}
       />
+      {/* Panel for debugging setDebugMode(1) to activate */}
+      <DebugPanel />
       {/* Modal overlay for focused section */}
       {selectedSection && (
         <SectionModal

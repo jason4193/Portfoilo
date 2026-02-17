@@ -9,7 +9,11 @@ export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
   return (
     <ClickableGroup onClick={onSelect}>
       {/* Awards Background */}
-      <group position={[-3.263, 3.842, 2.712]} scale={[1.975, 0.936, 2.352]}>
+      <group
+        position={[-2.819, 13.328, -1.33]}
+        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+        scale={[1.975, 0.936, 2.352]}
+      >
         <mesh
           geometry={nodes.Plane033.geometry}
           material={materials["Light Yellow"]}
@@ -22,8 +26,8 @@ export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
 
       {/* Awards Icon */}
       <group
-        position={[-2.613, 3.697, 6.503]}
-        rotation={[0, -0.321, 0]}
+        position={[-6.61, 12.678, -1.475]}
+        rotation={[-Math.PI / 2, -1.249, Math.PI]}
         scale={1.498}
       >
         <mesh geometry={nodes.Circle001.geometry} material={materials.Red} />
@@ -40,15 +44,15 @@ export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
       <mesh
         geometry={nodes.Awards_Info.geometry}
         material={materials["Dark Blue"]}
-        position={[-1.002, 3.747, 2.994]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[-3.101, 11.066, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.538}
       />
       <mesh
         geometry={nodes.Awards_Header.geometry}
         material={materials["Light Yellow"]}
-        position={[-2.069, 3.747, 3.169]}
-        rotation={[Math.PI, Math.PI / 2, 0]}
+        position={[-3.276, 12.134, -1.425]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.385}
       />
     </ClickableGroup>

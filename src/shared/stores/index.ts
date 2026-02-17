@@ -12,3 +12,8 @@ export {
 export { useSectionSelectionStore } from "./useSectionSelectionStore";
 export { useLoadingProgressStore } from "./useLoadingProgressStore";
 export { useCameraPoseStore } from "./useCameraPoseStore";
+export {
+  useDebugStore,
+  type DebugRotationMode,
+  type LightIntensities,
+} from "./useDebugStore";

@@ -148,8 +148,15 @@ export function useCameraFocus({
       camera.position.set(...CAMERA_FRONT_POSITION);
     }
     const controls = controlsRef.current;
-    if (controls && !defaultTargetRef.current) {
+    if (controls && cardObject) {
+      const center = new THREE.Vector3();
+      cardObject.getWorldPosition(center);
+      controls.target.copy(center);
+      defaultTargetRef.current = center.clone();
+      controls.update?.();
+    } else if (controls && !defaultTargetRef.current) {
       defaultTargetRef.current = controls.target.clone();
+      controls.update?.();
     }
     if (cardObject && !defaultCardRotationRef.current) {
       defaultCardRotationRef.current = cardObject.rotation.clone();
