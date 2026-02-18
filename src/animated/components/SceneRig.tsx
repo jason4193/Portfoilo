@@ -1,6 +1,6 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   AxesHelper,
@@ -50,6 +50,9 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const maxDistance = isDesktop
     ? ORBIT_MAX_DISTANCE_DESKTOP
     : ORBIT_MAX_DISTANCE_MOBILE;
+
+  // Memoize AxesHelper to avoid creating a new instance on every render
+  const axesHelper = useMemo(() => new AxesHelper(2.5), []);
 
   useFrame(() => {
     if (hasCenteredRef.current) return;
@@ -113,7 +116,7 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
         position={[2.5, 3, -4]}
         intensity={rimIntensity}
       />
-      {debugEnabled && <primitive object={new AxesHelper(2.5)} />}
+      {debugEnabled && <primitive object={axesHelper} />}
       {/* Camera Controls - disable drag rotation */}
       <OrbitControls
         ref={activeControlsRef}

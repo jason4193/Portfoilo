@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { DURATION, EASING } from "../constants/animations";
 
+// Map overlay animation durations to constants
+const OVERLAY_ANIMATION_DURATION_1 = 0.55; // back.in phase
+const OVERLAY_ANIMATION_DURATION_2 = 0.75; // power2.in phase
+
 interface EntryGuideOverlayProps {
   isVisible: boolean;
   onEnter: () => void;
@@ -19,7 +23,20 @@ export function EntryGuideOverlay({
   onEnter,
 }: EntryGuideOverlayProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const exitTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const isMountedRef = useRef(true);
   const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (exitTimelineRef.current) {
+        exitTimelineRef.current.kill();
+        exitTimelineRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!isVisible || !overlayRef.current) {
@@ -57,9 +74,15 @@ export function EntryGuideOverlay({
     setIsExiting(true);
     const exitDistance = window.innerHeight + 160;
 
-    gsap
+    // Store timeline in ref so it can be killed on unmount
+    exitTimelineRef.current = gsap
       .timeline({
-        onComplete: onEnter,
+        onComplete: () => {
+          // Only call onEnter if component is still mounted
+          if (isMountedRef.current) {
+            onEnter();
+          }
+        },
       })
       .to(overlayRef.current, {
         scale: 0.6,
@@ -68,7 +91,7 @@ export function EntryGuideOverlay({
         rotateZ: -4,
         transformPerspective: 1000,
         borderRadius: "2rem",
-        duration: 0.55,
+        duration: OVERLAY_ANIMATION_DURATION_1,
         ease: "back.in(0.2)",
       })
       .to(overlayRef.current, {
@@ -78,7 +101,7 @@ export function EntryGuideOverlay({
         rotateY: 3,
         rotateZ: -3,
         opacity: 0,
-        duration: 0.75,
+        duration: OVERLAY_ANIMATION_DURATION_2,
         ease: "power2.in",
       });
   };

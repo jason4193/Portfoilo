@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 interface UseObjectRotationProps {
-  object: THREE.Object3D | null;
+  object: React.RefObject<THREE.Object3D | null> | THREE.Object3D | null;
   domElement: HTMLElement | null;
   enabled?: boolean;
   rotateSpeed?: number;
@@ -37,8 +37,20 @@ export const useObjectRotation = ({
   const [isInteracting, setIsInteracting] = useState(false);
   const DRAG_THRESHOLD = 5; // pixels - only start dragging after moving this many pixels
 
+  // Normalize input: extract value from ref if needed
+  const getObject = () => {
+    if (!object) return null;
+    // If object is a ref (MutableRefObject)
+    if (typeof object === "object" && "current" in object) {
+      return object.current;
+    }
+    // If object is already a THREE.Object3D
+    return object as THREE.Object3D;
+  };
+
   useEffect(() => {
-    if (!object || !domElement || !enabled) return;
+    const currentObject = getObject();
+    if (!currentObject || !domElement || !enabled) return;
 
     // Mouse events (left-click drag for desktop)
     const onPointerDown = (e: PointerEvent) => {
@@ -108,7 +120,8 @@ export const useObjectRotation = ({
     // Animation loop for smooth rotation with damping
     let animationId: number;
     const animate = () => {
-      if (object) {
+      const currentObj = getObject();
+      if (currentObj) {
         // Horizontal drag (deltaX) → rotate around world Y-axis (up)
         // Vertical drag (deltaY) → rotate around world X-axis (right)
 
@@ -125,10 +138,10 @@ export const useObjectRotation = ({
         );
 
         // Apply rotations to object
-        rotationQuaternion.current.copy(object.quaternion);
+        rotationQuaternion.current.copy(currentObj.quaternion);
         rotationQuaternion.current.premultiply(rotationY);
         rotationQuaternion.current.premultiply(rotationX);
-        object.quaternion.copy(rotationQuaternion.current);
+        currentObj.quaternion.copy(rotationQuaternion.current);
 
         // Apply damping to create momentum/inertia effect
         rotationVelocity.current.x *= 1 - dampingFactor;
@@ -171,8 +184,9 @@ export const useObjectRotation = ({
 
   // Utility function to reset rotation
   const resetRotation = () => {
-    if (object) {
-      object.rotation.set(0, 0, 0);
+    const currentObj = getObject();
+    if (currentObj) {
+      currentObj.rotation.set(0, 0, 0);
       rotationVelocity.current = { x: 0, y: 0 };
     }
   };

@@ -186,7 +186,7 @@ export function Card({
   const rotationEnabled = debugRotationMode === "object";
 
   const { isInteracting, clearRotationVelocity } = useObjectRotation({
-    object: groupRef.current,
+    object: groupRef,
     domElement: gl.domElement,
     enabled: rotationEnabled,
     rotateSpeed: 0.5,
@@ -252,8 +252,10 @@ export function Card({
     }
 
     return () => {
-      tiltTimelineRef.current?.kill();
-      tiltTimelineRef.current = null;
+      if (idleTimeoutRef.current) {
+        window.clearTimeout(idleTimeoutRef.current);
+        idleTimeoutRef.current = null;
+      }
     };
   }, [isAnimationReady, isSectionFocused, isInteracting]);
 
