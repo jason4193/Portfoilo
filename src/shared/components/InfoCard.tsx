@@ -38,11 +38,15 @@ export function InfoCard({
   bullet = "►",
   children,
   className = "",
-  contentSectionClassName = "rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4",
+  contentSectionClassName,
 }: InfoCardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hasContent = header || (listItems && listItems.length > 0) || children;
+
+  // Default classes without background (background will be applied via inline style)
+  const defaultContentClasses = "rounded-b-3xl px-3 py-3 sm:px-4 sm:py-4";
+  const finalContentClasses = contentSectionClassName || defaultContentClasses;
 
   // Use the extracted tilt animation hook
   useImageTilt({
@@ -65,7 +69,8 @@ export function InfoCard({
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-3xl bg-white/95 shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] ${className}`}
+      className={`flex flex-col overflow-hidden rounded-xl shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] ${className}`}
+      style={{ backgroundColor: "var(--color-panel-bg, #ffffff)" }}
     >
       {image && (
         <div
@@ -84,21 +89,33 @@ export function InfoCard({
       )}
       {hasContent && (
         <div
-          className={`flex min-h-0 flex-1 flex-col ${contentSectionClassName}`}
+          className={`flex min-h-0 flex-1 flex-col ${finalContentClasses}`}
+          style={{
+            backgroundColor:
+              "var(--color-infocard-content-bg, rgba(255, 251, 235, 0.9))",
+          }}
         >
           {header && (
             <div className="flex items-center justify-center gap-3 mb-3 shrink-0">
               <span
-                className="h-0.5 flex-1 max-w-8 bg-amber-300/80 shrink"
+                className="h-0.5 flex-1 max-w-8 shrink"
+                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
                 aria-hidden
               />
-              <span className="rounded-full bg-amber-200/90 px-3 py-1.5">
-                <span className="font-semibold text-[#0B2B4C] text-sm">
+              <span
+                className="rounded-full px-3 py-1.5"
+                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
+              >
+                <span
+                  className="font-semibold text-sm"
+                  style={{ color: "var(--color-animated-bg-light, #0b2b4c)" }}
+                >
                   {header}
                 </span>
               </span>
               <span
-                className="h-0.5 flex-1 max-w-8 bg-amber-300/80 shrink"
+                className="h-0.5 flex-1 max-w-8 shrink"
+                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
                 aria-hidden
               />
             </div>
@@ -109,9 +126,14 @@ export function InfoCard({
               {listItems.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-2.5 text-sm text-[#0B2B4C]"
+                  className="flex items-center gap-2.5 text-sm"
+                  style={{ color: "var(--color-panel-text, #0b2b4c)" }}
                 >
-                  <span className="text-[#0B2B4C] text-xs" aria-hidden>
+                  <span
+                    className="text-xs"
+                    style={{ color: "var(--color-panel-text, #0b2b4c)" }}
+                    aria-hidden
+                  >
                     {bullet}
                   </span>
                   <span>{item}</span>

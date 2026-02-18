@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { useThemeStore } from "../../shared/stores";
 import { ThemeToggle } from "../../shared/components/ThemeToggle";
 import { ModeToggle } from "../../shared/components/ModeToggle";
 import { AnimatedLoadingScreen } from "../../shared/components/LoadingScreen";
@@ -17,16 +16,12 @@ export function Layout({
   loadingProgress = 0,
   onLoadingComplete,
 }: LayoutProps) {
-  const { theme } = useThemeStore();
 
   return (
     <div
       className="h-screen flex flex-col relative"
       style={{
-        backgroundColor:
-          theme === "light"
-            ? "var(--color-animated-bg-light)"
-            : "var(--color-bg-primary)",
+        backgroundColor: "var(--color-animated-bg-light)",
       }}
     >
       {showLoading && (

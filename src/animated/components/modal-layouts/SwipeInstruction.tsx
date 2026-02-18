@@ -86,8 +86,8 @@ export function SwipeInstruction({
   return (
     <div
       ref={textRef}
-      className="absolute left-0 right-0 bottom-1 flex items-center justify-center gap-2 text-sm text-[#0B2B4C]/70 pointer-events-none"
-      style={{ isolation: "isolate" }}
+      className="absolute left-0 right-0 bottom-1 flex items-center justify-center gap-2 text-sm pointer-events-none"
+      style={{ isolation: "isolate", color: "var(--color-panel-text-muted)" }}
     >
       <span className="text-base">←</span>
       <span>Swipe to see more</span>

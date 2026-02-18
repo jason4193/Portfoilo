@@ -82,32 +82,35 @@ export function AboutMeModalContent({
     parseIntroContent(raw);
 
   // Custom animation for AboutMe modal
-  const customContentAnimation = useCallback((tl: gsap.core.Timeline) => {
-    const left = leftRef.current;
-    const right = rightRef.current;
+  const customContentAnimation = useCallback(
+    (tl: gsap.core.Timeline) => {
+      const left = leftRef.current;
+      const right = rightRef.current;
 
-    if (left) {
-      const leftElements = left.querySelectorAll<HTMLElement>(
-        "[data-animate-left]",
-      );
-      if (leftElements.length > 0) {
+      if (left) {
+        const leftElements = left.querySelectorAll<HTMLElement>(
+          "[data-animate-left]",
+        );
+        if (leftElements.length > 0) {
+          tl.fromTo(
+            leftElements,
+            { opacity: 0, x: -30 },
+            { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
+          );
+        }
+      }
+
+      if (right) {
         tl.fromTo(
-          leftElements,
-          { opacity: 0, x: -30 },
-          { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
+          right,
+          { opacity: 0, x: 30 },
+          { opacity: 1, x: 0, duration: 0.5 },
+          "-=0.2",
         );
       }
-    }
-
-    if (right) {
-      tl.fromTo(
-        right,
-        { opacity: 0, x: 30 },
-        { opacity: 1, x: 0, duration: 0.5 },
-        "-=0.2",
-      );
-    }
-  }, [leftRef, rightRef]);
+    },
+    [leftRef, rightRef],
+  );
 
   useModalEntryAnimation({
     headerRef,
@@ -123,7 +126,6 @@ export function AboutMeModalContent({
       icon={<AboutMeIcon />}
       title="About Me"
       accentColor={accentColor}
-      backgroundColor="#F7F4EC"
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
@@ -137,7 +139,8 @@ export function AboutMeModalContent({
         <div className="px-2">
           <p
             data-animate-left
-            className="opacity-0 text-lg md:text-xl font-semibold text-shadow-bold text-[#0B2B4C] mb-4"
+            className="opacity-0 text-lg md:text-xl font-semibold text-shadow-bold mb-4"
+            style={{ color: "var(--color-panel-text)" }}
           >
             {introTitle}
           </p>
@@ -145,11 +148,7 @@ export function AboutMeModalContent({
             <p
               key={i}
               data-animate-left
-              className={
-                i === 1
-                  ? "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 italic text-[#0B2B4C]/90"
-                  : "opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
-              }
+              className="opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[var(--color-panel-text)]"
             >
               {p}
             </p>
@@ -159,9 +158,16 @@ export function AboutMeModalContent({
         {/* What I Do section */}
         <div
           data-animate-left
-          className="opacity-0 mt-6 mb-4 flex items-center gap-2 rounded-lg border border-amber-200/80 bg-[#0B2B4C] px-3 py-2 sm:px-4 sm:py-2.5"
+          className="opacity-0 mt-6 mb-4 flex items-center gap-2 rounded-lg border px-3 py-2 sm:px-4 sm:py-2.5"
+          style={{
+            backgroundColor: "var(--color-panel-text-subtle)",
+            borderColor: "var(--color-panel-text-muted)",
+          }}
         >
-          <span className="font-semibold text-yellow-400 text-shadow-bold">
+          <span
+            className="font-semibold text-shadow-bold"
+            style={{ color: "var(--color-infocard-content-bg)" }}
+          >
             What I Do
           </span>
         </div>
@@ -174,13 +180,20 @@ export function AboutMeModalContent({
                 <p
                   key={i}
                   data-animate-left
-                  className="opacity-0 mb-4 text-base leading-relaxed text-[#0B2B4C]/95"
+                  className="opacity-0 mb-4 text-base leading-relaxed"
+                  style={{ color: "var(--color-panel-text-subtle)" }}
                 >
-                  <span className="block font-semibold text-shadow-bold">
+                  <span
+                    className="block font-semibold text-shadow-bold"
+                    style={{ color: "var(--color-panel-text-subtle)" }}
+                  >
                     {prefix}
                   </span>
                   {rest && (
-                    <span className="block whitespace-pre-line text-base italic">
+                    <span
+                      className="block whitespace-pre-line text-base"
+                      style={{ color: "var(--color-panel-text-subtle)" }}
+                    >
                       {rest}
                     </span>
                   )}
@@ -191,7 +204,8 @@ export function AboutMeModalContent({
               <p
                 key={i}
                 data-animate-left
-                className="opacity-0 whitespace-pre-line text-base leading-relaxed mb-4 text-[#0B2B4C]/95"
+                className="opacity-0 whitespace-pre-line text-base leading-relaxed mb-4"
+                style={{ color: "var(--color-panel-text-subtle)" }}
               >
                 {p}
               </p>

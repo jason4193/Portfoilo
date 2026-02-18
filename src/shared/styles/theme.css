@@ -58,8 +58,11 @@
   --color-panel-border: rgba(11, 43, 76, 0.1);
   --color-panel-btn: #0b2b4c;
 
+  /* InfoCard content background */
+  --color-infocard-content-bg: rgba(255, 251, 235, 0.9);
+
   /* Animated layout */
-  --color-animated-bg-light: #e6dac6;
+  --color-animated-bg-light: #0a0e1a;
   --color-card-navy: #2f4668;
   --color-card-yellow: #f0c34e;
   --color-card-coral: #f2a1a1;
@@ -79,6 +82,23 @@
   --color-code-text: #c9d1d9; /* 4.5:1 contrast on code bg */
   --color-pre-bg: #161b22;
   --color-pre-border: #30363d;
+
+  /* Dark theme colors for Animated section */
+  --color-animated-bg-light: #0a0e1a;
+  --color-panel-bg: rgba(15, 20, 35, 0.95);
+  --color-panel-text: #d4e9fe;
+  --color-panel-text-muted: #a8c8ff;
+  --color-panel-text-subtle: #c0deff;
+  --color-panel-border: rgba(0, 217, 255, 0.3);
+  --color-panel-btn: #d0e8ff;
+  --color-card-navy: #00d9ff;
+  --color-card-yellow: #f0c34e;
+  --color-card-coral: #7c6eff;
+  --color-accent-cyan: #00d9ff;
+  --color-accent-purple: #7c6eff;
+
+  /* Dark mode InfoCard content background */
+  --color-infocard-content-bg: rgba(20, 30, 45, 0.95);
 }
 
 /* Base typography styles */
@@ -396,7 +416,7 @@ li {
   border-radius: 999rem;
   padding: 0.5rem 1.5rem;
   background-color: var(--color-panel-btn);
-  color: white;
+  color: var(--color-infocard-content-bg);
   box-shadow: 0 0.25rem 0.375rem -0.0625rem rgb(0 0 0 / 0.1);
   transition: opacity 0.2s;
 }
@@ -574,7 +594,7 @@ li {
   align-items: center;
   justify-content: center;
   padding: 2.5rem 1.5rem;
-  color: var(--color-card-navy);
+  color: var(--color-panel-text);
   background-color: var(--color-animated-bg-light);
   border: 0.125rem solid
     color-mix(in srgb, var(--color-card-navy) 30%, transparent);
@@ -590,7 +610,7 @@ li {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.7rem;
-  color: color-mix(in srgb, var(--color-card-navy) 70%, transparent);
+  color: color-mix(in srgb, var(--color-panel-text) 70%, transparent);
   margin-bottom: 0.75rem;
 }
 
@@ -598,11 +618,11 @@ li {
   font-size: var(--font-size-3xl);
   margin-bottom: 0.5rem;
   line-height: var(--line-height-tight);
-  color: var(--color-card-navy);
+  color: var(--color-panel-text);
 }
 
 .entry-guide-copy {
-  color: color-mix(in srgb, var(--color-card-navy) 75%, transparent);
+  color: color-mix(in srgb, var(--color-panel-text) 75%, transparent);
   margin-bottom: 1.25rem;
   line-height: var(--line-height-loose);
 }
@@ -619,7 +639,7 @@ li {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: color-mix(in srgb, var(--color-card-navy) 70%, transparent);
+  color: color-mix(in srgb, var(--color-panel-text) 70%, transparent);
   line-height: var(--line-height-loose);
 }
 
@@ -632,8 +652,8 @@ li {
 .entry-guide-button {
   padding: 0.85rem 2.25rem;
   border-radius: 999rem;
-  background-color: var(--color-card-navy);
-  color: white;
+  background-color: var(--color-panel-text);
+  color: var(--color-animated-bg-light);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.16em;
@@ -669,7 +689,7 @@ li {
   justify-content: center;
   background-color: var(--color-animated-bg-light);
   transition: opacity 0.8s ease-out;
-  color: var(--color-card-navy);
+  color: var(--color-panel-text);
 }
 
 .animated-loading-content {
@@ -685,20 +705,20 @@ li {
   height: 3.25rem;
   border-width: 0.2rem;
   border-style: solid;
-  border-color: color-mix(in srgb, var(--color-card-navy) 20%, transparent);
-  border-top-color: var(--color-card-navy);
+  border-color: color-mix(in srgb, var(--color-panel-text) 20%, transparent);
+  border-top-color: var(--color-panel-text);
   border-radius: 999rem;
   animation: spin 1s linear infinite;
 }
 
 .animated-loading-text {
   font-size: var(--font-size-2xl);
-  color: var(--color-card-navy);
+  color: var(--color-panel-text);
 }
 
 .animated-loading-subtext {
   font-size: var(--font-size-sm);
-  color: color-mix(in srgb, var(--color-card-navy) 65%, transparent);
+  color: color-mix(in srgb, var(--color-panel-text) 65%, transparent);
   max-width: 24rem;
 }
 
@@ -706,7 +726,11 @@ li {
   width: min(18rem, 80vw);
   height: 0.45rem;
   border-radius: 999rem;
-  background-color: color-mix(in srgb, var(--color-card-navy) 12%, transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--color-panel-text) 12%,
+    transparent
+  );
   overflow: hidden;
 }
 
@@ -722,7 +746,7 @@ li {
 
 .animated-loading-percent {
   font-size: var(--font-size-sm);
-  color: color-mix(in srgb, var(--color-card-navy) 70%, transparent);
+  color: color-mix(in srgb, var(--color-panel-text) 70%, transparent);
 }
 
 /* Footer */

@@ -46,7 +46,7 @@ function renderMobileCard(item: CompetitionItem) {
       header={item.award || item.role || item.date}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <p className="!mt-0 mb-1 font-bold text-[#0B2B4C] text-lg">
+      <p className="!mt-0 mb-1 font-bold text-lg" style={{ color: "var(--color-panel-text)" }}>
         {item.title}
       </p>
     </InfoCard>
@@ -75,7 +75,7 @@ function renderDesktopCard(item: CompetitionItem, placement: GridPlacement) {
       header={item.award || item.role || item.date}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <p className="!mt-0 mb-1 font-bold text-[#0B2B4C] text-lg">
+      <p className="!mt-0 mb-1 font-bold text-lg" style={{ color: "var(--color-panel-text)" }}>
         {item.title}
       </p>
     </InfoCard>
@@ -130,9 +130,8 @@ export function AwardsModalContent({
       panelRef={panelRef}
       icon={<AwardIcon className="size-18 object-contain" />}
       title="Awards & Competitions"
-      textColor="#E8F4F8"
       accentColor={accentColor}
-      backgroundColor="#E8F4F8"
+      headerTextColor="#e5f1fd"
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
@@ -140,7 +139,8 @@ export function AwardsModalContent({
     >
       <p
         ref={introRef}
-        className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg mb-4"
+        className="text-xs leading-relaxed sm:text-lg mb-4"
+        style={{ color: "var(--color-panel-text-subtle)" }}
       >
         Here are some competitions and awards I&apos;ve done:
       </p>
