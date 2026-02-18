@@ -1,8 +1,14 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import { DirectionalLightHelper, AxesHelper, DirectionalLight } from "three";
+import {
+  AxesHelper,
+  DirectionalLight,
+  DirectionalLightHelper,
+  Vector3,
+} from "three";
+import type { Group } from "three";
 
 import {
   DESKTOP_MIN_WIDTH,
@@ -12,29 +18,30 @@ import {
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "@animated/constants/scene";
 import { useCameraPoseTracker } from "@animated/hooks";
-
-function CameraDebug({ throttleMs = 750 }: { throttleMs?: number }) {
-  const lastLogRef = useRef(0);
-
-  useFrame(() => {
-    const now = performance.now();
-    if (now - lastLogRef.current < throttleMs) return;
-    lastLogRef.current = now;
-  });
-
-  return null;
-}
+import { useDebugStore } from "../../shared/stores";
 
 interface SceneRigProps {
   controlsRef?: React.RefObject<any>;
+  cardRef?: React.RefObject<Group | null>;
 }
 
-export function SceneRig({ controlsRef }: SceneRigProps) {
+export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
+  const lightIntensities = useDebugStore((state) => state.lightIntensities);
+  const debugRotationMode = useDebugStore((state) => state.rotationMode);
+  const debugEnabled = useDebugStore((state) => state.enabled);
+  const {
+    ambient: ambientIntensity,
+    key: keyIntensity,
+    fill: fillIntensity,
+    rim: rimIntensity,
+  } = lightIntensities;
   useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
-  const dirARef = useRef<DirectionalLight>(null);
-  const dirBRef = useRef<DirectionalLight>(null);
+  const hasCenteredRef = useRef(false);
+  const keyLightRef = useRef<DirectionalLight>(null);
+  const fillLightRef = useRef<DirectionalLight>(null);
+  const rimLightRef = useRef<DirectionalLight>(null);
 
   const isDesktop = useMediaQuery({ minWidth: DESKTOP_MIN_WIDTH });
   const minDistance = isDesktop
@@ -44,58 +51,78 @@ export function SceneRig({ controlsRef }: SceneRigProps) {
     ? ORBIT_MAX_DISTANCE_DESKTOP
     : ORBIT_MAX_DISTANCE_MOBILE;
 
-  // Debug light helpers can be toggled from the browser console via:
-  // window.setDebugLights(true | false)
-  const [debugLights, setDebugLights] = React.useState(false);
+  // Memoize AxesHelper to avoid creating a new instance on every render
+  const axesHelper = useMemo(() => new AxesHelper(2.5), []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  useFrame(() => {
+    if (hasCenteredRef.current) return;
+    if (!cardRef?.current || !activeControlsRef.current) {
+      return;
+    }
 
-    (window as any).__DEBUG_LIGHTS__ ??= false;
-    setDebugLights((window as any).__DEBUG_LIGHTS__);
+    const center = new Vector3();
+    cardRef.current.getWorldPosition(center);
 
-    (window as any).setDebugLights = (value: boolean) => {
-      (window as any).__DEBUG_LIGHTS__ = value;
-      setDebugLights(value);
-    };
+    activeControlsRef.current.target.copy(center);
+    activeControlsRef.current.update?.();
 
-    return () => {
-      if ((window as any).setDebugLights) {
-        delete (window as any).setDebugLights;
-      }
-    };
-  }, []);
+    hasCenteredRef.current = true;
+  });
 
-  // `useHelper` expects a ref to an Object3D. Our light refs are nullable, so we cast for TS.
   useHelper(
-    debugLights ? (dirARef as any) : null,
+    debugEnabled ? (keyLightRef as any) : null,
     DirectionalLightHelper,
     1,
-    0x00ff00,
+    0x00ff9a,
   );
   useHelper(
-    debugLights ? (dirBRef as any) : null,
+    debugEnabled ? (fillLightRef as any) : null,
     DirectionalLightHelper,
     1,
-    0xff00ff,
+    0x66ccff,
+  );
+  useHelper(
+    debugEnabled ? (rimLightRef as any) : null,
+    DirectionalLightHelper,
+    1,
+    0xffaa66,
   );
 
   return (
     <>
-      <CameraDebug />
-      {/* Lighting - very bright for pure white card appearance */}
-      <ambientLight intensity={1.2} />
-      <directionalLight ref={dirARef} position={[1, 0, 3]} intensity={1.1} />
-      <directionalLight ref={dirBRef} position={[-5, 2, -2]} intensity={1.2} />
-
-      {debugLights && <primitive object={new AxesHelper(2.5)} />}
-
-      {/* Camera Controls */}
+      {/* Lighting - studio setup with a right-side key to cast a slight left shadow */}
+      <ambientLight intensity={ambientIntensity} />
+      <directionalLight
+        ref={keyLightRef}
+        position={[4.5, 6, 6]}
+        intensity={keyIntensity}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-left={-6}
+        shadow-camera-right={6}
+        shadow-camera-top={6}
+        shadow-camera-bottom={-6}
+        shadow-camera-far={25}
+        shadow-bias={-0.0004}
+      />
+      <directionalLight
+        ref={fillLightRef}
+        position={[-3.5, 4, 2]}
+        intensity={fillIntensity}
+      />
+      <directionalLight
+        ref={rimLightRef}
+        position={[2.5, 3, -4]}
+        intensity={rimIntensity}
+      />
+      {debugEnabled && <primitive object={axesHelper} />}
+      {/* Camera Controls - disable drag rotation */}
       <OrbitControls
         ref={activeControlsRef}
         enablePan={true}
         enableZoom={true}
-        enableRotate={true}
+        enableRotate={debugRotationMode === "orbit"}
         minDistance={minDistance}
         maxDistance={maxDistance}
         autoRotate={false}

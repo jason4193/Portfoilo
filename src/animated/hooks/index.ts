@@ -9,6 +9,9 @@ export * from "./animation-groups/scene";
 export * from "./animation-groups/mobile";
 export * from "./animation-groups/interactive";
 
+// Interaction Hooks
+export { useObjectRotation } from "./useObjectRotation";
+
 // Legacy exports (for backwards compatibility during migration)
 export { useModalEntry as useModalEntryAnimation } from "./animation-groups/modal";
 export { useModalContent as useModalContentAnimation } from "./animation-groups/modal";

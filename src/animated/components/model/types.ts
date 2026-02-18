@@ -3,6 +3,7 @@ import type { GLTF } from "three-stdlib";
 
 export type GLTFResult = GLTF & {
   nodes: {
+    Background: THREE.Mesh;
     Card: THREE.Mesh;
     Circle_FL_1: THREE.Mesh;
     BézierCurve002: THREE.Mesh;
@@ -96,6 +97,7 @@ export type GLTFResult = GLTF & {
   };
   materials: {
     ["Light Yellow"]: THREE.MeshStandardMaterial;
+    ["Wood 124"]: THREE.MeshStandardMaterial;
     ["Dark Blue"]: THREE.MeshStandardMaterial;
     Yellow: THREE.MeshStandardMaterial;
     Red: THREE.MeshStandardMaterial;

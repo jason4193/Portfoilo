@@ -4,6 +4,8 @@ import * as THREE from "three";
 import type { Group } from "three";
 
 import { use3DHover } from "@animation-hooks/interactive/use3DHover";
+import { useDebugStore } from "@shared/stores/useDebugStore";
+import { isBackFaceVisible, findRotatedParent } from "../utils/cardDetection";
 
 interface ClickableGroupProps {
   children: ReactNode;
@@ -24,6 +26,7 @@ export function ClickableGroup({
 }: ClickableGroupProps) {
   const groupRef = useRef<Group | null>(null);
   const innerRef = useRef<Group | null>(null);
+  const debugEnabled = useDebugStore((state) => state.enabled);
 
   // Use the extracted 3D hover animation hook
   const { handlers } = use3DHover({
@@ -37,10 +40,51 @@ export function ClickableGroup({
 
   const handlePointerUp = (event: any) => {
     handlers.onPointerUp(event);
+
+    if (!groupRef.current) return;
+    const isBackVisible = isBackFaceVisible(groupRef.current!);
+
+    // Debug logging
+    if (debugEnabled) {
+      console.log("[ClickableGroup] Click event:", {
+        AbsRotatioY: findRotatedParent(groupRef.current).rotation.y.toFixed(2),
+        PI_2WithOffset: (Math.PI / 2 + 0.5).toFixed(2),
+        isBackVisible,
+        hasGroup: !!groupRef.current,
+        hasOnClick: !!onClick,
+      });
+    }
+
+    // Only process click if back face is facing camera
+    if (!isBackVisible) {
+      if (debugEnabled) {
+        console.log("[ClickableGroup] Click blocked: back face not visible");
+      }
+      return;
+    }
+
     const group = groupRef.current;
-    if (!group || !onClick) return;
+    if (!group || !onClick) {
+      if (debugEnabled) {
+        console.log(
+          "[ClickableGroup] Click blocked: no group or onClick handler",
+        );
+      }
+      return;
+    }
+
     const worldPos = new THREE.Vector3();
     group.getWorldPosition(worldPos);
+    if (debugEnabled) {
+      console.log(
+        "[ClickableGroup] Click processed, calling onClick with position:",
+        {
+          x: worldPos.x.toFixed(2),
+          y: worldPos.y.toFixed(2),
+          z: worldPos.z.toFixed(2),
+        },
+      );
+    }
     onClick([worldPos.x, worldPos.y, worldPos.z]);
   };
 

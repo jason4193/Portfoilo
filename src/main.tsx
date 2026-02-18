@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { usePortfolioModeStore, useThemeStore } from "./shared/stores";
-import { LoadingScreen } from "./shared/components/LoadingScreen";
+import {
+  AnimatedLoadingScreen,
+  LoadingScreen,
+} from "./shared/components/LoadingScreen";
 import { MarkdownApp } from "./markdown/App";
 import { AnimatedApp } from "./animated/App";
 import {
@@ -37,11 +40,20 @@ function App() {
     <>
       {isTransitioning && (
         <div className="fixed inset-0 z-50">
-          <LoadingScreen
-            message={loadingMessage}
-            optionalMessage={optionalLoadingMessage}
-            progress={transitionProgress}
-          />
+          {targetMode === "animated" ? (
+            <AnimatedLoadingScreen
+              message={loadingMessage}
+              optionalMessage={optionalLoadingMessage}
+              progress={transitionProgress}
+              minDurationMs={0}
+            />
+          ) : (
+            <LoadingScreen
+              message={loadingMessage}
+              optionalMessage={optionalLoadingMessage}
+              progress={transitionProgress}
+            />
+          )}
         </div>
       )}
       {/* Single component instance per mode - use displayMode to avoid remounting during transition */}

@@ -7,6 +7,6 @@ export const CARD_SCALE_MIN = 0.1;
 export const VIEWPORT_WIDTH_MIN = 360;
 export const VIEWPORT_WIDTH_MAX = 1280;
 
-export const BASE_ROTATION_X = Math.PI / 2;
-export const BASE_ROTATION_Y = -Math.PI / 2;
+export const BASE_ROTATION_X = 0;
+export const BASE_ROTATION_Y = 0;
 export const BASE_ROTATION_Z = 0;

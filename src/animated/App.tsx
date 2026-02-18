@@ -7,9 +7,16 @@ import {
 import { Layout } from "./components/Layout";
 import { AnimatedScene } from "./components/AnimatedScene";
 import { SectionModal } from "./components/SectionModal";
+import { EntryGuideOverlay } from "./components/EntryGuideOverlay";
+import { DebugPanel } from "./components/DebugPanel";
+import { initDebugWindowBridge } from "./utils/debugWindowBridge";
+
+// Initialize debug console bridge
+initDebugWindowBridge();
 
 export function AnimatedApp() {
   const { isTransitioning } = usePortfolioModeStore();
+  const MIN_LOADING_DURATION_MS = 1200;
   // Loading + readiness
   const loadingProgress = useLoadingProgressStore(
     (state) => state.loadingProgress,
@@ -19,7 +26,11 @@ export function AnimatedApp() {
     const store = usePortfolioModeStore.getState();
     return !store.isTransitioning;
   });
+  const [showEntryGuide, setShowEntryGuide] = useState(false);
   const canvasCreatedRef = useRef(false);
+  const entryGuideTriggeredRef = useRef(false);
+  const loadingStartRef = useRef<number | null>(null);
+  const loadingTimeoutRef = useRef<number | null>(null);
   const closeTimeoutRef = useRef<number | null>(null);
   // Section focus state
   const selectedSection = useSectionSelectionStore(
@@ -36,36 +47,76 @@ export function AnimatedApp() {
   // Internal loading visibility
   const shouldShowInternalLoading = isLoading && !isTransitioning;
 
+  const scheduleLoadingComplete = () => {
+    if (loadingTimeoutRef.current != null) {
+      return;
+    }
+
+    const startTime = loadingStartRef.current ?? performance.now();
+    const elapsed = performance.now() - startTime;
+    const remaining = Math.max(0, MIN_LOADING_DURATION_MS - elapsed);
+
+    loadingTimeoutRef.current = window.setTimeout(() => {
+      setIsLoading(false);
+      loadingTimeoutRef.current = null;
+    }, remaining);
+  };
+
   // Loading screen completion handler
   const handleLoadingComplete = () => {
-    setIsLoading(false);
+    scheduleLoadingComplete();
   };
 
   // Sync loading state with transitions
   useEffect(() => {
     if (isTransitioning) {
+      setShowEntryGuide(false);
       setIsLoading(false);
+      loadingStartRef.current = null;
+      if (loadingTimeoutRef.current != null) {
+        window.clearTimeout(loadingTimeoutRef.current);
+        loadingTimeoutRef.current = null;
+      }
     } else if (!isTransitioning && canvasCreatedRef.current) {
-      setIsLoading(false);
+      if (loadingProgress >= 100) {
+        scheduleLoadingComplete();
+      }
     } else if (
       !isLoading &&
       loadingProgress === 0 &&
       !canvasCreatedRef.current
     ) {
       setIsLoading(true);
+      loadingStartRef.current = performance.now();
     }
   }, [isTransitioning, isLoading, loadingProgress]);
 
-  // Enable animations after loading
   useEffect(() => {
-    if (isTransitioning || shouldShowInternalLoading) {
+    if (!isTransitioning && loadingProgress === 0) {
+      entryGuideTriggeredRef.current = false;
+      setShowEntryGuide(false);
+    }
+
+    if (
+      !isTransitioning &&
+      loadingProgress >= 85 &&
+      !entryGuideTriggeredRef.current
+    ) {
+      entryGuideTriggeredRef.current = true;
+      setShowEntryGuide(true);
+    }
+  }, [loadingProgress, isTransitioning]);
+
+  // Enable animations after loading and entry guide dismissal
+  useEffect(() => {
+    if (isTransitioning || shouldShowInternalLoading || showEntryGuide) {
       setCanAnimate(false);
       return;
     }
 
     const raf = requestAnimationFrame(() => setCanAnimate(true));
     return () => cancelAnimationFrame(raf);
-  }, [isTransitioning, shouldShowInternalLoading]);
+  }, [isTransitioning, shouldShowInternalLoading, showEntryGuide]);
 
   useEffect(() => {
     if (loadingProgress > 0 && !canvasCreatedRef.current) {
@@ -82,6 +133,9 @@ export function AnimatedApp() {
 
   useEffect(() => {
     return () => {
+      if (loadingTimeoutRef.current) {
+        window.clearTimeout(loadingTimeoutRef.current);
+      }
       if (closeTimeoutRef.current) {
         window.clearTimeout(closeTimeoutRef.current);
       }
@@ -94,6 +148,10 @@ export function AnimatedApp() {
       loadingProgress={loadingProgress}
       onLoadingComplete={handleLoadingComplete}
     >
+      <EntryGuideOverlay
+        isVisible={showEntryGuide}
+        onEnter={() => setShowEntryGuide(false)}
+      />
       {/* Dim/blur overlay for focus transition */}
       <div
         ref={dimOverlayRef}
@@ -111,6 +169,8 @@ export function AnimatedApp() {
         modalOverlayRef={modalOverlayRef}
         modalPanelRef={modalPanelRef}
       />
+      {/* Panel for debugging setDebugMode(1) to activate */}
+      <DebugPanel />
       {/* Modal overlay for focused section */}
       {selectedSection && (
         <SectionModal

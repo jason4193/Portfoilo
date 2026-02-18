@@ -4,19 +4,16 @@ import * as THREE from "three";
 
 import { debugPerf } from "@shared/utils/debug";
 import {
-  BACK_MOVE_DURATION,
-  CAMERA_BACK_POSITION,
   CAMERA_FRONT_POSITION,
   DIM_START_OFFSET,
   FOCUS_MOVE_DURATION,
-  FOCUS_Y_OFFSET,
-  FOCUS_Z,
   MODAL_EXPAND_DURATION,
   MODAL_START_OFFSET,
 } from "@animated/constants/scene";
 
 interface UseSectionFocusAnimationProps {
   camera: THREE.Camera; // Three.js camera instance reference
+  cardObject: THREE.Object3D | null; // The card group to rotate
   isActive: boolean; // Whether focus mode is active
   focusTarget: [number, number, number] | null; // World position to focus
   controlsRef: React.RefObject<any>; // Orbit controls ref for updates
@@ -25,8 +22,17 @@ interface UseSectionFocusAnimationProps {
   modalPanelRef?: React.RefObject<HTMLDivElement | null>; // Modal panel container ref
 }
 
+// Card rotation constants - straight back view
+// Updated to match new card model position: x ≈ 0, y ≈ π
+const CARD_BACK_ROTATION = {
+  x: 0, // Straight (back view)
+  y: Math.PI, // π radians - back face visible
+  z: 0,
+};
+
 export function useCameraFocus({
   camera,
+  cardObject,
   focusTarget,
   isActive,
   controlsRef,
@@ -34,11 +40,13 @@ export function useCameraFocus({
   modalOverlayRef,
   modalPanelRef,
 }: UseSectionFocusAnimationProps) {
-  // --- Stateful refs for camera focus flow ---
+  // --- Stateful refs for camera and card focus flow ---
   const defaultPositionRef = useRef<THREE.Vector3 | null>(null);
   const defaultTargetRef = useRef<THREE.Vector3 | null>(null);
+  const defaultCardRotationRef = useRef<THREE.Euler | null>(null);
   const lastCameraPositionRef = useRef<THREE.Vector3 | null>(null);
   const lastTargetRef = useRef<THREE.Vector3 | null>(null);
+  const lastCardRotationRef = useRef<THREE.Euler | null>(null);
   const resetTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const focusTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const isMountedRef = useRef(true);
@@ -65,15 +73,13 @@ export function useCameraFocus({
     overlay: HTMLDivElement,
     timeline: gsap.core.Timeline,
   ) => {
-    timeline.set(
-      overlay,
-      { pointerEvents: "auto" },
-      BACK_MOVE_DURATION + MODAL_START_OFFSET,
-    );
+    // Start modal expansion during zoom phase (after card rotation)
+    const startTime = FOCUS_MOVE_DURATION + MODAL_START_OFFSET;
+    timeline.set(overlay, { pointerEvents: "auto" }, startTime);
     timeline.to(
       overlay,
       { opacity: 1, duration: MODAL_EXPAND_DURATION, ease: "power2.out" },
-      BACK_MOVE_DURATION + MODAL_START_OFFSET,
+      startTime,
     );
   };
 
@@ -113,6 +119,7 @@ export function useCameraFocus({
     overlay: HTMLDivElement,
     timeline: gsap.core.Timeline,
   ) => {
+    // Start dim overlay during zoom phase (after card rotation)
     timeline.to(
       overlay,
       {
@@ -123,7 +130,7 @@ export function useCameraFocus({
           overlay.style.backdropFilter = "blur(0.375rem)";
         },
       },
-      BACK_MOVE_DURATION + DIM_START_OFFSET,
+      FOCUS_MOVE_DURATION + DIM_START_OFFSET,
     );
   };
 
@@ -135,17 +142,27 @@ export function useCameraFocus({
     };
   }, []);
 
-  // --- Initialize default camera + controls target once ---
+  // --- Initialize default camera + controls target + card rotation once ---
   useEffect(() => {
     if (!defaultPositionRef.current) {
       defaultPositionRef.current = new THREE.Vector3(...CAMERA_FRONT_POSITION);
       camera.position.set(...CAMERA_FRONT_POSITION);
     }
     const controls = controlsRef.current;
-    if (controls && !defaultTargetRef.current) {
+    if (controls && cardObject) {
+      const center = new THREE.Vector3();
+      cardObject.getWorldPosition(center);
+      controls.target.copy(center);
+      defaultTargetRef.current = center.clone();
+      controls.update?.();
+    } else if (controls && !defaultTargetRef.current) {
       defaultTargetRef.current = controls.target.clone();
+      controls.update?.();
     }
-  }, [camera, controlsRef]);
+    if (cardObject && !defaultCardRotationRef.current) {
+      defaultCardRotationRef.current = cardObject.rotation.clone();
+    }
+  }, [camera, controlsRef, cardObject]);
 
   // --- Main focus / restore effect ---
   useEffect(() => {
@@ -164,7 +181,7 @@ export function useCameraFocus({
       focusTimelineRef.current = null;
     }
 
-    // --- Restore flow: return camera + hide overlays ---
+    // --- Restore flow: return camera, card rotation + hide overlays ---
     if (!focusTarget || !isActive) {
       debugPerf("focus-restore-start", {
         isActive,
@@ -173,6 +190,8 @@ export function useCameraFocus({
       const restorePos =
         lastCameraPositionRef.current ?? defaultPositionRef.current;
       const restoreTarget = lastTargetRef.current ?? defaultTargetRef.current;
+      const restoreCardRotation =
+        lastCardRotationRef.current ?? defaultCardRotationRef.current;
       if (!restorePos) return;
 
       resetTimelineRef.current = gsap.timeline({
@@ -198,6 +217,42 @@ export function useCameraFocus({
           0,
         );
       }
+
+      // Restore card rotation to previous state using quaternion interpolation
+      if (cardObject && restoreCardRotation) {
+        // Create target quaternion from restore rotation
+        const targetQuat = new THREE.Quaternion();
+        targetQuat.setFromEuler(restoreCardRotation);
+
+        // Store current quaternion for interpolation
+        const startQuat = cardObject.quaternion.clone();
+
+        // Animate using quaternion slerp for smooth interpolation
+        const proxy = { t: 0 };
+        resetTimelineRef.current.to(
+          proxy,
+          {
+            t: 1,
+            duration: 1,
+            ease: "power2.out",
+            onUpdate: () => {
+              if (cardObject) {
+                // Spherical linear interpolation between current and target quaternions
+                cardObject.quaternion
+                  .copy(startQuat)
+                  .slerp(targetQuat, proxy.t);
+              }
+            },
+            onComplete: () => {
+              if (cardObject) {
+                // Ensure exact final rotation
+                cardObject.quaternion.copy(targetQuat);
+              }
+            },
+          },
+          0,
+        );
+      }
       if (modalOverlayRef?.current && modalPanelRef?.current) {
         const overlay = modalOverlayRef.current;
         hideModalOverlay(overlay);
@@ -209,6 +264,7 @@ export function useCameraFocus({
 
       lastCameraPositionRef.current = null;
       lastTargetRef.current = null;
+      lastCardRotationRef.current = null;
       return () => {
         if (resetTimelineRef.current) {
           resetTimelineRef.current.kill();
@@ -218,7 +274,7 @@ export function useCameraFocus({
       };
     }
 
-    // --- Focus flow: move camera + show overlays ---
+    // --- Focus flow: save current rotation + zoom camera to section ---
     const target = new THREE.Vector3(...focusTarget);
     debugPerf("focus-animate-start", {
       focusTarget: focusTarget.join(","),
@@ -228,12 +284,12 @@ export function useCameraFocus({
     }
     if (controls && !lastTargetRef.current) {
       lastTargetRef.current = controls.target.clone();
+      if (lastTargetRef.current) {
+      }
     }
-    const cameraPos = new THREE.Vector3(
-      target.x,
-      target.y - FOCUS_Y_OFFSET,
-      FOCUS_Z,
-    );
+    if (cardObject && !lastCardRotationRef.current) {
+      lastCardRotationRef.current = cardObject.rotation.clone();
+    }
 
     if (modalOverlayRef?.current && modalPanelRef?.current) {
       const overlay = modalOverlayRef.current;
@@ -255,33 +311,83 @@ export function useCameraFocus({
       },
     });
 
-    focusTimelineRef.current.to(camera.position, {
-      x: CAMERA_BACK_POSITION[0],
-      y: CAMERA_BACK_POSITION[1],
-      z: CAMERA_BACK_POSITION[2],
-      duration: BACK_MOVE_DURATION,
-      onUpdate: updateControls,
-    });
+    // Step 1: Rotate card to back view using quaternion interpolation
+    if (cardObject) {
+      // Create target quaternion for back view
+      const targetQuat = new THREE.Quaternion();
+      const targetEuler = new THREE.Euler(
+        CARD_BACK_ROTATION.x,
+        CARD_BACK_ROTATION.y,
+        CARD_BACK_ROTATION.z,
+        cardObject.rotation.order,
+      );
+      targetQuat.setFromEuler(targetEuler);
 
-    focusTimelineRef.current.to(camera.position, {
-      x: cameraPos.x,
-      y: cameraPos.y,
-      z: cameraPos.z,
-      duration: FOCUS_MOVE_DURATION,
-      onUpdate: updateControls,
-    });
+      // Store current quaternion for interpolation
+      const startQuat = cardObject.quaternion.clone();
 
+      // Animate using quaternion slerp for smooth interpolation
+      const proxy = { t: 0 };
+      focusTimelineRef.current.to(proxy, {
+        t: 1,
+        duration: FOCUS_MOVE_DURATION,
+        ease: "power2.out",
+        onUpdate: () => {
+          if (cardObject) {
+            // Spherical linear interpolation between start and target quaternions
+            cardObject.quaternion.copy(startQuat).slerp(targetQuat, proxy.t);
+          }
+        },
+        onComplete: () => {
+          if (cardObject) {
+            // Ensure exact final rotation
+            cardObject.quaternion.copy(targetQuat);
+          }
+        },
+      });
+    }
+
+    // Step 2: Zoom camera to target section (after card rotation completes)
     if (controls) {
+      // Calculate current camera distance from its target
+      const currentDistance = camera.position.distanceTo(controls.target);
+
+      // Calculate direction from target to current camera position
+      const directionToCamera = new THREE.Vector3().subVectors(
+        camera.position,
+        controls.target,
+      );
+      directionToCamera.normalize();
+
+      // Zoom in by moving camera closer (reduce distance to 40% of original)
+      const zoomedDistance = currentDistance * 0.4;
+      const newCameraPos = new THREE.Vector3()
+        .copy(target)
+        .addScaledVector(directionToCamera, zoomedDistance);
+
+      // Animate both camera position and target to focus point
+      focusTimelineRef.current.to(
+        camera.position,
+        {
+          x: newCameraPos.x,
+          y: newCameraPos.y,
+          z: newCameraPos.z,
+          duration: FOCUS_MOVE_DURATION,
+          onUpdate: updateControls,
+        },
+        FOCUS_MOVE_DURATION, // Start after card rotation completes
+      );
+
       focusTimelineRef.current.to(
         controls.target,
         {
           x: target.x,
-          y: target.y - FOCUS_Y_OFFSET,
+          y: target.y,
           z: target.z,
           duration: FOCUS_MOVE_DURATION,
           onUpdate: updateControls,
         },
-        BACK_MOVE_DURATION,
+        FOCUS_MOVE_DURATION, // Start at same time as camera
       );
     }
 
@@ -303,6 +409,7 @@ export function useCameraFocus({
     };
   }, [
     camera,
+    cardObject,
     controlsRef,
     focusTarget,
     isActive,
