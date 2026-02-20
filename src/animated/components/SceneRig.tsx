@@ -18,66 +18,8 @@ import {
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "@animated/constants/scene";
 import { useCameraPoseTracker } from "@animated/hooks";
-import {
-  useDebugStore,
-  useThemeStore,
-  type ThemeMode,
-} from "../../shared/stores";
-
-type DirectionalLightPreset = {
-  position: [number, number, number];
-  color: number;
-  intensityMultiplier: number;
-};
-
-type LightingPreset = {
-  ambientMultiplier: number;
-  ambientColor?: number;
-  key: DirectionalLightPreset;
-  fill: DirectionalLightPreset;
-  rim: DirectionalLightPreset;
-};
-
-const LIGHTING_PRESETS: Record<ThemeMode, LightingPreset> = {
-  light: {
-    ambientMultiplier: 1,
-    ambientColor: 0xffffff,
-    key: {
-      position: [4.5, 6, 6],
-      color: 0xffffff,
-      intensityMultiplier: 1,
-    },
-    fill: {
-      position: [-3.5, 4, 2],
-      color: 0xf9e9c7,
-      intensityMultiplier: 0.75,
-    },
-    rim: {
-      position: [2.5, 3, -4],
-      color: 0xb3d9ff,
-      intensityMultiplier: 0.65,
-    },
-  },
-  dark: {
-    ambientMultiplier: 0.35,
-    ambientColor: 0x1a2333,
-    key: {
-      position: [2.5, 4.5, 4],
-      color: 0xc7ecff,
-      intensityMultiplier: 1.4,
-    },
-    fill: {
-      position: [-2.25, 3, 1.5],
-      color: 0x2e3542,
-      intensityMultiplier: 0.35,
-    },
-    rim: {
-      position: [-3, 2.75, -4.5],
-      color: 0x4dd0ff,
-      intensityMultiplier: 0.9,
-    },
-  },
-};
+import { useDebugStore, useThemeStore } from "../../shared/stores";
+import { LIGHTING_PRESETS } from "@animated/constants/scene";
 
 interface SceneRigProps {
   controlsRef?: React.RefObject<any>;
@@ -96,7 +38,8 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
     rim: baseRimIntensity,
   } = lightIntensities;
   const lightingPreset = LIGHTING_PRESETS[theme];
-  const ambientIntensity = baseAmbientIntensity * lightingPreset.ambientMultiplier;
+  const ambientIntensity =
+    baseAmbientIntensity * lightingPreset.ambientMultiplier;
   const keyLightConfig = lightingPreset.key;
   const fillLightConfig = lightingPreset.fill;
   const rimLightConfig = lightingPreset.rim;
