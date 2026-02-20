@@ -41,7 +41,7 @@ export function BaseModalContent({
   accentColor,
   backgroundColor,
   textColor,
-  headerTextColor = "#0b2b4c",
+  headerTextColor = "var(--color-panel-text)",
   headerRef,
   closeRef,
   onClose,
@@ -73,7 +73,7 @@ export function BaseModalContent({
         <button
           className="absolute -top-2 -right-2 z-10 flex size-10 shrink-0 items-center justify-center rounded-full shadow-md transition-colors sm:hidden"
           style={{
-            backgroundColor: "var(--color-animated-panel-text, #d4e9fe)",
+            backgroundColor: "var(--color-panel-btn)",
             color: "var(--color-animated-bg-light)",
           }}
           onClick={onClose}

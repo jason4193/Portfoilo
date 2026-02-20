@@ -47,10 +47,10 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
     (experience.media && experience.media.length > 0);
 
   return (
-    <div id={anchorId} className="mb-6">
+    <div id={anchorId}>
       <div
-        className={`expandable-item ${
-          hasExpandableContent ? "expandable-item--clickable" : ""
+        className={`min-w-0 py-4 transition-opacity ${
+          hasExpandableContent ? "cursor-pointer hover:opacity-80" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -77,7 +77,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="link-icon"
+                        className="inline-flex items-center justify-center w-6 h-6 text-color-link hover:text-color-link-hover transition-colors "
                         onClick={(e) => e.stopPropagation()} // don't toggle expand
                         title={link.label}
                       >
@@ -98,7 +98,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`expand-chevron mt-4 ${isExpanded ? "rotate-180" : ""}`}
+              className={`w-6 h-6 text-text-base mt-4 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -125,7 +125,7 @@ export function ExperienceItem({ id, title, experience }: ExperienceItemProps) {
                     <li key={aIdx} className="text-sm">
                       {achievement}
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             )}

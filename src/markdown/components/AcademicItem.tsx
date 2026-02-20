@@ -17,10 +17,10 @@ export function AcademicItem({ id, title, academic }: AcademicItemProps) {
     academic.achievements && academic.achievements.length > 0;
 
   return (
-    <div id={anchorId} className="mb-6">
+    <div id={anchorId}>
       <div
-        className={`expandable-item ${
-          hasExpandableContent ? "expandable-item--clickable" : ""
+        className={`min-w-0 py-4 transition-opacity ${
+          hasExpandableContent ? "cursor-pointer hover:opacity-80" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -37,15 +37,13 @@ export function AcademicItem({ id, title, academic }: AcademicItemProps) {
           <div className="flex-1">
             <h4 className="text-xl font-semibold mb-2">{title}</h4>
             {academic.program && (
-              <p className="text-sm text-secondary mb-2">
-                {academic.program}
-              </p>
+              <p className="text-sm text-secondary mb-2">{academic.program}</p>
             )}
             {academic.summary && <p className="mb-3">{academic.summary}</p>}
           </div>
           {hasExpandableContent && (
             <svg
-              className={`expand-chevron mt-1 ${isExpanded ? "rotate-180" : ""}`}
+              className={`w-6 h-6 text-text-base mt-1 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -72,7 +70,7 @@ export function AcademicItem({ id, title, academic }: AcademicItemProps) {
                     <li key={aIdx} className="text-sm">
                       {achievement}
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             )}

@@ -64,18 +64,18 @@ export function TocRail({ tocItems }: TocRailProps) {
 
   return (
     <div
-      className="fixed right-0 top-1/4 -translate-y-1/2 z-50 hidden lg:block"
+      className="fixed top-0 right-0 z-50 hidden lg:block"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative flex items-center flex-row-reverse">
-        {/* Hover reveal: Full TOC list - Left side */}
+      <div className="relative">
+        {/* Hover reveal: Full TOC list - top right corner */}
         {isHovered && (
           <div
             ref={tocNavRef}
-            className="toc-panel mr-4 transition-opacity duration-150"
+            className="absolute top-0 right-0 transition-opacity duration-150 rounded-lg bg-surface-secondary p-4 border border-stroke max-h-[70vh] max-w-xs w-max overflow-y-auto"
           >
-            <div className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wide">
+            <div className="text-xs font-semibold text-text-muted mb-2 uppercase tracking-wide">
               Contents
             </div>
             <nav className="space-y-1">
@@ -90,13 +90,13 @@ export function TocRail({ tocItems }: TocRailProps) {
                     key={item.id}
                     data-toc-item-id={item.id}
                     onClick={() => handleClick(item)}
-                    className={`toc-item ${
+                    className={`w-full text-left px-3 py-1.5 rounded text-sm transition-colors ${indent} ${
                       isActive
-                        ? "toc-item--active"
+                        ? "bg-link text-white font-semibold"
                         : isParentActive
-                        ? "toc-item--parent-active"
-                        : "toc-item--inactive"
-                    } ${indent}`}
+                          ? "text-link opacity-75"
+                          : "text-text-muted hover:bg-surface-primary"
+                    }`}
                   >
                     {item.title}
                   </button>
@@ -108,7 +108,7 @@ export function TocRail({ tocItems }: TocRailProps) {
 
         {/* Not hovering: Horizontal bars for all sections - Right side */}
         {!isHovered && (
-          <div className="relative flex flex-col items-end gap-1.5 mr-4">
+          <div className="absolute top-30 right-4 flex flex-col items-end gap-1.5">
             {tocItems.map((item) => {
               const isActive = item.id === currentSectionId;
               const isParentActive = item.id === parentSectionId;
@@ -119,8 +119,8 @@ export function TocRail({ tocItems }: TocRailProps) {
                   ? "w-16"
                   : "w-12"
                 : isActive
-                ? "w-10"
-                : "w-8";
+                  ? "w-10"
+                  : "w-8";
 
               return (
                 <div key={item.id} className="relative flex items-center">
@@ -144,8 +144,8 @@ export function TocRail({ tocItems }: TocRailProps) {
                       isActive
                         ? "bg-link"
                         : isParentActive
-                        ? "bg-link opacity-75"
-                        : "bg-border hover:bg-secondary"
+                          ? "bg-link opacity-75"
+                          : "bg-border hover:bg-secondary"
                     } ${barWidth}`}
                     aria-label={item.title}
                     title={item.title}

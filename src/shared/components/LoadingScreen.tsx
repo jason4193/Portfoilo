@@ -63,7 +63,7 @@ export function LoadingScreen({
 
   return (
     <div
-      className="loading-screen"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-primary transition-opacity"
       style={{
         opacity: progress >= 100 && canHide ? 0 : 1,
         pointerEvents: progress >= 100 && canHide ? "none" : "auto",
@@ -71,19 +71,24 @@ export function LoadingScreen({
     >
       <div className="text-center">
         <div className="mb-8">
-          <div className="loading-spinner mx-auto" />
+          <div className="flex items-center justify-center">
+            <div className="relative inline-flex h-12 w-12 items-center justify-center">
+              <div className="absolute inset-0 animate-spin rounded-full border-2 border-text-base border-t-transparent" />
+              <div className="h-10 w-10 rounded-full bg-text-base/10" />
+            </div>
+          </div>
         </div>
-        <h2 className="text-2xl font-bold mb-4">{message}</h2>
-        <p className="text-sm text-secondary mb-4 whitespace-pre-line text-left">
+        <h2 className="text-2xl font-bold mb-4 text-text-base">{message}</h2>
+        <p className="text-sm text-text-muted mb-4 whitespace-pre-line text-left">
           {optionalMessage}
         </p>
-        <div className="loading-progress-bg mx-auto">
+        <div className="mx-auto h-1 w-48 overflow-hidden rounded-full bg-stroke">
           <div
-            className="loading-progress-fill"
+            className="h-full bg-link transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="mt-4 text-secondary">{Math.round(progress)}%</p>
+        <p className="mt-4 text-text-muted">{Math.round(progress)}%</p>
       </div>
     </div>
   );
@@ -100,25 +105,30 @@ export function AnimatedLoadingScreen({
 
   return (
     <div
-      className="animated-loading-screen"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-animated transition-opacity"
       style={{
         opacity: progress >= 100 && canHide ? 0 : 1,
         pointerEvents: progress >= 100 && canHide ? "none" : "auto",
       }}
     >
-      <div className="animated-loading-content">
-        <div className="animated-loading-spinner" aria-hidden="true" />
-        <div className="animated-loading-text">{message}</div>
+      <div className="flex flex-col items-center gap-6">
+        <div className="relative inline-flex h-16 w-16 items-center justify-center">
+          <div className="absolute inset-0 animate-spin rounded-full border-3 border-card-coral border-t-transparent" />
+          <div className="h-14 w-14 rounded-full bg-card-coral/20" />
+        </div>
+        <div className="text-2xl font-bold text-text-panel uppercase tracking-wider">
+          {message}
+        </div>
         {optionalMessage ? (
-          <p className="animated-loading-subtext">{optionalMessage}</p>
+          <p className="text-text-panel/70 text-sm">{optionalMessage}</p>
         ) : null}
-        <div className="animated-loading-bar">
+        <div className="w-48 h-1 overflow-hidden rounded-full bg-card-coral/30">
           <div
-            className="animated-loading-fill"
+            className="h-full bg-card-coral transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="animated-loading-percent">
+        <div className="text-text-panel/80 text-sm font-mono">
           {Math.round(progress)}%
         </div>
       </div>

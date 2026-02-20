@@ -46,7 +46,10 @@ function renderMobileCard(item: CompetitionItem) {
       header={item.award || item.role || item.date}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <p className="!mt-0 mb-1 font-bold text-lg" style={{ color: "var(--color-panel-text)" }}>
+      <p
+        className="!mt-0 mb-1 font-bold text-lg"
+        style={{ color: "var(--color-panel-text)" }}
+      >
         {item.title}
       </p>
     </InfoCard>
@@ -75,7 +78,10 @@ function renderDesktopCard(item: CompetitionItem, placement: GridPlacement) {
       header={item.award || item.role || item.date}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <p className="!mt-0 mb-1 font-bold text-lg" style={{ color: "var(--color-panel-text)" }}>
+      <p
+        className="!mt-0 mb-1 font-bold text-lg"
+        style={{ color: "var(--color-panel-text)" }}
+      >
         {item.title}
       </p>
     </InfoCard>
@@ -131,7 +137,7 @@ export function AwardsModalContent({
       icon={<AwardIcon className="size-18 object-contain" />}
       title="Awards & Competitions"
       accentColor={accentColor}
-      headerTextColor="#e5f1fd"
+      headerTextColor={"var(--color-panel-bg"}
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}

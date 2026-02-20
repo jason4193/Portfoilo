@@ -1,20 +1,57 @@
 @import "tailwindcss";
+@import "./theme.css";
 
 @theme {
-  /* Colors – map to theme.css vars (respects dark mode) */
-  --color-primary: var(--color-text-primary);
-  --color-secondary: var(--color-text-secondary);
-  --color-muted: var(--color-text-secondary);
-  --color-link: var(--color-link);
-  --color-link-hover: var(--color-link-hover);
-  --color-border: var(--color-border);
-  --color-accent: var(--color-accent);
+  /* ========== Surface Colors (Backgrounds) ========== */
+  --color-surface-primary: var(--color-bg-primary);
+  --color-surface-secondary: var(--color-bg-secondary);
+  --color-surface-animated: var(--color-animated-bg-light);
+  --color-surface-panel: var(--color-panel-bg);
+  --color-surface-code: var(--color-code-bg);
+  --color-surface-pre: var(--color-pre-bg);
+  --color-surface-infocard: var(--color-infocard-content-bg);
+
+  /* Legacy aliases (for gradual migration) */
   --color-bg: var(--color-bg-primary);
   --color-bg-muted: var(--color-bg-secondary);
   --color-bg-code: var(--color-code-bg);
   --color-bg-pre: var(--color-pre-bg);
 
-  /* Animated panel (no dark swap) */
+  /* ========== Text Colors ========== */
+  --color-text-base: var(--color-text-primary);
+  --color-text-muted: var(--color-text-secondary);
+  --color-text-panel: var(--color-panel-text);
+  --color-text-panel-muted: var(--color-panel-text-muted);
+  --color-text-panel-subtle: var(--color-panel-text-subtle);
+  --color-text-code: var(--color-code-text);
+
+  /* Legacy aliases (for gradual migration) */
+  --color-primary: var(--color-text-primary);
+  --color-secondary: var(--color-text-secondary);
+  --color-muted: var(--color-text-secondary);
+
+  /* ========== Border Colors ========== */
+  --color-stroke: var(--color-border);
+  --color-stroke-panel: var(--color-panel-border);
+  --color-stroke-pre: var(--color-pre-border);
+
+  /* Legacy alias */
+  --color-border: var(--color-border);
+
+  /* ========== Interactive Colors ========== */
+  --color-link: var(--color-link);
+  --color-link-hover: var(--color-link-hover);
+  --color-accent: var(--color-accent);
+  --color-interactive-btn: var(--color-panel-btn);
+
+  /* ========== 3D Card Material Colors ========== */
+  --color-card-navy: var(--color-card-navy);
+  --color-card-yellow: var(--color-card-yellow);
+  --color-card-coral: var(--color-card-coral);
+  --color-card-accent-cyan: var(--color-accent-cyan);
+  --color-card-accent-purple: var(--color-accent-purple);
+
+  /* ========== Animated Panel Colors ========== */
   --color-panel-bg: var(--color-panel-bg);
   --color-panel-text: var(--color-panel-text);
   --color-panel-text-muted: var(--color-panel-text-muted);
@@ -22,7 +59,7 @@
   --color-panel-border: var(--color-panel-border);
   --color-panel-btn: var(--color-panel-btn);
 
-  /* Font sizes */
+  /* ========== Font Sizes ========== */
   --font-size-xs: var(--font-size-xs);
   --font-size-sm: var(--font-size-sm);
   --font-size-base: var(--font-size-base);
@@ -32,12 +69,13 @@
   --font-size-3xl: var(--font-size-3xl);
   --font-size-4xl: var(--font-size-4xl);
 
-  /* Line heights */
+  /* ========== Line Heights ========== */
   --line-height-tight: var(--line-height-tight);
   --line-height-normal: var(--line-height-normal);
   --line-height-relaxed: var(--line-height-relaxed);
+  --line-height-loose: var(--line-height-loose);
 
-  /* Spacing */
+  /* ========== Spacing ========== */
   --spacing-1: var(--spacing-1);
   --spacing-2: var(--spacing-2);
   --spacing-3: var(--spacing-3);
@@ -48,7 +86,7 @@
   --spacing-10: var(--spacing-10);
   --spacing-12: var(--spacing-12);
 
-  /* Fake-bold text shadow (when font-weight is maxed) */
+  /* ========== Text Shadow (Fake Bold) ========== */
   --text-shadow-bold: 0.021875rem 0 0 currentColor, -0.021875rem 0 0 currentColor,
     0 0.021875rem 0 currentColor, 0 -0.021875rem 0 currentColor;
   --text-shadow-bold-lg: 0.025rem 0 0 currentColor, -0.025rem 0 0 currentColor,

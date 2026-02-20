@@ -69,8 +69,7 @@ export function InfoCard({
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-xl shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] ${className}`}
-      style={{ backgroundColor: "var(--color-panel-bg, #ffffff)" }}
+      className={`flex flex-col overflow-hidden rounded-xl shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] bg-surface-panel ${className}`}
     >
       {image && (
         <div
@@ -89,33 +88,21 @@ export function InfoCard({
       )}
       {hasContent && (
         <div
-          className={`flex min-h-0 flex-1 flex-col ${finalContentClasses}`}
-          style={{
-            backgroundColor:
-              "var(--color-infocard-content-bg, rgba(255, 251, 235, 0.9))",
-          }}
+          className={`flex min-h-0 flex-1 flex-col ${finalContentClasses} bg-surface-infocard`}
         >
           {header && (
             <div className="flex items-center justify-center gap-3 mb-3 shrink-0">
               <span
-                className="h-0.5 flex-1 max-w-8 shrink"
-                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
                 aria-hidden
               />
-              <span
-                className="rounded-full px-3 py-1.5"
-                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
-              >
-                <span
-                  className="font-semibold text-sm"
-                  style={{ color: "var(--color-animated-bg-light, #0b2b4c)" }}
-                >
+              <span className="rounded-full px-3 py-1.5 bg-card-yellow">
+                <span className="font-semibold text-sm text-surface-animated">
                   {header}
                 </span>
               </span>
               <span
-                className="h-0.5 flex-1 max-w-8 shrink"
-                style={{ backgroundColor: "var(--color-card-yellow, #f0c34e)" }}
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
                 aria-hidden
               />
             </div>
@@ -126,14 +113,9 @@ export function InfoCard({
               {listItems.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-2.5 text-sm"
-                  style={{ color: "var(--color-panel-text, #0b2b4c)" }}
+                  className="flex items-center gap-2.5 text-sm text-text-panel"
                 >
-                  <span
-                    className="text-xs"
-                    style={{ color: "var(--color-panel-text, #0b2b4c)" }}
-                    aria-hidden
-                  >
+                  <span className="text-xs text-text-panel" aria-hidden>
                     {bullet}
                   </span>
                   <span>{item}</span>

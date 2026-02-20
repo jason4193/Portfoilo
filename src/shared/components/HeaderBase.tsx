@@ -21,7 +21,7 @@ export function HeaderBase({ children }: HeaderBaseProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <ModeToggle className="w-9 h-9 sm:w-10 sm:h-10" />
+            <ModeToggle />
             <ThemeToggle />
           </div>
         </div>
@@ -74,7 +74,7 @@ export function HeaderBase({ children }: HeaderBaseProps) {
 
         {/* Theme Toggle and Mode Toggle - Top Right */}
         <div className="ml-2 sm:ml-4 flex items-center gap-2">
-          <ModeToggle className="w-9 h-9 sm:w-10 sm:h-10" />
+          <ModeToggle />
           <ThemeToggle />
         </div>
       </div>

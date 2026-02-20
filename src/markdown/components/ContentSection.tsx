@@ -72,10 +72,7 @@ export function ContentSection({ section, content }: ContentSectionProps) {
       // Footer
       case "footer":
         return (
-          <p
-            id={anchorId}
-            className="text-sm text-secondary text-center mt-12"
-          >
+          <p id={anchorId} className="text-sm text-secondary text-center mt-12">
             {content.footer}
           </p>
         );
@@ -85,5 +82,5 @@ export function ContentSection({ section, content }: ContentSectionProps) {
     }
   };
 
-  return <div className="mb-8">{renderContent()}</div>;
+  return <div>{renderContent()}</div>;
 }

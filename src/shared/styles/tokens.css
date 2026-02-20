@@ -1,0 +1,190 @@
+/**
+ * Design Tokens
+ * Single source of truth for all design system values
+ * Values defined here are consumed by both CSS and JavaScript
+ */
+
+@layer base {
+  :root {
+    /* ========== Typography ========== */
+    /* Font Sizes */
+    --font-size-xs: 0.75rem; /* 12px */
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-base: 1rem; /* 16px */
+    --font-size-lg: 1.125rem; /* 18px */
+    --font-size-xl: 1.25rem; /* 20px */
+    --font-size-2xl: 1.5rem; /* 24px */
+    --font-size-3xl: 1.875rem; /* 30px */
+    --font-size-4xl: 2.25rem; /* 36px */
+
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    --line-height-loose: 2;
+
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* ========== Spacing Scale ========== */
+    --spacing-1: 0.25rem; /* 4px */
+    --spacing-2: 0.5rem; /* 8px */
+    --spacing-3: 0.75rem; /* 12px */
+    --spacing-4: 1rem; /* 16px */
+    --spacing-5: 1.25rem; /* 20px */
+    --spacing-6: 1.5rem; /* 24px */
+    --spacing-8: 2rem; /* 32px */
+    --spacing-10: 2.5rem; /* 40px */
+    --spacing-12: 3rem; /* 48px */
+    --spacing-16: 4rem; /* 64px */
+    --spacing-20: 5rem; /* 80px */
+    --spacing-24: 6rem; /* 96px */
+
+    /* ========== Colors - Light Theme ========== */
+    /* Markdown Mode - Surface Colors */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f6f8fa;
+
+    /* Markdown Mode - Text Colors */
+    --color-text-primary: #24292f; /* 4.5:1 contrast on white */
+    --color-text-secondary: #57606a; /* 4.5:1 contrast on white */
+
+    /* Markdown Mode - Border Colors */
+    --color-border: #d0d7de;
+
+    /* Markdown Mode - Interactive Colors */
+    --color-link: #0969da; /* 4.5:1 contrast on white */
+    --color-link-hover: #0860ca; /* 4.5:1 contrast on white */
+    --color-accent: #0969da;
+
+    /* Markdown Mode - Code Colors */
+    --color-code-bg: rgba(175, 184, 193, 0.2);
+    --color-code-text: #24292f; /* 4.5:1 contrast on code bg */
+    --color-pre-bg: #f6f8fa;
+    --color-pre-border: #d0d7de;
+
+    /* Animated Mode - Canvas Colors */
+    --color-animated-bg-light: #f7f4ec;
+
+    /* Animated Mode - Panel/Modal Colors */
+    --color-panel-bg: #f7f4ec;
+    --color-panel-text: #0b2b4c;
+    --color-panel-text-muted: rgba(11, 43, 76, 0.8);
+    --color-panel-text-subtle: rgba(11, 43, 76, 0.95);
+    --color-panel-border: rgba(11, 43, 76, 0.1);
+    --color-panel-btn: #0b2b4c;
+
+    /* Animated Mode - 3D Card Material Colors */
+    --color-card-navy: #2f4668;
+    --color-card-yellow: #f0c34e;
+    --color-card-coral: #f2a1a1;
+
+    /* Section accent colors (modal headers) */
+    --color-section-aboutMe: #facd5a;
+    --color-section-community: #e88e8b;
+    --color-section-awards: #1d365a;
+    --color-section-projects: #f2d37b;
+    --color-section-working: #e88e8b;
+    --color-section-education: #1d365a;
+
+    /* Shared - InfoCard */
+    --color-infocard-content-bg: rgba(255, 251, 235, 0.9);
+
+    /* ========== Text Shadows (Fake Bold) ========== */
+    --text-shadow-bold:
+      0.021875rem 0 0 currentColor, -0.021875rem 0 0 currentColor,
+      0 0.021875rem 0 currentColor, 0 -0.021875rem 0 currentColor;
+    --text-shadow-bold-lg:
+      0.025rem 0 0 currentColor, -0.025rem 0 0 currentColor,
+      0 0.025rem 0 currentColor, 0 -0.025rem 0 currentColor;
+  }
+
+  /* ========== Dark Theme Overrides ========== */
+  [data-theme="dark"] {
+    /* Markdown Mode - Surface Colors */
+    --color-bg-primary: #0d1117;
+    --color-bg-secondary: #161b22;
+
+    /* Markdown Mode - Text Colors */
+    --color-text-primary: #c9d1d9; /* 4.5:1 contrast on dark bg */
+    --color-text-secondary: #8b949e; /* 4.5:1 contrast on dark bg */
+
+    /* Markdown Mode - Border Colors */
+    --color-border: #30363d;
+
+    /* Markdown Mode - Interactive Colors */
+    --color-link: #58a6ff; /* 4.5:1 contrast on dark bg */
+    --color-link-hover: #79c0ff; /* 4.5:1 contrast on dark bg */
+    --color-accent: #58a6ff;
+
+    /* Markdown Mode - Code Colors */
+    --color-code-bg: rgba(110, 118, 129, 0.4);
+    --color-code-text: #c9d1d9; /* 4.5:1 contrast on code bg */
+    --color-pre-bg: #161b22;
+    --color-pre-border: #30363d;
+
+    /* Animated Mode - Canvas Colors */
+    --color-animated-bg-light: #0a0e1a;
+
+    /* Animated Mode - Panel/Modal Colors */
+    --color-panel-bg: rgba(15, 20, 35, 0.95);
+    --color-panel-text: #d4e9fe;
+    --color-panel-text-muted: #a8c8ff;
+    --color-panel-text-subtle: #c0deff;
+    --color-panel-border: rgba(0, 217, 255, 0.3);
+    --color-panel-btn: #d0e8ff;
+
+    /* Animated Mode - 3D Card Material Colors (Dark Theme) */
+    --color-card-navy: #d4e9fe;
+    --color-card-yellow: #f0c34e; /* Same as light */
+    --color-card-coral: #7c6eff; /* Purple in dark mode */
+
+    /* Section accent colors (modal headers) */
+    --color-section-aboutMe: var(--color-card-yellow);
+    --color-section-community: var(--color-card-coral);
+    --color-section-awards: var(--color-card-navy);
+    --color-section-projects: var(--color-card-yellow);
+    --color-section-working: var(--color-card-coral);
+    --color-section-education: var(--color-card-navy);
+
+    /* Animated Mode - Accent Colors (Dark Theme Only) */
+    --color-accent-cyan: #00d9ff;
+    --color-accent-purple: #7c6eff;
+
+    /* Shared - InfoCard */
+    --color-infocard-content-bg: rgba(20, 30, 45, 0.95);
+  }
+
+  /* ========== Responsive Typography Scaling ========== */
+  @media (max-width: 40rem) {
+    /* Mobile */
+    :root {
+      --font-size-4xl: 1.875rem; /* 30px */
+      --font-size-3xl: 1.5rem; /* 24px */
+      --font-size-2xl: 1.25rem; /* 20px */
+      --font-size-xl: 1.125rem; /* 18px */
+      --spacing-8: 1.5rem; /* 24px */
+      --spacing-6: 1.25rem; /* 20px */
+    }
+  }
+
+  @media (min-width: 40.0625rem) and (max-width: 64rem) {
+    /* Tablet */
+    :root {
+      --font-size-4xl: 2rem; /* 32px */
+      --font-size-3xl: 1.75rem; /* 28px */
+      --font-size-2xl: 1.375rem; /* 22px */
+    }
+  }
+
+  @media (min-width: 160rem) {
+    /* Large desktop: scale up for readability */
+    :root {
+      --font-size-base: 1.125rem; /* 18px */
+      --font-size-lg: 1.25rem; /* 20px */
+    }
+  }
+}

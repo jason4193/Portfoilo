@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { usePortfolioModeStore } from "../stores";
+import { usePortfolioModeStore, useThemeStore } from "../stores";
 import { AnimatedIcon, MarkdownIcon } from "./icons";
 
 interface ModeToggleProps {
@@ -12,7 +12,9 @@ export function ModeToggle({
   iconClassName = "w-6 h-6",
 }: ModeToggleProps) {
   const { mode, toggleMode } = usePortfolioModeStore();
+  const { theme } = useThemeStore();
   const isMarkdown = mode === "markdown";
+  const isDark = theme === "dark";
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const isHoveringRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
@@ -20,7 +22,11 @@ export function ModeToggle({
   const button = (
     <button
       onClick={toggleMode}
-      className={`btn-icon relative z-10 opacity-80 ${className}`}
+      className={`flex items-center justify-center rounded-md border border-stroke w-9 h-9 sm:w-10 sm:h-10 relative z-10 transition-colors duration-300 ${className} ${
+        isDark
+          ? "bg-neutral-800 text-white hover:bg-neutral-700"
+          : "bg-white/70 text-neutral-700 hover:bg-white"
+      }`}
       aria-label={`Switch to ${isMarkdown ? "animated" : "markdown"} mode`}
       title={`Switch to ${isMarkdown ? "animated" : "markdown"} mode`}
     >

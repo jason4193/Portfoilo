@@ -16,10 +16,10 @@ export const SECTION_TITLES: Record<SectionId, string> = {
 };
 
 export const SECTION_COLORS: Record<SectionId, string> = {
-  aboutMe: "#FACD5A",
-  community: "#E88E8B",
-  awards: "#1D365A",
-  projects: "#F2D37B",
-  working: "#E88E8B",
-  education: "#1D365A",
+  aboutMe: "var(--color-section-aboutMe)",
+  community: "var(--color-section-community)",
+  awards: "var(--color-section-awards)",
+  projects: "var(--color-section-projects)",
+  working: "var(--color-section-working)",
+  education: "var(--color-section-education)",
 };

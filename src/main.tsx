@@ -12,7 +12,6 @@ import {
   OptionalLoadingMessages,
 } from "./shared/constant/message";
 import "./shared/styles/tailwind.css";
-import "./shared/styles/theme.css";
 
 function App() {
   const { mode, isTransitioning, transitionProgress, targetMode } =

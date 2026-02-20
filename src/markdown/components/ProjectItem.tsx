@@ -40,10 +40,10 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
     (project.media && project.media.length > 0);
 
   return (
-    <div id={anchorId} className="mb-12">
+    <div id={anchorId}>
       <div
-        className={`expandable-item ${
-          hasExpandableContent ? "expandable-item--clickable" : ""
+        className={`min-w-0 py-4 transition-opacity ${
+          hasExpandableContent ? "cursor-pointer hover:opacity-80" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -70,7 +70,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="link-icon"
+                        className="inline-flex items-center justify-center w-6 h-6 text-color-link hover:text-color-link-hover transition-colors"
                         onClick={(e) => e.stopPropagation()}
                         title={link.label}
                       >
@@ -82,9 +82,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
               )}
             </div>
             {project.date && (
-              <p className="text-sm text-secondary mb-2">
-                {project.date}
-              </p>
+              <p className="text-sm text-secondary mb-2">{project.date}</p>
             )}
             {project.techStack && project.techStack.length > 0 && (
               <div className="mb-3">
@@ -99,7 +97,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`expand-chevron mt-4 ${isExpanded ? "rotate-180" : ""}`}
+              className={`w-6 h-6 text-text-base mt-4 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -126,7 +124,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                     <li key={aIdx} className="text-sm">
                       {achievement}
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             )}

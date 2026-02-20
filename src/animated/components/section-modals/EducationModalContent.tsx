@@ -97,7 +97,7 @@ export function EducationModalContent({
       icon={<EducationIcon className="size-18 object-contain" />}
       title="Education"
       accentColor={accentColor}
-      headerTextColor="#e5f1fd"
+      headerTextColor={"var(--color-panel-bg"}
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
