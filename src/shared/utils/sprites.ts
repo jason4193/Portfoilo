@@ -35,8 +35,8 @@ export function getSpriteCellStyle(
   const backgroundSize = `${columns * 100}% ${rows * 100}%`;
 
   // Calculate background-position as percentage to show the specific cell
-  const xPosition = col * 50; // 0%, 50%, 100% for 3 columns
-  const yPosition = row * 100; // 0%, 100% for 2 rows
+  const xPosition = columns > 1 ? (col / (columns - 1)) * 100 : 0;
+  const yPosition = rows > 1 ? (row / (rows - 1)) * 100 : 0;
   const backgroundPosition = `${xPosition}% ${yPosition}%`;
 
   return { backgroundSize, backgroundPosition };
