@@ -7,8 +7,6 @@ import {
   EmailIcon,
   LinkIcon,
 } from "../../shared/components/icons";
-import { getMediaUrl } from "../../shared/utils/media";
-import { getProjectSpriteCellStyle } from "../../shared/utils/sprites";
 import type { Project } from "../../shared/types/content";
 
 interface ProjectItemProps {
@@ -131,7 +129,7 @@ export function ProjectItem({
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
           <div className="mt-4 space-y-4">
-            <MediaCollection 
+            <MediaCollection
               media={mediaForCollection}
               isSprites={useSprites}
               spriteImageIndex={useSprites ? projectIndex : undefined}
