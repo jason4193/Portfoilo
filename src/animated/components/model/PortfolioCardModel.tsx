@@ -17,7 +17,16 @@ import { BackProjects } from "./BackProjects";
 import { BackWorking } from "./BackWorking";
 import { FrontFace } from "./FrontFace";
 import type { GLTFResult } from "./types";
-import { useSectionSelectionStore } from "../../../shared/stores";
+import {
+  useSectionSelectionStore,
+  useThemeStore,
+} from "../../../shared/stores";
+import {
+  MODEL_MATERIAL_VARIANTS,
+  MaterialThemeSettings,
+} from "../../styles/model";
+
+type MaterialName = keyof GLTFResult["materials"];
 
 export default function PortfolioCardModel({
   ...props
@@ -42,21 +51,44 @@ export default function PortfolioCardModel({
     (state) => state.setSelectedSection,
   );
 
-  useLayoutEffect(() => {
-    const lightYellow = materials["Light Yellow"];
-    if (lightYellow) {
-      lightYellow.color = new THREE.Color("#FFFFFF");
-      lightYellow.needsUpdate = true;
-    }
+  const theme = useThemeStore((state) => state.theme);
 
-    // Make all materials double-sided so card is visible from all angles
+  useLayoutEffect(() => {
+    // Always render front/back shapes
     Object.values(materials).forEach((material) => {
       if (material instanceof THREE.Material) {
         material.side = THREE.DoubleSide;
         material.needsUpdate = true;
       }
     });
-  }, [materials]);
+
+    const variant = MODEL_MATERIAL_VARIANTS[theme];
+
+    (
+      Object.entries(variant) as Array<[MaterialName, MaterialThemeSettings]>
+    ).forEach(([materialName, config]) => {
+      const material = materials[materialName];
+      if (!material) return;
+
+      if (config.color !== undefined) {
+        material.color.setHex(config.color);
+      }
+      if (config.emissive !== undefined) {
+        material.emissive.setHex(config.emissive);
+      }
+      if (config.emissiveIntensity !== undefined) {
+        material.emissiveIntensity = config.emissiveIntensity;
+      }
+      if (config.roughness !== undefined) {
+        material.roughness = config.roughness;
+      }
+      if (config.metalness !== undefined) {
+        material.metalness = config.metalness;
+      }
+
+      material.needsUpdate = true;
+    });
+  }, [materials, theme]);
 
   return (
     <group {...props} dispose={null}>

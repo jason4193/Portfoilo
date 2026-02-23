@@ -18,7 +18,8 @@ import {
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "@animated/constants/scene";
 import { useCameraPoseTracker } from "@animated/hooks";
-import { useDebugStore } from "../../shared/stores";
+import { useDebugStore, useThemeStore } from "../../shared/stores";
+import { LIGHTING_PRESETS } from "@animated/constants/scene";
 
 interface SceneRigProps {
   controlsRef?: React.RefObject<any>;
@@ -29,12 +30,22 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const lightIntensities = useDebugStore((state) => state.lightIntensities);
   const debugRotationMode = useDebugStore((state) => state.rotationMode);
   const debugEnabled = useDebugStore((state) => state.enabled);
+  const theme = useThemeStore((state) => state.theme);
   const {
-    ambient: ambientIntensity,
-    key: keyIntensity,
-    fill: fillIntensity,
-    rim: rimIntensity,
+    ambient: baseAmbientIntensity,
+    key: baseKeyIntensity,
+    fill: baseFillIntensity,
+    rim: baseRimIntensity,
   } = lightIntensities;
+  const lightingPreset = LIGHTING_PRESETS[theme];
+  const ambientIntensity =
+    baseAmbientIntensity * lightingPreset.ambientMultiplier;
+  const keyLightConfig = lightingPreset.key;
+  const fillLightConfig = lightingPreset.fill;
+  const rimLightConfig = lightingPreset.rim;
+  const keyIntensity = baseKeyIntensity * keyLightConfig.intensityMultiplier;
+  const fillIntensity = baseFillIntensity * fillLightConfig.intensityMultiplier;
+  const rimIntensity = baseRimIntensity * rimLightConfig.intensityMultiplier;
   useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
@@ -90,12 +101,16 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
 
   return (
     <>
-      {/* Lighting - studio setup with a right-side key to cast a slight left shadow */}
-      <ambientLight intensity={ambientIntensity} />
+      {/* Lighting - studio setup with theme-aware ratios */}
+      <ambientLight
+        intensity={ambientIntensity}
+        color={lightingPreset.ambientColor}
+      />
       <directionalLight
         ref={keyLightRef}
-        position={[4.5, 6, 6]}
+        position={keyLightConfig.position}
         intensity={keyIntensity}
+        color={keyLightConfig.color}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -108,13 +123,15 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
       />
       <directionalLight
         ref={fillLightRef}
-        position={[-3.5, 4, 2]}
+        position={fillLightConfig.position}
         intensity={fillIntensity}
+        color={fillLightConfig.color}
       />
       <directionalLight
         ref={rimLightRef}
-        position={[2.5, 3, -4]}
+        position={rimLightConfig.position}
         intensity={rimIntensity}
+        color={rimLightConfig.color}
       />
       {debugEnabled && <primitive object={axesHelper} />}
       {/* Camera Controls - disable drag rotation */}

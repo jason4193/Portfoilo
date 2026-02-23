@@ -12,7 +12,7 @@ interface StackCardLayoutProps<T> {
   /** Array of items to render in the stack */
   items: T[];
   /** Function to render each card */
-  renderCard: (item: T, index: number) => ReactNode;
+  renderCard: (item: T, placement: any, index: number) => ReactNode;
   /** Extract unique key from item */
   getItemKey: (item: T, index: number) => string | number;
   /** Accessible label for swipe gesture */
@@ -65,7 +65,11 @@ export function StackCardLayout<T>({
               zIndex: items.length - index,
             }}
           >
-            {renderCard(item, index)}
+            {renderCard(
+              item,
+              null, // No complex placement needed for stack layout
+              index,
+            )}
           </div>
         ))}
       </div>

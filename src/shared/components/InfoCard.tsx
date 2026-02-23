@@ -1,7 +1,5 @@
 import { useRef } from "react";
-import type { ReactNode } from "react";
-
-import { useImageTilt } from "@animation-hooks/interactive/useImageTilt";
+import type { RefObject, ReactNode } from "react";
 
 interface InfoCardImage {
   src: string;
@@ -15,6 +13,14 @@ interface InfoCardProps {
   imageClassName?: string;
   /** Extra classes for the img element itself (e.g. override min-height, aspect ratio) */
   imgClassName?: string;
+  /** Optional inline styles for the img element */
+  imgStyle?: React.CSSProperties;
+  /** Whether this is a grid image that needs special square aspect ratio and scaling */
+  isGridImage?: boolean;
+  /** For grid images: number of columns in sprite sheet (default: 3) */
+  spriteColumns?: number;
+  /** For grid images: number of rows in sprite sheet (default: 2) */
+  spriteRows?: number;
   /** Optional header text shown as pill with horizontal lines */
   header?: string;
   /** Optional list items with bullet (e.g. ►) */
@@ -33,72 +39,98 @@ export function InfoCard({
   image,
   imageClassName,
   imgClassName,
+  imgStyle,
+  isGridImage = false,
+  spriteColumns = 3,
+  spriteRows = 2,
   header,
   listItems,
   bullet = "►",
   children,
   className = "",
-  contentSectionClassName = "rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4",
+  contentSectionClassName,
 }: InfoCardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLElement | null>(null);
   const hasContent = header || (listItems && listItems.length > 0) || children;
 
-  // Use the extracted tilt animation hook
-  useImageTilt({
-    wrapperRef,
-    imgRef,
-    hasImage: !!image,
-  });
+  // Default classes without background (background will be applied via inline style)
+  const defaultContentClasses = "rounded-b-3xl px-3 py-3 sm:px-4 sm:py-4";
+  const finalContentClasses = contentSectionClassName || defaultContentClasses;
 
-  // Base img classes always applied
-  const baseImgClasses = "rounded-2xl w-full will-change-transform";
+  const baseRegularImgClasses = "w-full will-change-transform object-cover";
+  const regularImgClasses = imgClassName
+    ? `${baseRegularImgClasses} ${imgClassName}`
+    : `${baseRegularImgClasses} aspect-[4/3] min-h-[20vh] sm:min-h-[35vh]`;
 
-  // Default sizing classes - only applied when no custom imgClassName provided
-  const defaultImgSizingClasses =
-    "object-cover aspect-[4/3] min-h-[20vh] sm:min-h-[35vh]";
+  const gridImgClasses = imgClassName
+    ? `absolute inset-0 will-change-transform ${imgClassName}`
+    : "absolute inset-0 will-change-transform";
 
-  // If imgClassName is provided, consumer has full control over sizing
-  const finalImgClasses = imgClassName
-    ? `${baseImgClasses} ${imgClassName}`
-    : `${baseImgClasses} ${defaultImgSizingClasses}`;
+  const gridBackgroundStyle: React.CSSProperties | undefined = isGridImage
+    ? {
+        backgroundImage: image ? `url(${image.src})` : undefined,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: `${spriteColumns * 100}% ${spriteRows * 100}%`,
+        backgroundPosition: "0% 0%",
+        ...imgStyle,
+      }
+    : undefined;
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-3xl bg-white/95 shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] ${className}`}
+      className={`flex flex-col overflow-hidden rounded-xl shadow-[0_0.5rem_1.875rem_rgba(11,43,76,0.08)] bg-surface-panel ${className}`}
     >
       {image && (
         <div
           ref={wrapperRef}
-          className={`shrink-0 overflow-hidden p-2 sm:p-3 [perspective:1000px] ${imageClassName ?? ""}`}
+          className={`shrink-0 overflow-hidden [perspective:1000px] flex justify-center ${imageClassName ?? ""}`}
           style={{ transformStyle: "preserve-3d" }}
         >
-          <img
-            ref={imgRef}
-            src={image.src}
-            alt={image.alt}
-            className={finalImgClasses}
-            style={{ transformStyle: "preserve-3d" }}
-          />
+          <div className={isGridImage ? "relative aspect-square" : "w-full"}>
+            {isGridImage ? (
+              <div
+                ref={imgRef as RefObject<HTMLDivElement | null>}
+                className={gridImgClasses}
+                role="img"
+                aria-label={image.alt}
+                style={{
+                  transformStyle: "preserve-3d",
+                  ...gridBackgroundStyle,
+                }}
+              />
+            ) : (
+              <img
+                ref={imgRef as RefObject<HTMLImageElement | null>}
+                src={image.src}
+                alt={image.alt}
+                className={regularImgClasses}
+                style={{
+                  transformStyle: "preserve-3d",
+                  ...imgStyle,
+                }}
+              />
+            )}
+          </div>
         </div>
       )}
       {hasContent && (
         <div
-          className={`flex min-h-0 flex-1 flex-col ${contentSectionClassName}`}
+          className={`flex min-h-0 flex-1 flex-col ${finalContentClasses} bg-surface-infocard`}
         >
           {header && (
             <div className="flex items-center justify-center gap-3 mb-3 shrink-0">
               <span
-                className="h-0.5 flex-1 max-w-8 bg-amber-300/80 shrink"
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
                 aria-hidden
               />
-              <span className="rounded-full bg-amber-200/90 px-3 py-1.5">
-                <span className="font-semibold text-[#0B2B4C] text-sm">
+              <span className="rounded-full px-3 py-1.5 bg-card-yellow">
+                <span className="font-semibold sm:text-xs text-sm text-surface-animated">
                   {header}
                 </span>
               </span>
               <span
-                className="h-0.5 flex-1 max-w-8 bg-amber-300/80 shrink"
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
                 aria-hidden
               />
             </div>
@@ -109,9 +141,9 @@ export function InfoCard({
               {listItems.map((item, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-2.5 text-sm text-[#0B2B4C]"
+                  className="flex items-center gap-2.5 text-sm text-text-panel"
                 >
-                  <span className="text-[#0B2B4C] text-xs" aria-hidden>
+                  <span className="text-xs text-text-panel" aria-hidden>
                     {bullet}
                   </span>
                   <span>{item}</span>

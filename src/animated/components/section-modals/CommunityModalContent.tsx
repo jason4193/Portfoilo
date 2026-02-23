@@ -45,10 +45,10 @@ function renderCommunityCard(item: CommunityItem) {
       header={item.role}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] !text-sm sm:text-base">
+      <h3 className="!mt-0 mb-1 font-bold !text-sm sm:text-base" style={{ color: "var(--color-panel-text)" }}>
         {item.title}
       </h3>
-      <p className="text-[0.5rem] sm:text-base leading-relaxed text-[#0B2B4C]/90">
+      <p className="text-[0.5rem] sm:text-base leading-relaxed" style={{ color: "var(--color-panel-text-subtle)" }}>
         {item.description}
       </p>
     </InfoCard>
@@ -87,7 +87,6 @@ export function CommunityModalContent({
       icon={<CommunityIcon className="size-18 object-contain" />}
       title="Community"
       accentColor={accentColor}
-      backgroundColor="#FCE8E7"
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
@@ -95,7 +94,8 @@ export function CommunityModalContent({
     >
       <p
         ref={introRef}
-        className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
+        className="text-xs leading-relaxed sm:text-lg"
+        style={{ color: "var(--color-panel-text-subtle)" }}
       >
         Here&apos;s how I&apos;ve engaged with various communities and
         contributed over the years:

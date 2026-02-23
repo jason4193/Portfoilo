@@ -5,12 +5,21 @@ import { getDominantColor } from "../utils/colorExtraction";
 import YouTube from "react-youtube";
 import { extractYouTubeVideoId } from "../utils/youtube";
 import { debugPerf } from "../utils/debug";
+import { getProjectSpriteCellStyle } from "../utils/sprites";
 
 interface MediaCollectionProps {
   media?: Media[];
+  /** Use sprite-based positioning for media items */
+  isSprites?: boolean;
+  /** Index of sprite cell to display (0-5 for 3x2 grid) */
+  spriteImageIndex?: number;
 }
 
-export function MediaCollection({ media }: MediaCollectionProps) {
+export function MediaCollection({
+  media,
+  isSprites = false,
+  spriteImageIndex,
+}: MediaCollectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -262,13 +271,38 @@ export function MediaCollection({ media }: MediaCollectionProps) {
     return color + alpha;
   };
 
-  const renderMedia = (item: Media) => {
+  const renderMedia = (item: Media, mediaIndex: number = 0) => {
     const mediaUrl = getMediaUrl(item.src);
     const bgColor = getBackgroundColor(item);
 
     // Standard frame with rounded corners and border
     const frameClass =
       "w-full aspect-1/1 rounded-lg border border-border overflow-hidden";
+
+    // Check if this is a sprite image that should use background-position styling
+    const isSpriteImage =
+      isSprites &&
+      spriteImageIndex !== undefined &&
+      mediaIndex === 0 &&
+      item.type === "image";
+
+    if (isSpriteImage) {
+      const spriteStyle = getProjectSpriteCellStyle(spriteImageIndex);
+      return (
+        <div
+          className={frameClass}
+          style={{
+            backgroundImage: `url(${mediaUrl})`,
+            backgroundSize: spriteStyle.backgroundSize,
+            backgroundPosition: spriteStyle.backgroundPosition,
+            backgroundRepeat: "no-repeat",
+            backgroundColor: bgColor,
+          }}
+          role="img"
+          aria-label={item.alt}
+        />
+      );
+    }
 
     switch (item.type) {
       case "image":
@@ -374,7 +408,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                   key={idx}
                   className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[12.5rem]"
                 >
-                  {renderMedia(item)}
+                  {renderMedia(item, idx % media.length)}
                 </div>
               ))
             : // Render actual items for 1-2 items
@@ -383,7 +417,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
                   key={idx}
                   className="flex-shrink-0 w-[calc(33.333%-0.67rem)] min-w-[12.5rem]"
                 >
-                  {renderMedia(item)}
+                  {renderMedia(item, idx)}
                 </div>
               ))}
         </div>
@@ -416,7 +450,7 @@ export function MediaCollection({ media }: MediaCollectionProps) {
           {hasMedia ? (
             media.map((item, idx) => (
               <div key={idx} className="flex-shrink-0 w-full snap-center">
-                {renderMedia(item)}
+                {renderMedia(item, idx)}
               </div>
             ))
           ) : (

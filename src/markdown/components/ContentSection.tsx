@@ -32,11 +32,14 @@ export function ContentSection({ section, content }: ContentSectionProps) {
       case "projectItem": {
         const project = section.content;
         if (!project || !section.title) return null;
+        // Find the project index from the content for grid positioning
+        const projectIndex = content?.projects?.findIndex((p) => p.title === project.title) ?? -1;
         return (
           <ProjectItem
             id={section.id}
             title={section.title}
             project={project}
+            projectIndex={projectIndex}
           />
         );
       }
@@ -72,10 +75,7 @@ export function ContentSection({ section, content }: ContentSectionProps) {
       // Footer
       case "footer":
         return (
-          <p
-            id={anchorId}
-            className="text-sm text-secondary text-center mt-12"
-          >
+          <p id={anchorId} className="text-sm text-secondary text-center mt-12">
             {content.footer}
           </p>
         );
@@ -85,5 +85,5 @@ export function ContentSection({ section, content }: ContentSectionProps) {
     }
   };
 
-  return <div className="mb-8">{renderContent()}</div>;
+  return <div>{renderContent()}</div>;
 }

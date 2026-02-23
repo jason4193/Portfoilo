@@ -51,7 +51,7 @@ export function Header() {
             {!isExpanded && paragraphs.length > 2 && (
               <button
                 type="button"
-                className="link-text text-sm"
+                className="text-link hover:text-link-hover text-sm font-medium underline cursor-pointer transition-colors"
                 onClick={() => setIsExpanded(true)}
               >
                 Read more

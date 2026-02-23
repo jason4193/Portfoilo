@@ -2,6 +2,7 @@ import { useRef, type RefObject } from "react";
 import { useMediaQuery } from "react-responsive";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
+import { getProjectSpriteCellStyle } from "@shared/utils/sprites";
 import { InfoCard } from "@shared/components/InfoCard";
 import { BaseModalContent } from "./BaseModalContent";
 import { useModalContent } from "@animated/hooks";
@@ -30,13 +31,26 @@ function ProjectIcon({ className }: { className?: string }) {
 
 type ProjectItem = NonNullable<typeof content>["projects"][number];
 
-function renderProjectCard(item: ProjectItem) {
+function renderProjectCard(item: ProjectItem, _placement: any, index: number) {
   const firstImage = item.media?.find((m) => m.type === "image");
+  const isGridImage = firstImage?.src === "Projects.webp";
+  const spriteStyle = isGridImage
+    ? getProjectSpriteCellStyle(index)
+    : undefined;
+
   return (
     <InfoCard
       className="size-full"
-      imageClassName="max-h-[55%]"
-      imgClassName="h-full object-cover object-center"
+      imageClassName={isGridImage ? "aspect-square max-h-[55%]" : "max-h-[55%]"}
+      imgClassName={isGridImage ? "" : "h-full w-full"}
+      isGridImage={isGridImage}
+      imgStyle={
+        isGridImage && spriteStyle
+          ? {
+              backgroundPosition: spriteStyle.backgroundPosition,
+            }
+          : undefined
+      }
       image={
         firstImage
           ? {
@@ -48,18 +62,29 @@ function renderProjectCard(item: ProjectItem) {
       header={item.date}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <h3 className="!mt-0 mb-1 font-bold text-[#0B2B4C] !text-sm sm:text-base">
+      <h3
+        className="!mt-0 mb-1 font-bold !text-sm sm:text-base"
+        style={{ color: "var(--color-panel-text)" }}
+      >
         {item.title}
       </h3>
-      <p className="text-[0.5rem] sm:text-sm leading-relaxed text-[#0B2B4C]/90 mb-2">
+      <p
+        className="text-sm sm:text-xs leading-relaxed mb-2"
+        style={{ color: "var(--color-panel-text)" }}
+      >
         {item.description}
       </p>
       {item.techStack && item.techStack.length > 0 && (
-        <div className="flex flex-wrap gap-1">
+        <div className="flex-wrap gap-1 flex sm:hidden">
           {item.techStack.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="text-[0.4rem] sm:text-xs px-2 py-0.5 bg-[#F2D37B]/30 rounded-full text-[#0B2B4C]/80"
+              className="text-xs px-2 py-0.5 rounded-full"
+              style={{
+                backgroundColor: "var(--color-card-yellow, #FCD34D)",
+                color: "var(--color-panel-bg)",
+                opacity: 0.7,
+              }}
             >
               {tech}
             </span>
@@ -102,7 +127,6 @@ export function ProjectsModalContent({
       icon={<ProjectIcon className="size-18 object-contain" />}
       title="Projects"
       accentColor={accentColor}
-      backgroundColor="#FFF9E6"
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
@@ -110,7 +134,8 @@ export function ProjectsModalContent({
     >
       <p
         ref={introRef}
-        className="text-xs leading-relaxed text-[#0B2B4C]/90 sm:text-lg"
+        className="text-xs leading-relaxed sm:text-lg"
+        style={{ color: "var(--color-panel-text-subtle)" }}
       >
         Here are some projects I&apos;ve worked on over the years:
       </p>

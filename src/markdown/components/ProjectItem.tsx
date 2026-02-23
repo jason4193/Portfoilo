@@ -13,6 +13,7 @@ interface ProjectItemProps {
   id: string;
   title: string;
   project: Project;
+  projectIndex: number; // 0-5 for projects in the grid
 }
 
 function getLinkIcon(label: string) {
@@ -31,19 +32,31 @@ function getLinkIcon(label: string) {
   return LinkIcon;
 }
 
-export function ProjectItem({ id, title, project }: ProjectItemProps) {
+export function ProjectItem({
+  id,
+  title,
+  project,
+  projectIndex,
+}: ProjectItemProps) {
   const anchorId = getSectionAnchorId(id, title);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Get the first image to check if it's a sprite image
+  const firstImage = project.media?.find((m) => m.type === "image");
+  const useSprites = firstImage?.src === "Projects.webp";
+
+  // Include all media in the collection
+  const mediaForCollection = project.media;
+
   const hasExpandableContent =
     (project.achievements && project.achievements.length > 0) ||
-    (project.media && project.media.length > 0);
+    (mediaForCollection && mediaForCollection.length > 0);
 
   return (
-    <div id={anchorId} className="mb-12">
+    <div id={anchorId}>
       <div
-        className={`expandable-item ${
-          hasExpandableContent ? "expandable-item--clickable" : ""
+        className={`min-w-0 py-4 transition-opacity ${
+          hasExpandableContent ? "cursor-pointer hover:opacity-80" : ""
         }`}
         onClick={() => hasExpandableContent && setIsExpanded(!isExpanded)}
         role={hasExpandableContent ? "button" : undefined}
@@ -70,7 +83,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="link-icon"
+                        className="inline-flex items-center justify-center w-6 h-6 text-color-link hover:text-color-link-hover transition-colors"
                         onClick={(e) => e.stopPropagation()}
                         title={link.label}
                       >
@@ -82,9 +95,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
               )}
             </div>
             {project.date && (
-              <p className="text-sm text-secondary mb-2">
-                {project.date}
-              </p>
+              <p className="text-sm text-secondary mb-2">{project.date}</p>
             )}
             {project.techStack && project.techStack.length > 0 && (
               <div className="mb-3">
@@ -99,7 +110,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
           </div>
           {hasExpandableContent && (
             <svg
-              className={`expand-chevron mt-4 ${isExpanded ? "rotate-180" : ""}`}
+              className={`w-6 h-6 text-text-base mt-4 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -118,7 +129,11 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
           <div className="mt-4 space-y-4">
-            <MediaCollection media={project.media} />
+            <MediaCollection
+              media={mediaForCollection}
+              isSprites={useSprites}
+              spriteImageIndex={useSprites ? projectIndex : undefined}
+            />
             {project.achievements?.length > 0 && (
               <ul className="list-disc list-inside space-y-1">
                 {project.achievements.map(
@@ -126,7 +141,7 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
                     <li key={aIdx} className="text-sm">
                       {achievement}
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             )}

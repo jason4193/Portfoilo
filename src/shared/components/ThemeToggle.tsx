@@ -9,32 +9,15 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="btn-icon btn-icon--rounded relative w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 transition-all duration-300 group overflow-hidden"
       aria-label={`Toggle theme. Current: ${isDark ? "Dark" : "Light"}`}
       title={`Current theme: ${isDark ? "Dark" : "Light"}. Click to toggle`}
+      className={`flex items-center justify-center rounded-full w-10 h-10 border border-stroke transition-colors duration-300 ${
+        isDark
+          ? "bg-neutral-800 text-white hover:bg-neutral-700"
+          : "bg-white/70 text-neutral-700 hover:bg-white"
+      }`}
     >
-      {/* Animated Sun/Moon toggle with sector transformation */}
-      <div className="relative w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6">
-        {/* Sun icon (light mode) - rotates and scales */}
-        <SunIcon
-          className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${
-            isDark
-              ? "opacity-0 rotate-[135deg] scale-0"
-              : "opacity-100 rotate-0 scale-100"
-          }`}
-          aria-hidden={true}
-        />
-
-        {/* Moon icon (dark mode) - rotates and scales with crescent */}
-        <MoonIcon
-          className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${
-            isDark
-              ? "opacity-100 rotate-0 scale-100"
-              : "opacity-0 -rotate-[135deg] scale-0"
-          }`}
-          aria-hidden={true}
-        />
-      </div>
+      {isDark ? <MoonIcon /> : <SunIcon />}
     </button>
   );
 }

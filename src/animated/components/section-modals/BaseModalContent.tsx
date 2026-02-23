@@ -15,6 +15,8 @@ interface BaseModalContentProps {
   backgroundColor?: string;
   /** Text color for container */
   textColor?: string;
+  /** Text color for header title */
+  headerTextColor?: string;
   /** Ref for header element (for animations) */
   headerRef: RefObject<HTMLDivElement | null>;
   /** Ref for close button element (for animations) */
@@ -37,14 +39,23 @@ export function BaseModalContent({
   icon,
   title,
   accentColor,
-  backgroundColor = "#F7F4EC",
-  textColor = "#0B2B4C",
+  backgroundColor,
+  textColor,
+  headerTextColor = "var(--color-panel-text)",
   headerRef,
   closeRef,
   onClose,
   children,
   contentClassName = "flex min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-10 sm:py-10",
 }: BaseModalContentProps) {
+  // Apply CSS variables for theme-aware colors, with fallbacks for custom overrides
+  const bgColorStyle = backgroundColor
+    ? { backgroundColor }
+    : { backgroundColor: "var(--color-panel-bg)" };
+  const textColorStyle = textColor
+    ? { color: textColor }
+    : { color: "var(--color-panel-text)" };
+
   return (
     <div
       ref={overlayRef}
@@ -55,12 +66,16 @@ export function BaseModalContent({
       <div
         ref={panelRef}
         className="relative size-full overflow-visible rounded-2xl shadow-xl flex flex-col"
-        style={{ backgroundColor, color: textColor }}
+        style={{ ...bgColorStyle, ...textColorStyle }}
         onClick={(event) => event.stopPropagation()}
       >
         {/* Mobile-only top-right X button */}
         <button
-          className="absolute -top-2 -right-2 z-10 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-[#0B2B4C]/80 shadow-md transition-colors hover:bg-white hover:text-[#0B2B4C] sm:hidden"
+          className="absolute -top-2 -right-2 z-10 flex size-10 shrink-0 items-center justify-center rounded-full shadow-md transition-colors sm:hidden"
+          style={{
+            backgroundColor: "var(--color-panel-btn)",
+            color: "var(--color-animated-bg-light)",
+          }}
           onClick={onClose}
           aria-label="Close section"
         >
@@ -79,7 +94,9 @@ export function BaseModalContent({
             </div>
             <p
               className="!m-0 text-xl font-bold italic sm:text-2xl md:text-3xl lg:text-4xl"
-              style={{ color: textColor }}
+              style={{
+                color: headerTextColor,
+              }}
             >
               {title}
             </p>
