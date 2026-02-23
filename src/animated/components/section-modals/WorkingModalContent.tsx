@@ -63,7 +63,7 @@ function renderWorkingCard(item: WorkingItem) {
       </p>
       <p
         className="text-[0.5rem] sm:text-base leading-relaxed"
-        style={{ color: "var(--color-panel-text-text)" }}
+        style={{ color: "var(--color-panel-text)" }}
       >
         {item.description}
       </p>

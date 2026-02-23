@@ -45,9 +45,9 @@
       ],
       "description": "A collection of AI-powered security analysis tools for assembly code and C programs.",
       "achievements": [
-        "Implemented a static tool to convert x86-64 assembly code to C with analysis and verification with powerd by Agentic AI framework",
-        "Implemented a dynamic tools to analyse C programs for security vulnerabilities using static analysis and AI powered analysis.",
-        "Applied the knowledge learnt from the course Binary Exploitatiion and Reverse Engineering to understand the common vulnerabilities in C and assembly code and how to detect them"
+        "Implemented a static tool to convert x86-64 assembly code to C with analysis and verification with powered by Agentic AI framework",
+        "Implemented dynamic tools to analyse C programs for security vulnerabilities using static analysis and AI powered analysis.",
+        "Applied the knowledge learnt from the course Binary Exploitation and Reverse Engineering to understand the common vulnerabilities in C and assembly code and how to detect them"
       ],
       "links": [],
       "media": [
@@ -123,7 +123,7 @@
       "title": "Linux Kali Investigation",
       "date": "Aug 2021 - Apr 2024",
       "techStack": ["Linux", "WireShark", "Ghidra", "Splunk"],
-      "description": "An exploration of cyber security and pentration testing through CTF compeition using Kali Linux.",
+      "description": "An exploration of cyber security and penetration testing through CTF compeition using Kali Linux.",
       "achievements": [
         "Improved knowledge of Linux OS and cyber security tools",
         "Applied ethical hacking principle, emphasing e-commerce security and data protection"
@@ -335,7 +335,7 @@
       "title": "UNSW's Software Development Socity Notangle Team",
       "date": "Mar 2025 - Jan 2026",
       "role": "Full-stack Developer",
-      "description": "An on-going society project for student to plan their weekly universty timetable with friends.",
+      "description": "An on-going society project for students to plan their weekly universty timetable with friends.",
       "achievements": [
         "Contributed to the development with 10+ pull requests between both frontend, backend and microservices",
         "Implemented client side features (Frontend Colour Theme, Migration Local Storage to React Query)",
@@ -509,7 +509,7 @@
       "achievements": [
         "Scheduled over 100 patient appointments, based on doctor and patient availabilities using Outlook and Excel tools",
         "Contacted more than 100 patients for appointment reminders or time adjustments using phone call and emails",
-        "Collaborated with other clinic branches for reloading medical stocks or collecting smaples and results",
+        "Collaborated with other clinic branches for reloading medical stocks or collecting samples and results",
         "Refactored the clinic document management system to improve the efficiency of the clinic's daily operations from 10 minutes to 1 minute for each patient folder"
       ],
       "media": [

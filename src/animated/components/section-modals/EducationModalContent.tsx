@@ -56,7 +56,7 @@ function renderEducationCard(item: AcademicItem) {
         {item.program}
       </h3>
       <p
-        className="text-[0.5rem] sm:text-base leading-relaxed"
+        className="text-xs sm:text-base leading-relaxed"
         style={{ color: "var(--color-panel-text)" }}
       >
         {item.summary}
@@ -97,7 +97,7 @@ export function EducationModalContent({
       icon={<EducationIcon className="size-18 object-contain" />}
       title="Education"
       accentColor={accentColor}
-      headerTextColor={"var(--color-panel-bg"}
+      headerTextColor={"var(--color-panel-bg)"}
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}

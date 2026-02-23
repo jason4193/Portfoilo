@@ -137,7 +137,7 @@ export function AwardsModalContent({
       icon={<AwardIcon className="size-18 object-contain" />}
       title="Awards & Competitions"
       accentColor={accentColor}
-      headerTextColor={"var(--color-panel-bg"}
+      headerTextColor={"var(--color-panel-bg)"}
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
