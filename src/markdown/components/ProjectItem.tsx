@@ -7,12 +7,15 @@ import {
   EmailIcon,
   LinkIcon,
 } from "../../shared/components/icons";
+import { getMediaUrl } from "../../shared/utils/media";
+import { getProjectSpriteCellStyle } from "../../shared/utils/sprites";
 import type { Project } from "../../shared/types/content";
 
 interface ProjectItemProps {
   id: string;
   title: string;
   project: Project;
+  projectIndex: number; // 0-5 for projects in the grid
 }
 
 function getLinkIcon(label: string) {
@@ -31,13 +34,25 @@ function getLinkIcon(label: string) {
   return LinkIcon;
 }
 
-export function ProjectItem({ id, title, project }: ProjectItemProps) {
+export function ProjectItem({
+  id,
+  title,
+  project,
+  projectIndex,
+}: ProjectItemProps) {
   const anchorId = getSectionAnchorId(id, title);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Get the first image to check if it's a sprite image
+  const firstImage = project.media?.find((m) => m.type === "image");
+  const useSprites = firstImage?.src === "Projects.webp";
+
+  // Include all media in the collection
+  const mediaForCollection = project.media;
+
   const hasExpandableContent =
     (project.achievements && project.achievements.length > 0) ||
-    (project.media && project.media.length > 0);
+    (mediaForCollection && mediaForCollection.length > 0);
 
   return (
     <div id={anchorId}>
@@ -116,7 +131,11 @@ export function ProjectItem({ id, title, project }: ProjectItemProps) {
       {hasExpandableContent && (
         <Activity mode={isExpanded ? "visible" : "hidden"}>
           <div className="mt-4 space-y-4">
-            <MediaCollection media={project.media} />
+            <MediaCollection 
+              media={mediaForCollection}
+              isSprites={useSprites}
+              spriteImageIndex={useSprites ? projectIndex : undefined}
+            />
             {project.achievements?.length > 0 && (
               <ul className="list-disc list-inside space-y-1">
                 {project.achievements.map(
