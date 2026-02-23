@@ -33,7 +33,7 @@
       ]
     },
     {
-      "title": "Security Analysor for C and Assembly Code",
+      "title": "Security Analyser for C and Assembly Code",
       "date": "Nov 2025 - Dec 2025",
       "techStack": [
         "Python",
@@ -477,6 +477,28 @@
         "Collaborated with the transport department using both English and Japanese to understand their current workflow",
         "Implemented a Python program to extract the data from the existing system and consolidate for analysis and future Machine Learning model training"
       ],
+      "media": [
+        {
+          "type": "image",
+          "src": "GateGourmet_1.webp",
+          "alt": "Gate Gourmet Japan Internship Group Photo"
+        },
+        {
+          "type": "image",
+          "src": "GateGourmet_2.webp",
+          "alt": "Gate Gourmet Japan Internship Photo with the transport department"
+        },
+        {
+          "type": "image",
+          "src": "GateGourmet_3.webp",
+          "alt": "Gate Gourmet Japan Internship Presentation"
+        },
+        {
+          "type": "image",
+          "src": "GateGourmet_4.webp",
+          "alt": "Gate Gourmet Japan Internship Working Session"
+        }
+      ],
       "links": []
     },
     {
@@ -489,6 +511,13 @@
         "Contacted more than 100 patients for appointment reminders or time adjustments using phone call and emails",
         "Collaborated with other clinic branches for reloading medical stocks or collecting smaples and results",
         "Refactored the clinic document management system to improve the efficiency of the clinic's daily operations from 10 minutes to 1 minute for each patient folder"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "RafflesMedical_1.webp",
+          "alt": "Raffles Medical Clinic"
+        }
       ],
       "links": []
     }
