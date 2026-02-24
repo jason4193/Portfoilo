@@ -1,4 +1,4 @@
-import { useRef, type RefObject } from "react";
+import { useRef, useState, type RefObject } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import { content } from "@shared/data/content";
@@ -10,6 +10,7 @@ import { useModalContent } from "@animated/hooks";
 import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
 import { GridCardLayout } from "@animated/components/modal-layouts/GridCardLayout";
 import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
+import { CommunityDetailPanel } from "./CommunityDetailPanel";
 
 interface CommunityModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -32,8 +33,8 @@ function renderCommunityCard(item: CommunityItem) {
   return (
     <InfoCard
       className="size-full"
-      imageClassName="max-h-[60%]"
-      imgClassName="h-full object-cover object-center"
+      imageClassName="max-h-[60%] overflow-hidden rounded-t-3xl"
+      imgClassName="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
       image={
         firstImage
           ? {
@@ -45,10 +46,16 @@ function renderCommunityCard(item: CommunityItem) {
       header={item.role}
       contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
     >
-      <h3 className="!mt-0 mb-1 font-bold !text-sm sm:text-base" style={{ color: "var(--color-panel-text)" }}>
+      <h3
+        className="!mt-0 mb-1 font-bold !text-sm sm:text-base"
+        style={{ color: "var(--color-panel-text)" }}
+      >
         {item.title}
       </h3>
-      <p className="text-[0.5rem] sm:text-base leading-relaxed" style={{ color: "var(--color-panel-text-subtle)" }}>
+      <p
+        className="text-[0.5rem] sm:text-base leading-relaxed"
+        style={{ color: "var(--color-panel-text-subtle)" }}
+      >
         {item.description}
       </p>
     </InfoCard>
@@ -80,6 +87,9 @@ export function CommunityModalContent({
     isMobile,
   });
 
+  const [selectedContribution, setSelectedContribution] =
+    useState<CommunityItem | null>(null);
+
   return (
     <BaseModalContent
       overlayRef={overlayRef}
@@ -90,6 +100,7 @@ export function CommunityModalContent({
       headerRef={headerRef}
       closeRef={closeRef}
       onClose={onClose}
+      showCloseFooter={!selectedContribution}
       contentClassName="flex min-h-0 flex-1 flex-col gap-1 sm:gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8"
     >
       <p
@@ -100,26 +111,49 @@ export function CommunityModalContent({
         Here&apos;s how I&apos;ve engaged with various communities and
         contributed over the years:
       </p>
+      {!selectedContribution &&
+        (isMobile ? (
+          <div ref={stackRef} className="flex-1 min-h-0">
+            <StackCardLayout
+              items={contributions}
+              renderCard={(item) => (
+                <button
+                  type="button"
+                  className="size-full text-left group"
+                  onClick={() => setSelectedContribution(item)}
+                >
+                  {renderCommunityCard(item)}
+                </button>
+              )}
+              getItemKey={(item, index) => `${item.title}-${index}`}
+              swipeLabel="Swipe left to see next community contribution"
+            />
+          </div>
+        ) : (
+          <div ref={cardsRef} className="flex-1 min-h-0">
+            <GridCardLayout
+              items={contributions}
+              renderCard={(item) => (
+                <button
+                  type="button"
+                  className="size-full text-left group"
+                  onClick={() => setSelectedContribution(item)}
+                >
+                  {renderCommunityCard(item)}
+                </button>
+              )}
+              getItemKey={(item, index) => `${item.title}-${index}`}
+              gridMode="equal"
+              enforceAspectRatio={false}
+            />
+          </div>
+        ))}
 
-      {isMobile ? (
-        <div ref={stackRef} className="flex-1 min-h-0">
-          <StackCardLayout
-            items={contributions}
-            renderCard={renderCommunityCard}
-            getItemKey={(item, index) => `${item.title}-${index}`}
-            swipeLabel="Swipe left to see next community contribution"
-          />
-        </div>
-      ) : (
-        <div ref={cardsRef} className="flex-1 min-h-0">
-          <GridCardLayout
-            items={contributions}
-            renderCard={renderCommunityCard}
-            getItemKey={(item, index) => `${item.title}-${index}`}
-            gridMode="equal"
-            enforceAspectRatio={false}
-          />
-        </div>
+      {selectedContribution && (
+        <CommunityDetailPanel
+          item={selectedContribution}
+          onBack={() => setSelectedContribution(null)}
+        />
       )}
     </BaseModalContent>
   );
