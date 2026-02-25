@@ -16,45 +16,45 @@ export function BackAboutMe({ nodes, materials, onSelect }: BackAboutMeProps) {
       >
         <mesh
           geometry={nodes.Plane030.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
         <mesh
           geometry={nodes.Plane030_1.geometry}
-          material={materials.Yellow}
+          material={materials.Secondary}
         />
       </group>
 
       <mesh
         geometry={nodes.AboutMe_Icon_Background.geometry}
-        material={materials["Light Yellow"]}
+        material={materials.Background}
         position={[6.204, 12.473, -1.434]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.936}
       />
       <mesh
         geometry={nodes.AboutMe_Icon_Avatar_1.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Primary}
         position={[6.207, 12.753, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.936}
       />
       <mesh
         geometry={nodes.AboutMe_Icon_Avatar_2.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Primary}
         position={[6.207, 11.988, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={1.395}
       />
       <mesh
         geometry={nodes.AboutMe_Header.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[5.487, 12.165, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.208}
       />
       <mesh
         geometry={nodes.AboutMe_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[6.949, 10.955, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.52}

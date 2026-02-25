@@ -96,11 +96,13 @@ export type GLTFResult = GLTF & {
     Plane007_2: THREE.Mesh;
   };
   materials: {
-    ["Light Yellow"]: THREE.MeshStandardMaterial;
-    ["Wood 124"]: THREE.MeshStandardMaterial;
-    ["Dark Blue"]: THREE.MeshStandardMaterial;
-    Yellow: THREE.MeshStandardMaterial;
-    Red: THREE.MeshStandardMaterial;
+    Base: THREE.MeshStandardMaterial;
+    Background: THREE.MeshStandardMaterial;
+    Wood: THREE.MeshStandardMaterial;
+    Primary: THREE.MeshStandardMaterial;
+    Secondary: THREE.MeshStandardMaterial;
+    Accent: THREE.MeshStandardMaterial;
+    Text: THREE.MeshStandardMaterial;
   };
 };
 

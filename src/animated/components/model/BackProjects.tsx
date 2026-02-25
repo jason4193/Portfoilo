@@ -14,7 +14,7 @@ export function BackProjects({
     <ClickableGroup onClick={onSelect}>
       <mesh
         geometry={nodes.Projects_Icon_1.geometry}
-        material={materials.Red}
+        material={materials.Accent}
         position={[5.924, 7.988, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.738}
@@ -22,7 +22,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_Background.geometry}
-        material={materials["Light Yellow"]}
+        material={materials.Background}
         position={[6.204, 8.223, -1.434]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.588}
@@ -30,7 +30,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_5.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Primary}
         position={[5.924, 8.519, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={-0.225}
@@ -38,7 +38,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_6.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Primary}
         position={[6.542, 8.57, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
@@ -46,7 +46,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_7.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[6.542, 8.121, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
@@ -54,7 +54,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_4.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[6.542, 7.974, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
@@ -62,7 +62,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_3.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[6.542, 7.841, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
@@ -70,7 +70,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Icon_2.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[6.542, 7.695, -1.48]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={0.15}
@@ -85,19 +85,19 @@ export function BackProjects({
       >
         <mesh
           geometry={nodes.Plane034.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
           castShadow
         />
         <mesh
           geometry={nodes.Plane034_1.geometry}
-          material={materials.Yellow}
+          material={materials.Secondary}
           castShadow
         />
       </group>
 
       <mesh
         geometry={nodes.Projects_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[6.949, 6.876, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.52}
@@ -105,7 +105,7 @@ export function BackProjects({
       />
       <mesh
         geometry={nodes.Projects_Header.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[5.353, 7.946, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.208}

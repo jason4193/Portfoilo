@@ -67,28 +67,28 @@
     --color-pre-border: #d0d7de;
 
     /* Animated Mode - Canvas Colors */
-    --color-animated-bg-light: #f7f4ec;
+    --color-animated-bg-light: #ededed;
 
     /* Animated Mode - Panel/Modal Colors */
-    --color-panel-bg: #f7f4ec;
-    --color-panel-text: #0b2b4c;
-    --color-panel-text-muted: rgba(11, 43, 76, 0.8);
-    --color-panel-text-subtle: rgba(11, 43, 76, 0.95);
-    --color-panel-border: rgba(11, 43, 76, 0.1);
-    --color-panel-btn: #0b2b4c;
+    --color-panel-bg: #f2dac4;
+    --color-panel-text: #4b433f;
+    --color-panel-text-muted: rgba(75, 67, 63, 0.8);
+    --color-panel-text-subtle: rgba(75, 67, 63, 0.95);
+    --color-panel-border: rgba(75, 67, 63, 0.1);
+    --color-panel-btn: #4b433f;
 
     /* Animated Mode - 3D Card Material Colors */
-    --color-card-navy: #2f4668;
-    --color-card-yellow: #f0c34e;
-    --color-card-coral: #f2a1a1;
+    --color-card-navy: #b4bf9b;
+    --color-card-yellow: #f2a679;
+    --color-card-coral: #d98162;
 
     /* Section accent colors (modal headers) */
-    --color-section-aboutMe: #facd5a;
-    --color-section-community: #e88e8b;
-    --color-section-awards: #1d365a;
-    --color-section-projects: #f2d37b;
-    --color-section-working: #e88e8b;
-    --color-section-education: #1d365a;
+    --color-section-aboutMe: #f2a679;
+    --color-section-community: #d98162;
+    --color-section-awards: #b4bf9b;
+    --color-section-projects: #f2a679;
+    --color-section-working: #d98162;
+    --color-section-education: #b4bf9b;
 
     /* Shared - InfoCard */
     --color-infocard-content-bg: rgba(255, 251, 235, 0.9);
@@ -127,32 +127,32 @@
     --color-pre-border: #30363d;
 
     /* Animated Mode - Canvas Colors */
-    --color-animated-bg-light: #0a0e1a;
+    --color-animated-bg-light: #0a2136;
 
     /* Animated Mode - Panel/Modal Colors */
-    --color-panel-bg: rgba(15, 20, 35, 0.95);
-    --color-panel-text: #d4e9fe;
-    --color-panel-text-muted: #a8c8ff;
-    --color-panel-text-subtle: #c0deff;
-    --color-panel-border: rgba(0, 217, 255, 0.3);
-    --color-panel-btn: #d0e8ff;
+    --color-panel-bg: rgba(14, 68, 115, 0.95);
+    --color-panel-text: #72e5f2;
+    --color-panel-text-muted: rgba(114, 229, 242, 0.8);
+    --color-panel-text-subtle: rgba(114, 229, 242, 0.95);
+    --color-panel-border: rgba(4, 138, 191, 0.3);
+    --color-panel-btn: #72e5f2;
 
     /* Animated Mode - 3D Card Material Colors (Dark Theme) */
-    --color-card-navy: #d4e9fe;
-    --color-card-yellow: #f0c34e; /* Same as light */
-    --color-card-coral: #7c6eff; /* Purple in dark mode */
+    --color-card-navy: #048abf;
+    --color-card-yellow: #0e3a73;
+    --color-card-coral: #0a2740;
 
     /* Section accent colors (modal headers) */
-    --color-section-aboutMe: var(--color-card-yellow);
-    --color-section-community: var(--color-card-coral);
-    --color-section-awards: var(--color-card-navy);
-    --color-section-projects: var(--color-card-yellow);
-    --color-section-working: var(--color-card-coral);
-    --color-section-education: var(--color-card-navy);
+    --color-section-aboutMe: #0e3a73;
+    --color-section-community: #0a2740;
+    --color-section-awards: #048abf;
+    --color-section-projects: #0e3a73;
+    --color-section-working: #0a2740;
+    --color-section-education: #048abf;
 
     /* Animated Mode - Accent Colors (Dark Theme Only) */
-    --color-accent-cyan: #00d9ff;
-    --color-accent-purple: #7c6eff;
+    --color-accent-cyan: #048abf;
+    --color-accent-purple: #0e3a73;
 
     /* Shared - InfoCard */
     --color-infocard-content-bg: rgba(20, 30, 45, 0.95);

@@ -62,6 +62,17 @@ export default function PortfolioCardModel({
       }
     });
 
+    // Create semantic materials if they don't exist
+    const semanticMaterials = ["Base", "Background", "Primary", "Secondary", "Accent", "Wood", "Text"];
+    
+    semanticMaterials.forEach((materialName) => {
+      if (!(materials as any)[materialName]) {
+        const newMaterial = new THREE.MeshStandardMaterial();
+        newMaterial.side = THREE.DoubleSide;
+        (materials as any)[materialName] = newMaterial;
+      }
+    });
+
     const variant = MODEL_MATERIAL_VARIANTS[theme];
 
     (
