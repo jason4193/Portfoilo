@@ -50,8 +50,10 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const keyIntensity = baseKeyIntensity * keyLightConfig.intensityMultiplier;
   const fillIntensity = baseFillIntensity * fillLightConfig.intensityMultiplier;
   const rimIntensity = baseRimIntensity * rimLightConfig.intensityMultiplier;
-  const warmAccentIntensity = baseWarmAccentIntensity * warmAccentConfig.intensityMultiplier;
-  const topFillIntensity = baseTopFillIntensity * topFillConfig.intensityMultiplier;
+  const warmAccentIntensity =
+    baseWarmAccentIntensity * warmAccentConfig.intensityMultiplier;
+  const topFillIntensity =
+    baseTopFillIntensity * topFillConfig.intensityMultiplier;
   useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
