@@ -1,15 +1,11 @@
-import { useRef, type RefObject } from "react";
-import { useMediaQuery } from "react-responsive";
+import { type RefObject } from "react";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
 import { getProjectSpriteCellStyle } from "@shared/utils/sprites";
 import { InfoCard } from "@shared/components/InfoCard";
-import { BaseModalContent } from "./BaseModalContent";
-import { useModalContent } from "@animated/hooks";
-import { StackCardLayout } from "@animated/components/modal-layouts/StackCardLayout";
-import { GridCardLayout } from "@animated/components/modal-layouts/GridCardLayout";
-import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
+import { GenericModalContent } from "./GenericModalContent";
 import projectIcon from "@animated/assets/ProjectsSectionIcon.webp";
+import type { Project } from "@shared/types/content";
 
 interface ProjectsModalContentProps {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -29,14 +25,13 @@ function ProjectIcon({ className }: { className?: string }) {
   );
 }
 
-type ProjectItem = NonNullable<typeof content>["projects"][number];
-
-function renderProjectCard(item: ProjectItem, _placement: any, index: number) {
+function renderProjectCard(item: Project, _placement: any, index?: number) {
   const firstImage = item.media?.find((m) => m.type === "image");
   const isGridImage = firstImage?.src === "Projects.webp";
-  const spriteStyle = isGridImage
-    ? getProjectSpriteCellStyle(index)
-    : undefined;
+  const spriteStyle =
+    isGridImage && index !== undefined
+      ? getProjectSpriteCellStyle(index)
+      : undefined;
 
   return (
     <InfoCard
@@ -101,65 +96,22 @@ export function ProjectsModalContent({
   accentColor,
   onClose,
 }: ProjectsModalContentProps) {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLParagraphElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const stackRef = useRef<HTMLDivElement>(null);
-  const closeRef = useRef<HTMLDivElement>(null);
-
-  const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
   const projects = content?.projects ?? [];
 
-  // Standardized modal content animation
-  useModalContent({
-    headerRef,
-    closeRef,
-    introRef,
-    cardsRef,
-    stackRef,
-    isMobile,
-  });
-
   return (
-    <BaseModalContent
+    <GenericModalContent
       overlayRef={overlayRef}
       panelRef={panelRef}
       icon={<ProjectIcon className="size-18 object-contain" />}
       title="Projects"
       accentColor={accentColor}
-      headerRef={headerRef}
-      closeRef={closeRef}
+      introText="Here are some projects I've worked on over the years:"
+      items={projects}
       onClose={onClose}
-      contentClassName="flex min-h-0 flex-1 flex-col gap-1 sm:gap-4 overflow-hidden px-4 py-5 sm:px-8 sm:py-8"
-    >
-      <p
-        ref={introRef}
-        className="text-xs leading-relaxed sm:text-lg"
-        style={{ color: "var(--color-panel-text-subtle)" }}
-      >
-        Here are some projects I&apos;ve worked on over the years:
-      </p>
-
-      {isMobile ? (
-        <div ref={stackRef} className="flex-1 min-h-0">
-          <StackCardLayout
-            items={projects}
-            renderCard={renderProjectCard}
-            getItemKey={(item, index) => `${item.title}-${index}`}
-            swipeLabel="Swipe left to see next project"
-          />
-        </div>
-      ) : (
-        <div ref={cardsRef} className="flex-1 min-h-0">
-          <GridCardLayout
-            items={projects}
-            renderCard={renderProjectCard}
-            getItemKey={(item, index) => `${item.title}-${index}`}
-            gridMode="equal"
-            enforceAspectRatio={false}
-          />
-        </div>
-      )}
-    </BaseModalContent>
+      renderCard={renderProjectCard}
+      getItemKey={(item, index) => `${item.title}-${index}`}
+      swipeLabel="Swipe left to see next project"
+      enableDetailPanel={true}
+    />
   );
 }

@@ -34,6 +34,8 @@ export function useModalContent({
   delay = 0.5,
 }: UseModalContentAnimationOptions) {
   const runBlurMorph = useBlurMorph({ cardsRef });
+  
+  // Memoize the custom animation to avoid recreation on every render
   const customContentAnimation = useCallback(
     (tl: gsap.core.Timeline) => {
       const intro = introRef.current;
