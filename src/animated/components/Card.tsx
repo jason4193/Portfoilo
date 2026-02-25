@@ -166,7 +166,6 @@ export function Card({
   const tiltTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const idleTimeoutRef = useRef<number | null>(null);
   const idleStartModeRef = useRef<"initial" | "resume">("initial");
-  const clearVelocityRef = useRef<(() => void) | null>(null);
   const [isIdleActive, setIsIdleActive] = useState(false);
   const debugRotationMode = useDebugStore((state) => state.rotationMode);
   const { size, gl } = useThree();
@@ -193,17 +192,12 @@ export function Card({
     dampingFactor: 0.05,
   });
 
-  // Store the clear velocity function for use in other effects
-  useEffect(() => {
-    clearVelocityRef.current = clearRotationVelocity;
-  }, [clearRotationVelocity]);
-
   // Clear rotation velocity when section is focused to prevent momentum flicks
   useEffect(() => {
-    if (isSectionFocused && clearVelocityRef.current) {
-      clearVelocityRef.current();
+    if (isSectionFocused) {
+      clearRotationVelocity();
     }
-  }, [isSectionFocused]);
+  }, [isSectionFocused, clearRotationVelocity]);
 
   // GSAP tilt animation runs after idle delay and pauses during interaction
   useEffect(() => {

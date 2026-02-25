@@ -23,6 +23,9 @@ export function useCameraTracker({
 
   const updatesThisSecondRef = useRef(0);
   const lastResetRef = useRef(0);
+  
+  // Memoize epsilon squared to avoid repeated multiplications
+  const epsilonSq = useRef(epsilon * epsilon);
 
   useFrame((_, delta) => {
     elapsedRef.current += delta;
@@ -34,11 +37,13 @@ export function useCameraTracker({
     const z = camera.position.z;
     const [lx, ly, lz] = lastPositionRef.current;
 
-    if (
-      Math.abs(x - lx) < epsilon &&
-      Math.abs(y - ly) < epsilon &&
-      Math.abs(z - lz) < epsilon
-    ) {
+    // Use squared distance to avoid expensive sqrt calls
+    const dx = x - lx;
+    const dy = y - ly;
+    const dz = z - lz;
+    const distSq = dx * dx + dy * dy + dz * dz;
+    
+    if (distSq < epsilonSq.current) {
       return;
     }
 
