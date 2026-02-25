@@ -29,6 +29,7 @@ export function GenericDetailPanel<T extends Record<string, any>>({
 }: GenericDetailPanelProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const returnRef = useRef<HTMLDivElement>(null);
   const detailCardRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLParagraphElement>(null);
@@ -38,6 +39,21 @@ export function GenericDetailPanel<T extends Record<string, any>>({
 
   const getField = (field: string) =>
     getFieldValue ? getFieldValue(item, field) : (item as any)[field];
+
+  // Handle ESC key to go back to modal content
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        onBack();
+      }
+    };
+
+    // Use capture phase to ensure this handler runs before BaseModalContent's handler
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
+  }, [onBack]);
 
   // Animate hero expansion on mount
   useEffect(() => {
@@ -49,16 +65,33 @@ export function GenericDetailPanel<T extends Record<string, any>>({
     tl.fromTo(
       heroRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 0.6, ease: "power2.out" },
+      { opacity: 1, duration: 0.8, ease: "power2.out" },
       0,
     );
+    // fade in the back button with at the same time as the hero
+    tl.fromTo(
+      returnRef.current,
+      { opacity: 0, y: -10 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+      0,
+    );
+
+    // slide up the overlay card
+    if (detailCardRef.current) {
+      tl.fromTo(
+        detailCardRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+        0.3,
+      );
+    }
 
     // Fade in and apply floating animation to scroll indicator
     if (scrollIndicatorRef.current) {
       tl.fromTo(
         scrollIndicatorRef.current,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.5 },
+        { y: -10 },
+        { y: 0, duration: 0.5 },
         0.3,
       );
 
@@ -128,14 +161,21 @@ export function GenericDetailPanel<T extends Record<string, any>>({
       className="relative w-full h-full flex flex-col overflow-y-auto overflow-x-hidden rounded-3xl scroll-smooth no-scrollbar"
     >
       {/* Sticky Back Button */}
-      <div className="sticky top-6 z-30 h-0 w-full px-4 sm:px-6 flex justify-end">
+      <div
+        ref={returnRef}
+        className="sticky top-6 z-30 h-0 w-full px-4 sm:px-6 flex justify-end"
+      >
         <button
           type="button"
           onClick={() => {
             console.log("Back button clicked");
             onBack();
           }}
-          className="pointer-events-auto flex items-center gap-2 min-h-10 px-4 py-2 rounded-full bg-white/40 hover:bg-grey/70 text-white font-medium transition-colors backdrop-blur-sm"
+          className="pointer-events-auto flex items-center gap-2 min-h-10 px-4 py-2 rounded-full shadow-md transition-colors backdrop-blur-sm"
+          style={{
+            backgroundColor: "var(--color-panel-btn)",
+            color: "var(--color-animated-bg-light)",
+          }}
           aria-label="Back to list"
         >
           <svg
@@ -181,7 +221,14 @@ export function GenericDetailPanel<T extends Record<string, any>>({
             className="w-full px-4 sm:px-6 pb-6 cursor-pointer group"
             onClick={handleScrollToDetails}
           >
-            <div className="rounded-3xl border border-white/30 bg-white/10 backdrop-blur-lg p-4 sm:p-6 shadow-lg hover:bg-white/15 transition-colors">
+            <div
+              className="rounded-3xl border border-white/30 p-4 sm:p-6 shadow-lg transition-colors"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                boxShadow:
+                  "0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.3)",
+              }}
+            >
               <div>
                 {date && (
                   <p className="text-xs uppercase tracking-wide text-white/80">

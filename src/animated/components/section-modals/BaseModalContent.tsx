@@ -1,4 +1,5 @@
 import type { RefObject, ReactNode } from "react";
+import { useEffect } from "react";
 
 interface BaseModalContentProps {
   /** Ref for overlay element (for animations) */
@@ -58,6 +59,18 @@ export function BaseModalContent({
   const textColorStyle = textColor
     ? { color: textColor }
     : { color: "var(--color-panel-text)" };
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   return (
     <div
