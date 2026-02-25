@@ -36,6 +36,8 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
     key: baseKeyIntensity,
     fill: baseFillIntensity,
     rim: baseRimIntensity,
+    warmAccent: baseWarmAccentIntensity,
+    topFill: baseTopFillIntensity,
   } = lightIntensities;
   const lightingPreset = LIGHTING_PRESETS[theme];
   const ambientIntensity =
@@ -43,9 +45,13 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const keyLightConfig = lightingPreset.key;
   const fillLightConfig = lightingPreset.fill;
   const rimLightConfig = lightingPreset.rim;
+  const warmAccentConfig = lightingPreset.warmAccent;
+  const topFillConfig = lightingPreset.topFill;
   const keyIntensity = baseKeyIntensity * keyLightConfig.intensityMultiplier;
   const fillIntensity = baseFillIntensity * fillLightConfig.intensityMultiplier;
   const rimIntensity = baseRimIntensity * rimLightConfig.intensityMultiplier;
+  const warmAccentIntensity = baseWarmAccentIntensity * warmAccentConfig.intensityMultiplier;
+  const topFillIntensity = baseTopFillIntensity * topFillConfig.intensityMultiplier;
   useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
@@ -53,6 +59,8 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const keyLightRef = useRef<DirectionalLight>(null);
   const fillLightRef = useRef<DirectionalLight>(null);
   const rimLightRef = useRef<DirectionalLight>(null);
+  const warmAccentLightRef = useRef<DirectionalLight>(null);
+  const topFillLightRef = useRef<DirectionalLight>(null);
 
   const isDesktop = useMediaQuery({ minWidth: DESKTOP_MIN_WIDTH });
   const minDistance = isDesktop
@@ -98,6 +106,18 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
     1,
     0xffaa66,
   );
+  useHelper(
+    debugEnabled ? (warmAccentLightRef as any) : null,
+    DirectionalLightHelper,
+    1,
+    0xffdd44,
+  );
+  useHelper(
+    debugEnabled ? (topFillLightRef as any) : null,
+    DirectionalLightHelper,
+    1,
+    0x88ccff,
+  );
 
   return (
     <>
@@ -132,6 +152,18 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
         position={rimLightConfig.position}
         intensity={rimIntensity}
         color={rimLightConfig.color}
+      />
+      <directionalLight
+        ref={warmAccentLightRef}
+        position={warmAccentConfig.position}
+        intensity={warmAccentIntensity}
+        color={warmAccentConfig.color}
+      />
+      <directionalLight
+        ref={topFillLightRef}
+        position={topFillConfig.position}
+        intensity={topFillIntensity}
+        color={topFillConfig.color}
       />
       {debugEnabled && <primitive object={axesHelper} />}
       {/* Camera Controls - disable drag rotation */}

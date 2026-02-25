@@ -224,7 +224,7 @@ export function GenericDetailPanel<T extends Record<string, any>>({
             <div
               className="rounded-3xl border border-white/30 p-4 sm:p-6 shadow-lg transition-colors"
               style={{
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                backgroundColor: "rgba(92, 92, 92, 0.35)",
                 boxShadow:
                   "0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.3)",
               }}

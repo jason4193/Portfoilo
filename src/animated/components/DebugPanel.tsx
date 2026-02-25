@@ -19,6 +19,8 @@ export function DebugPanel() {
       { key: "key", label: "Key", min: 0, max: 2.5, step: 0.05 },
       { key: "fill", label: "Fill", min: 0, max: 2, step: 0.05 },
       { key: "rim", label: "Rim", min: 0, max: 2, step: 0.05 },
+      { key: "warmAccent", label: "Warm Accent", min: 0, max: 1.5, step: 0.05 },
+      { key: "topFill", label: "Top Fill", min: 0, max: 1.5, step: 0.05 },
     ],
     [],
   );

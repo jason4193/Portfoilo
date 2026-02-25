@@ -33,6 +33,8 @@ type LightingPreset = {
   key: DirectionalLightPreset;
   fill: DirectionalLightPreset;
   rim: DirectionalLightPreset;
+  warmAccent: DirectionalLightPreset;
+  topFill: DirectionalLightPreset;
 };
 
 export const LIGHTING_PRESETS: Record<ThemeMode, LightingPreset> = {
@@ -54,6 +56,16 @@ export const LIGHTING_PRESETS: Record<ThemeMode, LightingPreset> = {
       color: 0xb3d9ff,
       intensityMultiplier: 0.65,
     },
+    warmAccent: {
+      position: [4, 5, -7],
+      color: 0xfdb456,
+      intensityMultiplier: 0.4,
+    },
+    topFill: {
+      position: [0, 7, -8],
+      color: 0xf9e9c7,
+      intensityMultiplier: 0.3,
+    },
   },
   dark: {
     ambientMultiplier: 0.35,
@@ -72,6 +84,16 @@ export const LIGHTING_PRESETS: Record<ThemeMode, LightingPreset> = {
       position: [-3, 2.75, -4.5],
       color: 0x4dd0ff,
       intensityMultiplier: 0.9,
+    },
+    warmAccent: {
+      position: [3, 4, -6.5],
+      color: 0xff8c42,
+      intensityMultiplier: 0.5,
+    },
+    topFill: {
+      position: [0, 5, -7.5],
+      color: 0x4a5f7f,
+      intensityMultiplier: 0.25,
     },
   },
 };

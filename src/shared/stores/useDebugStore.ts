@@ -7,6 +7,8 @@ type LightIntensities = {
   key: number;
   fill: number;
   rim: number;
+  warmAccent: number;
+  topFill: number;
 };
 
 interface DebugStore {
@@ -29,6 +31,8 @@ const defaultLightIntensities: LightIntensities = {
   key: 1.3,
   fill: 0.5,
   rim: 0.35,
+  warmAccent: 0.4,
+  topFill: 0.3,
 };
 
 export const useDebugStore = create<DebugStore>((set) => ({
