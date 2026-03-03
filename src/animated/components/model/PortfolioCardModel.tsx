@@ -4,6 +4,7 @@ Command: npx gltfjsx@6.5.3 src/animated/assets/Portfolio_v4.glb -t -o src/animat
 */
 
 import { useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -64,7 +65,7 @@ export default function PortfolioCardModel({
 
     // Create semantic materials if they don't exist
     const semanticMaterials = ["Base", "Background", "Primary", "Secondary", "Accent", "Wood", "Text"];
-    
+
     semanticMaterials.forEach((materialName) => {
       if (!(materials as any)[materialName]) {
         const newMaterial = new THREE.MeshStandardMaterial();
@@ -72,7 +73,16 @@ export default function PortfolioCardModel({
         (materials as any)[materialName] = newMaterial;
       }
     });
+  }, [materials]);
 
+  // Temp color for lerping
+  const _targetColor = useMemo(() => new THREE.Color(), []);
+  const _targetEmissive = useMemo(() => new THREE.Color(), []);
+  const CARD_LERP_SPEED = 3;
+
+  // Smooth card material transitions
+  useFrame((_, delta) => {
+    const t = Math.min(1, delta * CARD_LERP_SPEED);
     const variant = MODEL_MATERIAL_VARIANTS[theme];
 
     (
@@ -82,24 +92,24 @@ export default function PortfolioCardModel({
       if (!material) return;
 
       if (config.color !== undefined) {
-        material.color.setHex(config.color);
+        _targetColor.setHex(config.color);
+        material.color.lerp(_targetColor, t);
       }
       if (config.emissive !== undefined) {
-        material.emissive.setHex(config.emissive);
+        _targetEmissive.setHex(config.emissive);
+        material.emissive.lerp(_targetEmissive, t);
       }
       if (config.emissiveIntensity !== undefined) {
-        material.emissiveIntensity = config.emissiveIntensity;
+        material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, config.emissiveIntensity, t);
       }
       if (config.roughness !== undefined) {
-        material.roughness = config.roughness;
+        material.roughness = THREE.MathUtils.lerp(material.roughness, config.roughness, t);
       }
       if (config.metalness !== undefined) {
-        material.metalness = config.metalness;
+        material.metalness = THREE.MathUtils.lerp(material.metalness, config.metalness, t);
       }
-
-      material.needsUpdate = true;
     });
-  }, [materials, theme]);
+  });
 
   return (
     <group {...props} dispose={null}>

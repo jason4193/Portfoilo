@@ -9,6 +9,7 @@ import {
   DirectionalLightHelper,
   Vector3,
 } from "three";
+import * as THREE from "three";
 import type { Group } from "three";
 
 const toHex = (c: number | string | undefined): string => {
@@ -197,18 +198,70 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
     0x88ccff,
   );
 
+  // Refs for ambient light
+  const ambientLightRef = useRef<any>(null);
+  // Temp Color objects for lerping
+  const targetColor = useMemo(() => new THREE.Color(), []);
+  const LERP_SPEED = 3; // higher = faster transition
+
+  // Smooth lighting transitions via useFrame
+  useFrame((_, delta) => {
+    const t = Math.min(1, delta * LERP_SPEED);
+
+    // Ambient
+    if (ambientLightRef.current) {
+      ambientLightRef.current.intensity = THREE.MathUtils.lerp(ambientLightRef.current.intensity, ambientIntensity, t);
+      targetColor.set(ambientColor);
+      ambientLightRef.current.color.lerp(targetColor, t);
+    }
+
+    // Key
+    if (keyLightRef.current) {
+      keyLightRef.current.intensity = THREE.MathUtils.lerp(keyLightRef.current.intensity, keyIntensity, t);
+      targetColor.set(keyColor);
+      keyLightRef.current.color.lerp(targetColor, t);
+      keyLightRef.current.position.lerp(new Vector3(...keyPosition), t);
+    }
+
+    // Fill
+    if (fillLightRef.current) {
+      fillLightRef.current.intensity = THREE.MathUtils.lerp(fillLightRef.current.intensity, fillIntensity, t);
+      targetColor.set(fillColor);
+      fillLightRef.current.color.lerp(targetColor, t);
+      fillLightRef.current.position.lerp(new Vector3(...fillPosition), t);
+    }
+
+    // Rim
+    if (rimLightRef.current) {
+      rimLightRef.current.intensity = THREE.MathUtils.lerp(rimLightRef.current.intensity, rimIntensity, t);
+      targetColor.set(rimColor);
+      rimLightRef.current.color.lerp(targetColor, t);
+      rimLightRef.current.position.lerp(new Vector3(...rimPosition), t);
+    }
+
+    // Warm Accent
+    if (warmAccentLightRef.current) {
+      warmAccentLightRef.current.intensity = THREE.MathUtils.lerp(warmAccentLightRef.current.intensity, warmAccentIntensity, t);
+      targetColor.set(warmAccentColor);
+      warmAccentLightRef.current.color.lerp(targetColor, t);
+      warmAccentLightRef.current.position.lerp(new Vector3(...warmAccentPosition), t);
+    }
+
+    // Top Fill
+    if (topFillLightRef.current) {
+      topFillLightRef.current.intensity = THREE.MathUtils.lerp(topFillLightRef.current.intensity, topFillIntensity, t);
+      targetColor.set(topFillColor);
+      topFillLightRef.current.color.lerp(targetColor, t);
+      topFillLightRef.current.position.lerp(new Vector3(...topFillPosition), t);
+    }
+  });
+
   return (
     <>
-      {/* Lighting - studio setup with theme-aware ratios */}
-      <ambientLight
-        intensity={ambientIntensity}
-        color={ambientColor}
-      />
+      {/* Lighting - studio setup with smooth theme transitions */}
+      <ambientLight ref={ambientLightRef} />
       <directionalLight
         ref={keyLightRef}
-        position={keyPosition}
-        intensity={keyIntensity}
-        color={keyColor}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -219,30 +272,10 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
         shadow-camera-far={30}
         shadow-bias={-0.002}
       />
-      <directionalLight
-        ref={fillLightRef}
-        position={fillPosition}
-        intensity={fillIntensity}
-        color={fillColor}
-      />
-      <directionalLight
-        ref={rimLightRef}
-        position={rimPosition}
-        intensity={rimIntensity}
-        color={rimColor}
-      />
-      <directionalLight
-        ref={warmAccentLightRef}
-        position={warmAccentPosition}
-        intensity={warmAccentIntensity}
-        color={warmAccentColor}
-      />
-      <directionalLight
-        ref={topFillLightRef}
-        position={topFillPosition}
-        intensity={topFillIntensity}
-        color={topFillColor}
-      />
+      <directionalLight ref={fillLightRef} />
+      <directionalLight ref={rimLightRef} />
+      <directionalLight ref={warmAccentLightRef} />
+      <directionalLight ref={topFillLightRef} />
       {debugEnabled && <primitive object={axesHelper} />}
       {/* Camera Controls - disable drag rotation */}
       <OrbitControls
