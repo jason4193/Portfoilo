@@ -13,79 +13,162 @@ export type MaterialName = keyof GLTFResult["materials"];
 
 export type MaterialVariantConfig = Record<MaterialName, MaterialThemeSettings>;
 
+// original
+// const c1 = 0xf7f4ec;
+// const c2 = 0x2f4668;
+// const c3 = 0xf0c34e;
+// const c4 = 0xf2a1a1;
+
+// const c1 = 0xf2e1c2;
+// const c2 = 0x46718c;
+// const c3 = 0xf29441;
+// const c4 = 0xf25430;
+
+// const c1 = 0xd9d9d9;
+// const c2 = 0x3e518c;
+// const c3 = 0x3c56a6;
+// const c4 = 0x03258c;
+
+// organge
+// const c1 = 0xf7f4ec;
+// const c2 = 0xffed63;
+// // const c3 = 0xffa32f;
+// // const c3 = 0xaaac6a;
+// const c3 = 0xffdde7;
+// const c4 = 0xff8462;
+// // const c4 = 0xd97218;
+// const title = 0x2f4668;
+
+// japanese
+// const c1 = 0xe4dbd7;
+// const c2 = 0xbdbdad;
+// const c3 = 0xd9b3b0;
+// const c4 = 0xaa5a53;
+// const title = 0x4b433f;
+
+// autumn
+// const c1 = 0xf2eadf;
+// const c2 = 0xd97218;
+// const c4 = 0xbfa38a;
+// const c3 = 0xbf3b0b;
+// const title = 0x4b433f;
+
+const c1 = 0xf2dac4;
+const c2 = 0xb4bf9b;
+const c3 = 0xf2a679;
+const c4 = 0xd98162;
+const text = 0x4b433f;
+const wood = 0x63442d; //0x8b6f47
+const background = 0xededed;
+
+// Dark mode neon/night city colors
+const c1Dark = 0x0e4473;
+const c2Dark = 0x048abf;
+const c3Dark = 0x0e3a73;
+const c4Dark = 0x0a2740;
+const textDark = 0x72e5f2;
+const backgroundDark = 0x0a2136;
+
 export const MODEL_MATERIAL_VARIANTS: Record<ThemeMode, MaterialVariantConfig> =
   {
     light: {
-      "Light Yellow": {
-        color: 0xf7f4ec,
+      Background: {
+        color: background,
+        emissive: 0xffffff,
+        emissiveIntensity: 0.1,
+        roughness: 0.7,
+        metalness: 0.0,
+      },
+      Base: {
+        color: c1,
         emissive: 0x8b6f47,
         emissiveIntensity: 0.2,
         roughness: 0.65,
         metalness: 0.1,
       },
-      "Dark Blue": {
-        color: 0x2f4668,
+      Primary: {
+        color: c2,
         emissive: 0x132033,
         emissiveIntensity: 0.25,
         roughness: 0.5,
         metalness: 0.2,
       },
-      Yellow: {
-        color: 0xf0c34e,
+      Secondary: {
+        color: c3,
         emissive: 0x4d3100,
         emissiveIntensity: 0.2,
         roughness: 0.6,
         metalness: 0.15,
       },
-      Red: {
-        color: 0xf2a1a1,
+      Accent: {
+        color: c4,
         emissive: 0x66313a,
         emissiveIntensity: 0.15,
         roughness: 0.5,
         metalness: 0.1,
       },
-      "Wood 124": {
-        emissive: 0x8b6f47,
-        emissiveIntensity: 0.15,
+      Wood: {
+        emissive: wood,
+        emissiveIntensity: 0.5,
         roughness: 0.78,
         metalness: 0.12,
       },
-    },
-    dark: {
-      "Light Yellow": {
-        color: 0x0f111c,
-        emissive: 0x151b2f,
-        emissiveIntensity: 0.55,
-        roughness: 0.85,
-        metalness: 0.05,
-      },
-      "Dark Blue": {
-        // color: 0x00d9ff,
-        color: 0xd4e9fe,
-        emissive: 0x0b2b4c,
-        emissiveIntensity: 0.65,
-        roughness: 0.4,
-        metalness: 0.25,
-      },
-      Yellow: {
-        color: 0xf0c34e,
-        emissive: 0x2f1f00,
+      Text: {
+        color: text,
+        emissive: 0x132033,
         emissiveIntensity: 0.25,
-        roughness: 0.6,
-        metalness: 0.15,
-      },
-      Red: {
-        color: 0x7c6eff,
-        emissive: 0x241a5c,
-        emissiveIntensity: 0.6,
         roughness: 0.5,
         metalness: 0.2,
       },
-      "Wood 124": {
-        emissive: 0x0a1b2c,
-        emissiveIntensity: 0.14,
-        roughness: 0.95,
-        metalness: 0.03,
+    },
+    dark: {
+      Base: {
+        color: c1Dark,
+        emissive: 0x1a1f3a,
+        emissiveIntensity: 0.4,
+        roughness: 0.85,
+        metalness: 0.05,
+      },
+      Background: {
+        color: backgroundDark,
+        emissive: 0x000000,
+        emissiveIntensity: 0.3,
+        roughness: 0.5,
+        metalness: 0.1,
+      },
+      Primary: {
+        color: c2Dark,
+        emissive: 0x048abf,
+        emissiveIntensity: 0.8,
+        roughness: 0.3,
+        metalness: 0.4,
+      },
+      Secondary: {
+        color: c3Dark,
+        emissive: 0xff006e,
+        emissiveIntensity: 0.7,
+        roughness: 0.4,
+        metalness: 0.3,
+      },
+      Accent: {
+        color: c4Dark,
+        emissive: 0x8b00ff,
+        emissiveIntensity: 0.75,
+        roughness: 0.35,
+        metalness: 0.35,
+      },
+      Wood: {
+        emissive: 0x8b6f47,
+        emissiveIntensity: 0.25,
+        roughness: 0.9,
+        metalness: 0.05,
+      },
+      Text: {
+        color: textDark,
+        emissive: 0x72e5f2,
+        emissiveIntensity: 0.6,
+        roughness: 0.3,
+        metalness: 0.2,
       },
     },
   };

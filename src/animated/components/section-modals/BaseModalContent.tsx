@@ -1,4 +1,5 @@
 import type { RefObject, ReactNode } from "react";
+import { useEffect } from "react";
 
 interface BaseModalContentProps {
   /** Ref for overlay element (for animations) */
@@ -27,6 +28,8 @@ interface BaseModalContentProps {
   children: ReactNode;
   /** Custom class name for main content area */
   contentClassName?: string;
+  /** Whether to show the desktop footer close button (default: true) */
+  showCloseFooter?: boolean;
 }
 
 /**
@@ -47,6 +50,7 @@ export function BaseModalContent({
   onClose,
   children,
   contentClassName = "flex min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-10 sm:py-10",
+  showCloseFooter = true,
 }: BaseModalContentProps) {
   // Apply CSS variables for theme-aware colors, with fallbacks for custom overrides
   const bgColorStyle = backgroundColor
@@ -55,6 +59,18 @@ export function BaseModalContent({
   const textColorStyle = textColor
     ? { color: textColor }
     : { color: "var(--color-panel-text)" };
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   return (
     <div
@@ -107,14 +123,16 @@ export function BaseModalContent({
         <div className={contentClassName}>{children}</div>
 
         {/* Desktop-only close button footer */}
-        <div
-          ref={closeRef}
-          className="hidden shrink-0 justify-center px-4 pb-4 sm:flex sm:px-6 sm:pb-6"
-        >
-          <button className="btn-panel-close" onClick={onClose}>
-            Close
-          </button>
-        </div>
+        {showCloseFooter && (
+          <div
+            ref={closeRef}
+            className="hidden shrink-0 justify-center px-4 pb-4 sm:flex sm:px-6 sm:pb-6"
+          >
+            <button className="btn-panel-close" onClick={onClose}>
+              Close
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

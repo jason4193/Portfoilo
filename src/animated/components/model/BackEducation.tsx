@@ -20,24 +20,24 @@ export function BackEducation({
       >
         <mesh
           geometry={nodes.Plane036.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
         <mesh
           geometry={nodes.Plane036_1.geometry}
-          material={materials["Dark Blue"]}
+          material={materials.Primary}
         />
       </group>
 
       <mesh
         geometry={nodes.Education_Header.geometry}
-        material={materials["Light Yellow"]}
+        material={materials.Text}
         position={[-2.997, 7.926, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.314}
       />
       <mesh
         geometry={nodes.Education_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[-3.012, 6.872, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.458}
@@ -49,14 +49,14 @@ export function BackEducation({
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={-0.04}
       >
-        <mesh geometry={nodes.Plane007.geometry} material={materials.Red} />
+        <mesh geometry={nodes.Plane007.geometry} material={materials.Accent} />
         <mesh
           geometry={nodes.Plane007_1.geometry}
-          material={materials.Yellow}
+          material={materials.Secondary}
         />
         <mesh
           geometry={nodes.Plane007_2.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
       </group>
     </ClickableGroup>

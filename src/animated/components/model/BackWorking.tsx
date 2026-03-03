@@ -16,9 +16,9 @@ export function BackWorking({ nodes, materials, onSelect }: BackWorkingProps) {
       >
         <mesh
           geometry={nodes.Plane035.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
-        <mesh geometry={nodes.Plane035_1.geometry} material={materials.Red} />
+        <mesh geometry={nodes.Plane035_1.geometry} material={materials.Accent} />
       </group>
 
       {/* Working Icon PC Monitor */}
@@ -29,73 +29,73 @@ export function BackWorking({ nodes, materials, onSelect }: BackWorkingProps) {
       >
         <mesh
           geometry={nodes.Plane059.geometry}
-          material={materials["Dark Blue"]}
+          material={materials.Primary}
         />
         <mesh
           geometry={nodes.Plane059_1.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
       </group>
 
       <mesh
         geometry={nodes.Working_Icon_1.geometry}
-        material={materials.Red}
+        material={materials.Accent}
         position={[-0.913, 8.639, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.038, 0.038, 0.171]}
       />
       <mesh
         geometry={nodes.Working_Icon_2.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Primary}
         position={[-0.872, 8.386, -1.424]}
         rotation={[Math.PI / 2, -Math.PI / 4, 0]}
         scale={-0.092}
       />
       <mesh
         geometry={nodes.Working_Icon_3.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.307, 8.48, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.251]}
       />
       <mesh
         geometry={nodes.Working_Icon_4.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.161, 8.416, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
       />
       <mesh
         geometry={nodes.Working_Icon_6.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.161, 8.358, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
       />
       <mesh
         geometry={nodes.Working_Icon_8.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.161, 8.298, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
       />
       <mesh
         geometry={nodes.Working_Icon_5.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.449, 8.416, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
       />
       <mesh
         geometry={nodes.Working_Icon_7.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.449, 8.358, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
       />
       <mesh
         geometry={nodes.Working_Icon_9.geometry}
-        material={materials.Yellow}
+        material={materials.Secondary}
         position={[-1.449, 8.298, -1.435]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
         scale={[0.014, 0.03, 0.107]}
@@ -104,22 +104,22 @@ export function BackWorking({ nodes, materials, onSelect }: BackWorkingProps) {
         position={[-1.895, 8.174, -1.425]}
         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
       >
-        <mesh geometry={nodes.Circle022.geometry} material={materials.Yellow} />
+        <mesh geometry={nodes.Circle022.geometry} material={materials.Secondary} />
         <mesh
           geometry={nodes.Circle022_1.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
       </group>
       <mesh
         geometry={nodes.Working_Header.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[1.888, 7.961, -1.425]}
         rotation={[Math.PI / 2, 0, -Math.PI]}
         scale={1.09}
       />
       <mesh
         geometry={nodes.Working_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[2.024, 6.857, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.435}

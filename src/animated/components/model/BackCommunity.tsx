@@ -18,14 +18,14 @@ export function BackCommunity({
         rotation={[-Math.PI / 2, -1.296, Math.PI]}
         scale={0.215}
       >
-        <mesh geometry={nodes.Plane046.geometry} material={materials.Yellow} />
+        <mesh geometry={nodes.Plane046.geometry} material={materials.Secondary} />
         <mesh
           geometry={nodes.Plane046_1.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
         <mesh
           geometry={nodes.Plane046_2.geometry}
-          material={materials["Dark Blue"]}
+          material={materials.Primary}
         />
       </group>
 
@@ -37,21 +37,21 @@ export function BackCommunity({
       >
         <mesh
           geometry={nodes.Plane032.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
-        <mesh geometry={nodes.Plane032_1.geometry} material={materials.Red} />
+        <mesh geometry={nodes.Plane032_1.geometry} material={materials.Accent} />
       </group>
 
       <mesh
         geometry={nodes.Community_Header.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[2.058, 12.165, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.208}
       />
       <mesh
         geometry={nodes.Community_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[1.954, 11.011, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.52}

@@ -50,6 +50,12 @@ export function useCameraFocus({
   const resetTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const focusTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const isMountedRef = useRef(true);
+  
+  // Store overlay refs to avoid dependency issues
+  const overlaysRef = useRef({ dimOverlayRef, modalOverlayRef, modalPanelRef });
+  useEffect(() => {
+    overlaysRef.current = { dimOverlayRef, modalOverlayRef, modalPanelRef };
+  }, [dimOverlayRef, modalOverlayRef, modalPanelRef]);
 
   // --- Overlay helpers (modal + dim) ---
   const hideModalOverlay = (overlay: HTMLDivElement) => {
@@ -168,6 +174,8 @@ export function useCameraFocus({
   useEffect(() => {
     const controls = controlsRef.current;
     const updateControls = () => controlsRef.current?.update?.();
+    const { dimOverlayRef: dimRef, modalOverlayRef: modalRef, modalPanelRef: panelRef } = overlaysRef.current;
+    
     if (controls) {
       controls.enabled = !isActive;
     }
@@ -253,12 +261,12 @@ export function useCameraFocus({
           0,
         );
       }
-      if (modalOverlayRef?.current && modalPanelRef?.current) {
-        const overlay = modalOverlayRef.current;
+      if (modalRef?.current && panelRef?.current) {
+        const overlay = modalRef.current;
         hideModalOverlay(overlay);
       }
-      if (dimOverlayRef?.current) {
-        const dimOverlay = dimOverlayRef.current;
+      if (dimRef?.current) {
+        const dimOverlay = dimRef.current;
         hideDimOverlay(dimOverlay);
       }
 
@@ -291,12 +299,12 @@ export function useCameraFocus({
       lastCardRotationRef.current = cardObject.rotation.clone();
     }
 
-    if (modalOverlayRef?.current && modalPanelRef?.current) {
-      const overlay = modalOverlayRef.current;
+    if (modalRef?.current && panelRef?.current) {
+      const overlay = modalRef.current;
       prepareModalOverlay(overlay);
     }
-    if (dimOverlayRef?.current) {
-      const dimOverlay = dimOverlayRef.current;
+    if (dimRef?.current) {
+      const dimOverlay = dimRef.current;
       prepareDimOverlay(dimOverlay);
     }
 
@@ -304,8 +312,8 @@ export function useCameraFocus({
       defaults: { ease: "power2.out" },
       onComplete: () => {
         if (!isMountedRef.current) return;
-        if (modalOverlayRef?.current && modalPanelRef?.current) {
-          const overlay = modalOverlayRef.current;
+        if (modalRef?.current && panelRef?.current) {
+          const overlay = modalRef.current;
           gsap.set(overlay, { opacity: 1, pointerEvents: "auto" });
         }
       },
@@ -391,12 +399,12 @@ export function useCameraFocus({
       );
     }
 
-    if (modalOverlayRef?.current && modalPanelRef?.current) {
-      const overlay = modalOverlayRef.current;
+    if (modalRef?.current && panelRef?.current) {
+      const overlay = modalRef.current;
       showModalOverlay(overlay, focusTimelineRef.current);
     }
-    if (dimOverlayRef?.current) {
-      const dimOverlay = dimOverlayRef.current;
+    if (dimRef?.current) {
+      const dimOverlay = dimRef.current;
       showDimOverlay(dimOverlay, focusTimelineRef.current);
     }
 
@@ -413,8 +421,5 @@ export function useCameraFocus({
     controlsRef,
     focusTarget,
     isActive,
-    dimOverlayRef,
-    modalOverlayRef,
-    modalPanelRef,
   ]);
 }

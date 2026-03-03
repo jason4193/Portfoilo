@@ -39,7 +39,17 @@ export function useModalEntry({
     const content = contentRef?.current;
     const close = closeRef.current;
 
+    // Early return if required element is missing
     if (!close) return;
+
+    // Only create context if we have elements to animate
+    const hasContent =
+      customContentAnimation ||
+      (content && contentSelector && stagger) ||
+      content ||
+      header;
+
+    if (!hasContent) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({

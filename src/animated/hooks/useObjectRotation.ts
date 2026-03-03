@@ -99,6 +99,9 @@ export const useObjectRotation = ({
       rotationVelocity.current.y = deltaX * rotateSpeed * 0.01;
       rotationVelocity.current.x = deltaY * rotateSpeed * 0.01;
 
+      // Restart animation loop if there's movement
+      startAnimating();
+
       previousPointer.current = { x: e.clientX, y: e.clientY };
     };
 
@@ -118,7 +121,23 @@ export const useObjectRotation = ({
     const onContextMenu = (e: Event) => e.preventDefault();
 
     // Animation loop for smooth rotation with damping
-    let animationId: number;
+    let animationId: number | null = null;
+    let isAnimating = false;
+    
+    const startAnimating = () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      animate();
+    };
+    
+    const stopAnimating = () => {
+      isAnimating = false;
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    };
+    
     const animate = () => {
       const currentObj = getObject();
       if (currentObj) {
@@ -147,18 +166,24 @@ export const useObjectRotation = ({
         rotationVelocity.current.x *= 1 - dampingFactor;
         rotationVelocity.current.y *= 1 - dampingFactor;
 
-        // Stop very small velocities to prevent jittering
+        // Stop very small velocities to prevent jittering and STOP animation loop
         if (Math.abs(rotationVelocity.current.x) < 0.0001) {
           rotationVelocity.current.x = 0;
         }
         if (Math.abs(rotationVelocity.current.y) < 0.0001) {
           rotationVelocity.current.y = 0;
         }
+        
+        // Only continue animation if there's still velocity
+        if (rotationVelocity.current.x !== 0 || rotationVelocity.current.y !== 0) {
+          animationId = requestAnimationFrame(animate);
+        } else {
+          stopAnimating();
+        }
+      } else {
+        stopAnimating();
       }
-
-      animationId = requestAnimationFrame(animate);
     };
-    animate();
 
     // Add event listeners (pointer events handle both mouse and touch)
     domElement.addEventListener("pointerdown", onPointerDown);
@@ -172,7 +197,7 @@ export const useObjectRotation = ({
 
     // Cleanup function
     return () => {
-      cancelAnimationFrame(animationId);
+      stopAnimating();
       domElement.removeEventListener("pointerdown", onPointerDown);
       domElement.removeEventListener("pointermove", onPointerMove);
       domElement.removeEventListener("pointerup", onPointerUp);

@@ -16,11 +16,11 @@ export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
       >
         <mesh
           geometry={nodes.Plane033.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
         <mesh
           geometry={nodes.Plane033_1.geometry}
-          material={materials["Dark Blue"]}
+          material={materials.Primary}
         />
       </group>
 
@@ -30,27 +30,27 @@ export function BackAwards({ nodes, materials, onSelect }: BackAwardsProps) {
         rotation={[-Math.PI / 2, -1.249, Math.PI]}
         scale={1.498}
       >
-        <mesh geometry={nodes.Circle001.geometry} material={materials.Red} />
+        <mesh geometry={nodes.Circle001.geometry} material={materials.Accent} />
         <mesh
           geometry={nodes.Circle001_1.geometry}
-          material={materials.Yellow}
+          material={materials.Secondary}
         />
         <mesh
           geometry={nodes.Circle001_2.geometry}
-          material={materials["Light Yellow"]}
+          material={materials.Background}
         />
       </group>
 
       <mesh
         geometry={nodes.Awards_Info.geometry}
-        material={materials["Dark Blue"]}
+        material={materials.Text}
         position={[-3.101, 11.066, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.538}
       />
       <mesh
         geometry={nodes.Awards_Header.geometry}
-        material={materials["Light Yellow"]}
+        material={materials.Text}
         position={[-3.276, 12.134, -1.425]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={1.385}

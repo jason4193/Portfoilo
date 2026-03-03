@@ -27,7 +27,6 @@ export function ClickableGroup({
   const groupRef = useRef<Group | null>(null);
   const innerRef = useRef<Group | null>(null);
   const debugEnabled = useDebugStore((state) => state.enabled);
-
   // Use the extracted 3D hover animation hook
   const { handlers } = use3DHover({
     groupRef,
