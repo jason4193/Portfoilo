@@ -6,7 +6,7 @@ export { DESKTOP_MIN_WIDTH };
 
 /** OrbitControls zoom limits – tighter range on mobile for better feel */
 export const ORBIT_MIN_DISTANCE_DESKTOP = 0.1;
-export const ORBIT_MAX_DISTANCE_DESKTOP = 10;
+export const ORBIT_MAX_DISTANCE_DESKTOP = 30;
 export const ORBIT_MIN_DISTANCE_MOBILE = 2.5;
 export const ORBIT_MAX_DISTANCE_MOBILE = 7;
 
@@ -39,27 +39,27 @@ type LightingPreset = {
 
 export const LIGHTING_PRESETS: Record<ThemeMode, LightingPreset> = {
   light: {
-    ambientMultiplier: 1,
-    ambientColor: 0xffffff,
+    ambientMultiplier: 0.1,
+    ambientColor: 0x0091eb,
     key: {
-      position: [4.5, 6, 6],
-      color: 0xffffff,
-      intensityMultiplier: 1,
+      position: [4.5, 3.5, 6],
+      color: 0xfdf5e6,
+      intensityMultiplier: 2.0,
     },
     fill: {
       position: [-3.5, 4, 2],
-      color: 0xf9e9c7,
-      intensityMultiplier: 0.75,
+      color: 0xe8e3d7,
+      intensityMultiplier: 1.0,
     },
     rim: {
       position: [2.5, 3, -4],
-      color: 0xb3d9ff,
+      color: 0xa8cef4ff,
       intensityMultiplier: 0.65,
     },
     warmAccent: {
       position: [4, 5, -7],
       color: 0xfdb456,
-      intensityMultiplier: 0.4,
+      intensityMultiplier: 1.0,
     },
     topFill: {
       position: [0, 7, -8],

@@ -2,6 +2,7 @@ import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useControls } from "leva";
 import {
   AxesHelper,
   DirectionalLight,
@@ -9,6 +10,14 @@ import {
   Vector3,
 } from "three";
 import type { Group } from "three";
+
+const toHex = (c: number | string | undefined): string => {
+  if (c === undefined) return "#ffffff";
+  if (typeof c === "string") return c.startsWith("#") ? c : "#" + c;
+  let hex = c.toString(16);
+  if (hex.length > 6) hex = hex.slice(0, 6);
+  return "#" + hex.padStart(6, "0");
+};
 
 import {
   DESKTOP_MIN_WIDTH,
@@ -40,20 +49,87 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
     topFill: baseTopFillIntensity,
   } = lightIntensities;
   const lightingPreset = LIGHTING_PRESETS[theme];
-  const ambientIntensity =
-    baseAmbientIntensity * lightingPreset.ambientMultiplier;
   const keyLightConfig = lightingPreset.key;
   const fillLightConfig = lightingPreset.fill;
   const rimLightConfig = lightingPreset.rim;
   const warmAccentConfig = lightingPreset.warmAccent;
   const topFillConfig = lightingPreset.topFill;
-  const keyIntensity = baseKeyIntensity * keyLightConfig.intensityMultiplier;
-  const fillIntensity = baseFillIntensity * fillLightConfig.intensityMultiplier;
-  const rimIntensity = baseRimIntensity * rimLightConfig.intensityMultiplier;
-  const warmAccentIntensity =
-    baseWarmAccentIntensity * warmAccentConfig.intensityMultiplier;
-  const topFillIntensity =
-    baseTopFillIntensity * topFillConfig.intensityMultiplier;
+
+  // Direct preset values — always theme-reactive
+  const presetValues = {
+    ambientIntensity: baseAmbientIntensity * lightingPreset.ambientMultiplier,
+    ambientColor: toHex(lightingPreset.ambientColor),
+    keyIntensity: baseKeyIntensity * keyLightConfig.intensityMultiplier,
+    keyColor: toHex(keyLightConfig.color),
+    keyPosition: keyLightConfig.position as [number, number, number],
+    fillIntensity: baseFillIntensity * fillLightConfig.intensityMultiplier,
+    fillColor: toHex(fillLightConfig.color),
+    fillPosition: fillLightConfig.position as [number, number, number],
+    rimIntensity: baseRimIntensity * rimLightConfig.intensityMultiplier,
+    rimColor: toHex(rimLightConfig.color),
+    rimPosition: rimLightConfig.position as [number, number, number],
+    warmAccentIntensity: baseWarmAccentIntensity * warmAccentConfig.intensityMultiplier,
+    warmAccentColor: toHex(warmAccentConfig.color),
+    warmAccentPosition: warmAccentConfig.position as [number, number, number],
+    topFillIntensity: baseTopFillIntensity * topFillConfig.intensityMultiplier,
+    topFillColor: toHex(topFillConfig.color),
+    topFillPosition: topFillConfig.position as [number, number, number],
+  };
+
+  // Leva overrides — only active in debug mode
+  const levaAmbient = useControls("1. Ambient Light", {
+    ambientIntensity: { value: presetValues.ambientIntensity, min: 0, max: 5, step: 0.1 },
+    ambientColor: { value: presetValues.ambientColor },
+  }, { collapsed: true }, [theme]);
+
+  const levaKey = useControls("2. Key Light", {
+    keyIntensity: { value: presetValues.keyIntensity, min: 0, max: 10, step: 0.1 },
+    keyColor: { value: presetValues.keyColor },
+    keyPosition: { value: presetValues.keyPosition, step: 0.1 },
+  }, { collapsed: true }, [theme]);
+
+  const levaFill = useControls("3. Fill Light", {
+    fillIntensity: { value: presetValues.fillIntensity, min: 0, max: 10, step: 0.1 },
+    fillColor: { value: presetValues.fillColor },
+    fillPosition: { value: presetValues.fillPosition, step: 0.1 },
+  }, { collapsed: true }, [theme]);
+
+  const levaRim = useControls("4. Rim Light", {
+    rimIntensity: { value: presetValues.rimIntensity, min: 0, max: 10, step: 0.1 },
+    rimColor: { value: presetValues.rimColor },
+    rimPosition: { value: presetValues.rimPosition, step: 0.1 },
+  }, { collapsed: true }, [theme]);
+
+  const levaWarmAccent = useControls("5. Warm Accent Light", {
+    warmAccentIntensity: { value: presetValues.warmAccentIntensity, min: 0, max: 10, step: 0.1 },
+    warmAccentColor: { value: presetValues.warmAccentColor },
+    warmAccentPosition: { value: presetValues.warmAccentPosition, step: 0.1 },
+  }, { collapsed: true }, [theme]);
+
+  const levaTopFill = useControls("6. Top Fill Light", {
+    topFillIntensity: { value: presetValues.topFillIntensity, min: 0, max: 10, step: 0.1 },
+    topFillColor: { value: presetValues.topFillColor },
+    topFillPosition: { value: presetValues.topFillPosition, step: 0.1 },
+  }, { collapsed: true }, [theme]);
+
+  // Use Leva values in debug mode, otherwise use preset values directly
+  const ambientIntensity = debugEnabled ? levaAmbient.ambientIntensity : presetValues.ambientIntensity;
+  const ambientColor = debugEnabled ? levaAmbient.ambientColor : presetValues.ambientColor;
+  const keyIntensity = debugEnabled ? levaKey.keyIntensity : presetValues.keyIntensity;
+  const keyColor = debugEnabled ? levaKey.keyColor : presetValues.keyColor;
+  const keyPosition = debugEnabled ? levaKey.keyPosition : presetValues.keyPosition;
+  const fillIntensity = debugEnabled ? levaFill.fillIntensity : presetValues.fillIntensity;
+  const fillColor = debugEnabled ? levaFill.fillColor : presetValues.fillColor;
+  const fillPosition = debugEnabled ? levaFill.fillPosition : presetValues.fillPosition;
+  const rimIntensity = debugEnabled ? levaRim.rimIntensity : presetValues.rimIntensity;
+  const rimColor = debugEnabled ? levaRim.rimColor : presetValues.rimColor;
+  const rimPosition = debugEnabled ? levaRim.rimPosition : presetValues.rimPosition;
+  const warmAccentIntensity = debugEnabled ? levaWarmAccent.warmAccentIntensity : presetValues.warmAccentIntensity;
+  const warmAccentColor = debugEnabled ? levaWarmAccent.warmAccentColor : presetValues.warmAccentColor;
+  const warmAccentPosition = debugEnabled ? levaWarmAccent.warmAccentPosition : presetValues.warmAccentPosition;
+  const topFillIntensity = debugEnabled ? levaTopFill.topFillIntensity : presetValues.topFillIntensity;
+  const topFillColor = debugEnabled ? levaTopFill.topFillColor : presetValues.topFillColor;
+  const topFillPosition = debugEnabled ? levaTopFill.topFillPosition : presetValues.topFillPosition;
   useCameraPoseTracker({ fps: 30, epsilon: 0.002 });
   const internalControlsRef = useRef<any>(null);
   const activeControlsRef = controlsRef ?? internalControlsRef;
@@ -126,46 +202,46 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
       {/* Lighting - studio setup with theme-aware ratios */}
       <ambientLight
         intensity={ambientIntensity}
-        color={lightingPreset.ambientColor}
+        color={ambientColor}
       />
       <directionalLight
         ref={keyLightRef}
-        position={keyLightConfig.position}
+        position={keyPosition}
         intensity={keyIntensity}
-        color={keyLightConfig.color}
+        color={keyColor}
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-left={-6}
-        shadow-camera-right={6}
-        shadow-camera-top={6}
-        shadow-camera-bottom={-6}
-        shadow-camera-far={25}
-        shadow-bias={-0.0004}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+        shadow-camera-far={30}
+        shadow-bias={-0.002}
       />
       <directionalLight
         ref={fillLightRef}
-        position={fillLightConfig.position}
+        position={fillPosition}
         intensity={fillIntensity}
-        color={fillLightConfig.color}
+        color={fillColor}
       />
       <directionalLight
         ref={rimLightRef}
-        position={rimLightConfig.position}
+        position={rimPosition}
         intensity={rimIntensity}
-        color={rimLightConfig.color}
+        color={rimColor}
       />
       <directionalLight
         ref={warmAccentLightRef}
-        position={warmAccentConfig.position}
+        position={warmAccentPosition}
         intensity={warmAccentIntensity}
-        color={warmAccentConfig.color}
+        color={warmAccentColor}
       />
       <directionalLight
         ref={topFillLightRef}
-        position={topFillConfig.position}
+        position={topFillPosition}
         intensity={topFillIntensity}
-        color={topFillConfig.color}
+        color={topFillColor}
       />
       {debugEnabled && <primitive object={axesHelper} />}
       {/* Camera Controls - disable drag rotation */}
