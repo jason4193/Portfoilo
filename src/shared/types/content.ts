@@ -11,6 +11,8 @@ export interface Media {
 
 export interface Project {
   title: string;
+  category?: string;
+  categories?: string[];
   date?: string;
   techStack: string[];
   description: string;
@@ -21,6 +23,8 @@ export interface Project {
 
 export interface CompetitionExperience {
   title: string;
+  category?: string;
+  categories?: string[];
   date: string;
   award?: string;
   role?: string;
@@ -79,17 +83,17 @@ export interface PortfolioContent {
 export interface ContentSection {
   id: string;
   type:
-    | "projects"
-    | "projectItem"
-    | "competitions"
-    | "competitionItem"
-    | "communityContributions"
-    | "communityContributionItem"
-    | "workingExperience"
-    | "workingExperienceItem"
-    | "academic"
-    | "academicItem"
-    | "footer";
+  | "projects"
+  | "projectItem"
+  | "competitions"
+  | "competitionItem"
+  | "communityContributions"
+  | "communityContributionItem"
+  | "workingExperience"
+  | "workingExperienceItem"
+  | "academic"
+  | "academicItem"
+  | "footer";
   title?: string;
   content?: any;
   level: number;

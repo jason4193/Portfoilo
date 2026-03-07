@@ -35,7 +35,7 @@ function renderEducationCard(item: AcademicItem) {
   const firstImage = item.media?.find((m) => m.type === "image");
   return (
     <InfoCard
-      className="size-full"
+      className="size-full shadow-2xl overflow-hidden group border border-border bg-card/70 dark:bg-card/30 backdrop-blur-lg rounded-2xl"
       imageClassName="max-h-[60%]"
       imgClassName="h-full object-cover object-center"
       image={
@@ -47,7 +47,7 @@ function renderEducationCard(item: AcademicItem) {
           : undefined
       }
       header={item.institution}
-      contentSectionClassName="rounded-b-3xl bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4"
+      contentSectionClassName="bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4 h-full"
     >
       <h3
         className="!mt-0 mb-1 font-bold !text-sm sm:text-base"
@@ -105,7 +105,7 @@ export function EducationModalContent({
     >
       <p
         ref={introRef}
-        className="text-xs leading-relaxed sm:text-lg"
+        className="text-xs leading-relaxed sm:text-lg shrink-0"
         style={{ color: "var(--color-panel-text-subtle)" }}
       >
         Here&apos;s my educational background and academic journey:
@@ -121,16 +121,15 @@ export function EducationModalContent({
           />
         </div>
       ) : (
-        <div ref={cardsRef} className="flex-1 min-h-0">
+        <div ref={cardsRef} className="flex-1 min-h-0 w-full flex flex-col justify-center">
           <GridCardLayout
             items={academics}
             renderCard={renderEducationCard}
             getItemKey={(item, index) => `${item.institution}-${index}`}
-            gridMode="equal"
-            enforceAspectRatio={false}
           />
         </div>
       )}
     </BaseModalContent>
   );
 }
+
