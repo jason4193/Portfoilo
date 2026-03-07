@@ -1,6 +1,6 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useControls } from "leva";
 import {
@@ -203,9 +203,17 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   // Temp Color objects for lerping
   const targetColor = useMemo(() => new THREE.Color(), []);
   const LERP_SPEED = 3; // higher = faster transition
+  const lerpTimer = useRef(2.0);
+
+  useEffect(() => {
+    lerpTimer.current = 0;
+  }, [theme, debugEnabled]);
 
   // Smooth lighting transitions via useFrame
   useFrame((_, delta) => {
+    if (lerpTimer.current >= 2.0) return;
+    lerpTimer.current += delta;
+
     const t = Math.min(1, delta * LERP_SPEED);
 
     // Ambient
@@ -263,8 +271,8 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
       <directionalLight
         ref={keyLightRef}
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
         shadow-camera-left={-8}
         shadow-camera-right={8}
         shadow-camera-top={8}

@@ -79,15 +79,24 @@ export default function PortfolioCardModel({
   const _targetColor = useMemo(() => new THREE.Color(), []);
   const _targetEmissive = useMemo(() => new THREE.Color(), []);
   const CARD_LERP_SPEED = 3;
+  const lerpTimer = useRef(2.0); // start done
+
+  useLayoutEffect(() => {
+    lerpTimer.current = 0; // reset on theme change
+  }, [theme]);
 
   // Smooth card material transitions
   useFrame((_, delta) => {
+    if (lerpTimer.current >= 2.0) return; // Stop burning CPU after 2 seconds
+    lerpTimer.current += delta;
+
     const t = Math.min(1, delta * CARD_LERP_SPEED);
     const variant = MODEL_MATERIAL_VARIANTS[theme];
 
-    (
-      Object.entries(variant) as Array<[MaterialName, MaterialThemeSettings]>
-    ).forEach(([materialName, config]) => {
+    // Cache the entries calculation to avoid allocating Arrays every frame
+    const configEntries = Object.entries(variant) as Array<[MaterialName, MaterialThemeSettings]>;
+
+    configEntries.forEach(([materialName, config]) => {
       const material = materials[materialName];
       if (!material) return;
 

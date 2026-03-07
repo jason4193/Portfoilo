@@ -24,7 +24,7 @@ function ProjectIcon({ className }: { className?: string }) {
   );
 }
 
-function renderProjectCard(item: Project, _placement: any, index?: number) {
+function renderProjectCard(item: Project, _placement: any, _index?: number) {
   const firstImage = item.media?.find((m) => m.type === "image");
 
   return (

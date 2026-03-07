@@ -63,7 +63,7 @@ export function AnimatedScene({
           powerPreference: "high-performance",
         }}
         shadows
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
       >
         <TransitionProgressController />
         <SceneRig controlsRef={controlsRef} cardRef={cardRef} />
