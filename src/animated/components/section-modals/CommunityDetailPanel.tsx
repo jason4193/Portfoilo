@@ -30,34 +30,38 @@ export function CommunityDetailPanel({
   useEffect(() => {
     if (!heroRef.current) return;
 
-    const tl = gsap.timeline();
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
 
-    // Fade in hero image
-    tl.fromTo(
-      heroRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.6, ease: "power2.out" },
-      0,
-    );
-
-    // Fade in and apply floating animation to scroll indicator
-    if (scrollIndicatorRef.current) {
+      // Fade in hero image
       tl.fromTo(
-        scrollIndicatorRef.current,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        0.3,
+        heroRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: "power2.out" },
+        0,
       );
 
-      // Floating/pulsing animation for scroll indicator
-      gsap.to(scrollIndicatorRef.current, {
-        y: 8,
-        duration: 1.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    }
+      // Fade in and apply floating animation to scroll indicator
+      if (scrollIndicatorRef.current) {
+        tl.fromTo(
+          scrollIndicatorRef.current,
+          { opacity: 0, y: -10 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          0.3,
+        );
+
+        // Floating/pulsing animation for scroll indicator
+        gsap.to(scrollIndicatorRef.current, {
+          y: 8,
+          duration: 1.2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   // Handle scroll to trigger animations
