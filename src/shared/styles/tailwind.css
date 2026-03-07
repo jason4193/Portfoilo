@@ -35,9 +35,6 @@
   --color-stroke-panel: var(--color-panel-border);
   --color-stroke-pre: var(--color-pre-border);
 
-  /* Legacy alias */
-  --color-border: var(--color-border);
-
   /* ========== Interactive Colors ========== */
   --color-link: var(--color-link);
   --color-link-hover: var(--color-link-hover);
@@ -45,19 +42,16 @@
   --color-interactive-btn: var(--color-panel-btn);
 
   /* ========== 3D Card Material Colors ========== */
-  --color-card-navy: var(--color-card-navy);
-  --color-card-yellow: var(--color-card-yellow);
-  --color-card-coral: var(--color-card-coral);
-  --color-card-accent-cyan: var(--color-accent-cyan);
-  --color-card-accent-purple: var(--color-accent-purple);
+  --color-card-primary: var(--color-card-primary);
+  --color-card-secondary: var(--color-card-secondary);
+  --color-card-accent: var(--color-card-accent);
 
-  /* ========== Animated Panel Colors ========== */
-  --color-panel-bg: var(--color-panel-bg);
-  --color-panel-text: var(--color-panel-text);
-  --color-panel-text-muted: var(--color-panel-text-muted);
-  --color-panel-text-subtle: var(--color-panel-text-subtle);
-  --color-panel-border: var(--color-panel-border);
-  --color-panel-btn: var(--color-panel-btn);
+  /* ========== Detail Panel Colors ========== */
+  --color-detail-bg: var(--color-detail-bg);
+  --color-detail-text: var(--color-detail-text);
+  --color-detail-pill-bg: var(--color-detail-pill-bg);
+  --color-detail-pill-bg-hover: var(--color-detail-pill-bg-hover);
+  --color-detail-border: var(--color-detail-border);
 
   /* ========== Font Sizes ========== */
   --font-size-xs: var(--font-size-xs);
@@ -102,6 +96,7 @@
 }
 
 @layer utilities {
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -109,7 +104,9 @@
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }

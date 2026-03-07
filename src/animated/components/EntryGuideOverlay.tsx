@@ -113,7 +113,7 @@ export function EntryGuideOverlay({
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-60 flex items-center justify-center px-6 py-10 text-text-panel bg-surface-animated border-2 border-card-navy/30"
+      className="fixed inset-0 z-60 flex items-center justify-center px-6 py-10 text-text-panel bg-surface-animated border-2 border-card-primary/30"
     >
       <div
         className="w-full max-w-xs sm:max-w-sm text-left"
@@ -135,7 +135,7 @@ export function EntryGuideOverlay({
           {TIPS.map((tip) => (
             <li
               key={tip}
-              className="flex items-center gap-2 text-text-panel/70 text-sm before:content-['▸'] before:text-card-yellow before:font-bold"
+              className="flex items-center gap-2 text-text-panel/70 text-sm before:content-['▸'] before:text-card-secondary before:font-bold"
             >
               {tip}
             </li>

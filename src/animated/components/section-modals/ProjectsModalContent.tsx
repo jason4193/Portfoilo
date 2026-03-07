@@ -42,20 +42,20 @@ function renderProjectCard(item: Project, _placement: any, index?: number) {
       imgStyle={
         isGridImage && spriteStyle
           ? {
-              backgroundPosition: spriteStyle.backgroundPosition,
-            }
+            backgroundPosition: spriteStyle.backgroundPosition,
+          }
           : undefined
       }
       image={
         firstImage
           ? {
-              src: getMediaUrl(firstImage.src),
-              alt: firstImage.alt ?? item.title,
-            }
+            src: getMediaUrl(firstImage.src),
+            alt: firstImage.alt ?? item.title,
+          }
           : undefined
       }
       header={item.date}
-      contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
+      contentSectionClassName="rounded-b-3xl bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4"
     >
       <h3
         className="!mt-0 mb-1 font-bold !text-sm sm:text-base"
@@ -76,7 +76,7 @@ function renderProjectCard(item: Project, _placement: any, index?: number) {
               key={tech}
               className="text-xs px-2 py-0.5 rounded-full"
               style={{
-                backgroundColor: "var(--color-card-yellow, #FCD34D)",
+                backgroundColor: "var(--color-card-secondary)",
                 color: "var(--color-panel-bg)",
                 opacity: 0.7,
               }}

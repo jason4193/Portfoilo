@@ -37,8 +37,8 @@ function useCompletionGate(
 
     const completeTimeoutId = onComplete
       ? window.setTimeout(() => {
-          onComplete();
-        }, remaining + 500)
+        onComplete();
+      }, remaining + 500)
       : undefined;
 
     return () => {
@@ -113,8 +113,8 @@ export function AnimatedLoadingScreen({
     >
       <div className="flex flex-col items-center gap-6">
         <div className="relative inline-flex h-16 w-16 items-center justify-center">
-          <div className="absolute inset-0 animate-spin rounded-full border-3 border-card-coral border-t-transparent" />
-          <div className="h-14 w-14 rounded-full bg-card-coral/20" />
+          <div className="absolute inset-0 animate-spin rounded-full border-3 border-text-base border-t-transparent" />
+          <div className="h-14 w-14 rounded-full bg-text-base/20" />
         </div>
         <div className="text-2xl font-bold text-text-panel uppercase tracking-wider">
           {message}
@@ -122,9 +122,9 @@ export function AnimatedLoadingScreen({
         {optionalMessage ? (
           <p className="text-text-panel/70 text-sm">{optionalMessage}</p>
         ) : null}
-        <div className="w-48 h-1 overflow-hidden rounded-full bg-card-coral/30">
+        <div className="w-48 h-1 overflow-hidden rounded-full bg-text-base/30">
           <div
-            className="h-full bg-card-coral transition-all"
+            className="h-full bg-text-base transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>

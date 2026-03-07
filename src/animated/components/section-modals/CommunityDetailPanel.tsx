@@ -115,7 +115,11 @@ export function CommunityDetailPanel({
             console.log("Back button clicked");
             onBack();
           }}
-          className="pointer-events-auto flex items-center gap-2 min-h-10 px-4 py-2 rounded-full bg-white/40 hover:bg-grey/70 text-white font-medium transition-colors backdrop-blur-sm"
+          className="pointer-events-auto flex items-center gap-2 min-h-10 px-4 py-2 rounded-full shadow-md transition-colors backdrop-blur-sm"
+          style={{
+            backgroundColor: "var(--color-panel-btn)",
+            color: "var(--color-animated-bg-light)",
+          }}
           aria-label="Back to contributions"
         >
           <svg
@@ -196,14 +200,14 @@ export function CommunityDetailPanel({
       {/* Details Section */}
       <div
         ref={detailsRef}
-        className="flex-shrink-0 w-full bg-white/95 backdrop-blur-sm"
+        className="flex-shrink-0 w-full bg-detail-bg backdrop-blur-sm"
       >
-        <div className="rounded-t-3xl border-t border-amber-100 p-4 sm:p-6">
+        <div className="rounded-t-3xl border-t border-detail-border p-4 sm:p-6">
           {/* Scroll-up indicator / Back button */}
           <button
             type="button"
             onClick={handleBackToHero}
-            className="flex items-center gap-2 px-3 py-1 mb-4 text-sm font-medium text-[#0B2B4C] hover:text-[#0B2B4C]/70 transition-colors"
+            className="flex items-center gap-2 px-3 py-1 mb-4 text-sm font-medium text-detail-text hover:text-detail-text/70 transition-colors"
             aria-label="Back to hero preview"
           >
             <svg
@@ -250,25 +254,25 @@ export function CommunityDetailPanel({
 
             <div className="space-y-3">
               <div>
-                <p className="text-xs uppercase tracking-wide text-[#0B2B4C]/60">
+                <p className="text-xs uppercase tracking-wide text-detail-text/60">
                   {item.date}
                 </p>
-                <h3 className="text-lg font-bold text-[#0B2B4C] sm:text-2xl">
+                <h3 className="text-lg font-bold text-detail-text sm:text-2xl">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#0B2B4C]/80 sm:text-base">
+                <p className="text-sm text-detail-text/80 sm:text-base">
                   {item.role}
                 </p>
               </div>
 
               {item.description && (
-                <p className="text-sm leading-relaxed text-[#0B2B4C]/90 sm:text-base">
+                <p className="text-sm leading-relaxed text-detail-text/90 sm:text-base">
                   {item.description}
                 </p>
               )}
 
               {item.achievements?.length > 0 && (
-                <ul className="list-disc space-y-1 pl-5 text-sm text-[#0B2B4C]/90 sm:text-base">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-detail-text/90 sm:text-base">
                   {item.achievements.map((a, i) => (
                     <li key={i}>{a}</li>
                   ))}
@@ -283,7 +287,7 @@ export function CommunityDetailPanel({
                       href={link.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-[#0B2B4C] hover:bg-amber-200 sm:text-sm"
+                      className="rounded-full bg-detail-pill-bg px-3 py-1 text-xs font-semibold text-detail-text hover:bg-detail-pill-bg-hover sm:text-sm"
                     >
                       {link.label}
                     </a>
