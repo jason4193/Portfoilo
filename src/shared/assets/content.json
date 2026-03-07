@@ -4,6 +4,86 @@
   "introAnimated": "I'm a 2026 Comp Sci Graduate student from UNSW Sydney.\n\nHope you find my portfolio cool and engaging! (˶ᵔ ᵕ ᵔ˶) If you find it dizzy or prefer reading, check out my Markdown version from the top right mode toggle button.\n\nI like making products that could help people to fill up their gaps of daily life. I often ask myself, \"Can I build something that could make my life easier?\" A swarm of ideas will come to my mind. With my knowledge and skills in both coding, design, and security, I'm able to build up some useful products to fill up those existing gaps.\n\n\"When a new term starts and not sure which classes should take?\"\nMe and my team in UNSW Software Development Society developed a Drag and Drop timetable planner called \"Notangles\" might help you save a few hours of struggle.\n\n\"Always struggle with checking the stock price of your shopping list?\"\nOur 2025 1st place hackathon project \"ShopLyft\", a one-stop automated shopping assistant could sort it out for you.\n\nCheck out my Projects Section and you might find something that might boost up your daily life!\n\nAm I just a code monkey ᧖(• ᦢ •)ᦣ? Might be? But I'm trying to be a better one!\n\n2026 Side Quest:\n▶ Half Marathon ('ω' ⊃ )⊃三二一\n▶ Photography Gallery Page [ ◉¯]",
   "projects": [
     {
+      "title": "Portfolio Website",
+      "date": "Jan 2026 - Mar 2026",
+      "techStack": [
+        "React",
+        "TailwindCSS",
+        "TypeScript",
+        "Three.js",
+        "GSAP"
+      ],
+      "description": "My portfolio website with dual version of animated and static markdown version.",
+      "achievements": [
+        "Learned the basic knowledge of 3D development using Blender, Three.js and GSAP with 2 months",
+        "Implemented a smooth and optimised animation on both 3D components and text content"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/jason4193/portfolio"
+        }
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "Project_Portfolio_1.webp",
+          "alt": "Portfolio Website Light Mode"
+        },
+        {
+          "type": "image",
+          "src": "Project_Portfolio_2.webp",
+          "alt": "Portfolio Website Dark Mode"
+        }
+      ]
+    },
+    {
+      "title": "Chrome Extension: YouTube to Brave Redirector",
+      "date": "Mar 2026 - Present",
+      "techStack": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Python",
+        "Shell",
+        "Batchfile"
+      ],
+      "description": "A Chrome extension + native host that redirects YouTube URLs from Chrome to Brave.",
+      "achievements": [
+        "Implemented a web extension tool that provide seamless transition of YouTube URLs between Chrome and Brave browser",
+        "Developed a native host application that allows the extension to communicate with the operating system",
+        "Learned the script and batchfile to automate the installation for both Mac and Windows platform"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/jason4193/youtube-to-brave"
+        }
+      ],
+      "media": [
+        {
+          "type": "image",
+          "src": "Project_YouTubeToBrave_1.webp",
+          "alt": "YouTube to Brave Redirector Promo Tile"
+        },
+        {
+          "type": "image",
+          "src": "Project_YouTubeToBrave_2.webp",
+          "alt": "Extension UI Light mode"
+        },
+        {
+          "type": "image",
+          "src": "Project_YouTubeToBrave_3.webp",
+          "alt": "Extension UI Dark mode"
+        },
+        {
+          "type": "image",
+          "src": "Project_YouTubeToBrave_4.webp",
+          "alt": "Extension Installation Guide"
+        }
+      ]
+    },
+    {
       "title": "On Going Linux Home Server Development",
       "date": "Jul 2025 - Present",
       "techStack": [
