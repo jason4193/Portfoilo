@@ -9,6 +9,7 @@ import {
 } from "@animated/components/modal-layouts/GridCardLayout";
 import { MOBILE_MAX_WIDTH } from "@animated/constants/mobile";
 import { GenericDetailPanel } from "./GenericDetailPanel";
+import { GalleryLayout } from "@animated/components/modal-layouts/GalleryLayout";
 
 export interface GenericModalConfig<T extends Record<string, any>> {
   overlayRef: RefObject<HTMLDivElement | null>;
@@ -24,8 +25,14 @@ export interface GenericModalConfig<T extends Record<string, any>> {
   swipeLabel?: string;
   enableDetailPanel?: boolean;
   getFieldValue?: (item: T, field: string) => unknown;
-  groupFn?: (items: T[]) => T[][];
   headerTextColor?: string;
+  topContent?: ReactNode;
+  galleryHeaderLeftContent?: ReactNode;
+  customLayout?: (
+    items: T[],
+    renderCard: (item: T, index?: number) => ReactNode,
+    getItemKey: (item: T, index: number) => string
+  ) => ReactNode;
 }
 
 export function GenericModalContent<T extends Record<string, any>>({
@@ -42,8 +49,10 @@ export function GenericModalContent<T extends Record<string, any>>({
   swipeLabel = "Swipe left to see next item",
   enableDetailPanel = false,
   getFieldValue,
-  groupFn,
   headerTextColor,
+  topContent,
+  galleryHeaderLeftContent,
+  customLayout,
 }: GenericModalConfig<T>) {
   const headerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
@@ -80,11 +89,23 @@ export function GenericModalContent<T extends Record<string, any>>({
     >
       <p
         ref={introRef}
-        className="text-xs leading-relaxed sm:text-lg"
-        style={{ color: "var(--color-panel-text-subtle)" }}
+        className="text-xs leading-relaxed sm:text-lg shrink-0"
+        style={{ color: "var(--color-panel-text-subtle)", marginTop: "0.25rem" }}
       >
         {introText}
       </p>
+
+      {topContent && !selectedItem && (
+        <div className="shrink-0 mt-4 mb-2 z-10 w-full overflow-hidden">
+          {topContent}
+        </div>
+      )}
+
+      {galleryHeaderLeftContent && isMobile && !selectedItem && (
+        <div className="shrink-0 mt-2 mb-4 z-10 w-full overflow-hidden">
+          {galleryHeaderLeftContent}
+        </div>
+      )}
 
       {!selectedItem &&
         (isMobile ? (
@@ -98,10 +119,10 @@ export function GenericModalContent<T extends Record<string, any>>({
                     className="size-full text-left group"
                     onClick={() => setSelectedItem(item)}
                   >
-                    {renderCard(item, undefined, index)}
+                    {renderCard(item, index)}
                   </button>
                 ) : (
-                  renderCard(item, undefined, index)
+                  renderCard(item, index)
                 )
               }
               getItemKey={getItemKey}
@@ -109,27 +130,72 @@ export function GenericModalContent<T extends Record<string, any>>({
             />
           </div>
         ) : (
-          <div ref={cardsRef} className="flex-1 min-h-0">
-            <GridCardLayout
-              items={items}
-              groupFn={groupFn}
-              renderCard={(item, placement, index) =>
-                enableDetailPanel ? (
-                  <button
-                    type="button"
-                    className="size-full text-left group"
-                    onClick={() => setSelectedItem(item)}
-                  >
-                    {renderCard(item, placement, index)}
-                  </button>
-                ) : (
-                  renderCard(item, placement, index)
-                )
-              }
-              getItemKey={getItemKey}
-              gridMode="equal"
-              enforceAspectRatio={false}
-            />
+          <div ref={cardsRef} className="flex-1 min-h-0 w-full flex flex-col justify-center">
+            {customLayout ? (
+              customLayout(
+                items,
+                (item: T, index?: number) =>
+                  enableDetailPanel ? (
+                    <button
+                      type="button"
+                      className="size-full text-left group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/20 rounded-2xl"
+                      onClick={() => setSelectedItem(item)}
+                    >
+                      {renderCard(item, undefined, index)}
+                    </button>
+                  ) : (
+                    renderCard(item, undefined, index)
+                  ),
+                getItemKey
+              )
+            ) : (
+              items.length <= 2 ? (
+                <div className="w-full flex flex-col h-full justify-center">
+                  {galleryHeaderLeftContent && (
+                    <div className="flex items-center justify-between mb-4 shrink-0 sm:px-2 h-11">
+                      <div className="flex-1 min-w-0 pr-4">{galleryHeaderLeftContent}</div>
+                    </div>
+                  )}
+                  <GridCardLayout
+                    items={items}
+                    // groupFn={groupFn} <-- REMOVE THIS, it's no longer in the simple version
+                    renderCard={(item, placement, index) => // placement is now {} from the child
+                      enableDetailPanel ? (
+                        <button
+                          type="button"
+                          className="size-full text-left group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/20 rounded-2xl"
+                          onClick={() => setSelectedItem(item)}
+                        >
+                          {renderCard(item, placement, index)}
+                        </button>
+                      ) : (
+                        renderCard(item, placement, index)
+                      )
+                    }
+                    getItemKey={getItemKey}
+                  />
+                </div>
+              ) : (
+                <GalleryLayout
+                  items={items}
+                  headerLeftContent={galleryHeaderLeftContent}
+                  renderCard={(item, index) =>
+                    enableDetailPanel ? (
+                      <button
+                        type="button"
+                        className="size-full text-left group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/20 rounded-2xl"
+                        onClick={() => setSelectedItem(item)}
+                      >
+                        {renderCard(item, undefined, index)}
+                      </button>
+                    ) : (
+                      renderCard(item, undefined, index)
+                    )
+                  }
+                  getItemKey={getItemKey}
+                />
+              )
+            )}
           </div>
         ))}
 
@@ -143,3 +209,4 @@ export function GenericModalContent<T extends Record<string, any>>({
     </BaseModalContent>
   );
 }
+

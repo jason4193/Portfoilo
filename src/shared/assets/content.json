@@ -30,6 +30,9 @@
           "src": "Project_LinuxServer.webp",
           "alt": "Linux Home Server Development"
         }
+      ],
+      "categories": [
+        "System"
       ]
     },
     {
@@ -56,6 +59,11 @@
           "src": "Project_SecurityAnalyzer.webp",
           "alt": "AI Security Analysis for Assembly & C Code"
         }
+      ],
+      "categories": [
+        "AI & Data",
+        "Security",
+        "Tool"
       ]
     },
     {
@@ -87,6 +95,10 @@
           "src": "Project_NetworkVulnerability.webp",
           "alt": "Network Vulnerability Investigation"
         }
+      ],
+      "categories": [
+        "Security",
+        "System"
       ]
     },
     {
@@ -123,6 +135,10 @@
           "src": "Project_CareerPathway.webp",
           "alt": "Career Pathway Mapping Tool"
         }
+      ],
+      "categories": [
+        "AI & Data",
+        "Web"
       ]
     },
     {
@@ -146,6 +162,10 @@
           "src": "Project_KaliLinux.webp",
           "alt": "Kali Linux CTF Investigation"
         }
+      ],
+      "categories": [
+        "Security",
+        "System"
       ]
     },
     {
@@ -169,6 +189,9 @@
           "src": "Project_TSPAlgorithm.webp",
           "alt": "Genetic TSP Algorithm"
         }
+      ],
+      "categories": [
+        "AI & Data"
       ]
     }
   ],
@@ -198,6 +221,9 @@
           "src": "ACUCYS_3.webp",
           "alt": "ACUCyS Jingle Shells CTF 2025 Team Scores"
         }
+      ],
+      "categories": [
+        "CTF"
       ]
     },
     {
@@ -262,6 +288,9 @@
           "label": "DevPost",
           "url": "https://devpost.com/software/shoplyft-pu8065#updates"
         }
+      ],
+      "categories": [
+        "Hackathon"
       ]
     },
     {
@@ -304,6 +333,11 @@
           "label": "GitHub",
           "url": "https://github.com/Thambolo/AZN-Intelligence"
         }
+      ],
+      "categories": [
+        "Hackathon",
+        "Web",
+        "Tool"
       ]
     },
     {
@@ -321,7 +355,10 @@
           "alt": "ASD CTF Team Scores"
         }
       ],
-      "links": []
+      "links": [],
+      "categories": [
+        "CTF"
+      ]
     },
     {
       "title": "DownUnderCTF 2023",
@@ -343,7 +380,10 @@
           "alt": "DownUnderCTF Team Scores"
         }
       ],
-      "links": []
+      "links": [],
+      "categories": [
+        "CTF"
+      ]
     }
   ],
   "communityContributions": [

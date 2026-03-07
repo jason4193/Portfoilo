@@ -1,4 +1,4 @@
-import { type RefObject } from "react";
+import { useState, useMemo, type RefObject } from "react";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
 import { InfoCard } from "@shared/components/InfoCard";
@@ -30,14 +30,16 @@ function renderProjectCard(item: Project, _placement: any, _index?: number) {
   return (
     <InfoCard
       className="size-full"
-      imageClassName="max-h-[55%]"
+      // Slightly taller image cap so the single-card grid
+      // feels substantial but still stays inside the frame.
+      imageClassName="max-h-[30vh] sm:max-h-[48vh]"
       imgClassName="h-full w-full object-contain"
       image={
         firstImage
           ? {
-            src: getMediaUrl(firstImage.src),
-            alt: firstImage.alt ?? item.title,
-          }
+              src: getMediaUrl(firstImage.src),
+              alt: firstImage.alt ?? item.title,
+            }
           : undefined
       }
       header={item.date}
@@ -76,6 +78,15 @@ function renderProjectCard(item: Project, _placement: any, _index?: number) {
   );
 }
 
+const PROJECT_CATEGORIES = [
+  "All",
+  "Web",
+  "System",
+  "Tool",
+  "Security",
+  "AI & Data",
+];
+
 export function ProjectsModalContent({
   overlayRef,
   panelRef,
@@ -83,6 +94,39 @@ export function ProjectsModalContent({
   onClose,
 }: ProjectsModalContentProps) {
   const projects = content?.projects ?? [];
+
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === "All") return projects;
+    return projects.filter((p) => {
+      const cats =
+        p.categories && p.categories.length > 0
+          ? p.categories
+          : p.category
+            ? [p.category]
+            : ["Web"];
+      return cats.includes(activeCategory);
+    });
+  }, [projects, activeCategory]);
+
+  const filterComponent = (
+    <div className="flex gap-2 w-full overflow-x-auto no-scrollbar items-center pb-1">
+      {PROJECT_CATEGORIES.map((cat) => (
+        <button
+          key={cat}
+          onClick={() => setActiveCategory(cat)}
+          className={`whitespace-nowrap rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium transition-colors border ${
+            activeCategory === cat
+              ? "border-[var(--color-panel-text)]/40 bg-[var(--color-panel-text)] text-[var(--color-panel-bg)] shadow-sm"
+              : "border-white/10 bg-black/20 text-white/70 hover:bg-white/10 hover:text-white"
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <GenericModalContent
@@ -92,12 +136,13 @@ export function ProjectsModalContent({
       title="Projects"
       accentColor={accentColor}
       introText="Here are some projects I've worked on over the years:"
-      items={projects}
+      items={filteredProjects}
       onClose={onClose}
       renderCard={renderProjectCard}
       getItemKey={(item, index) => `${item.title}-${index}`}
       swipeLabel="Swipe left to see next project"
       enableDetailPanel={true}
+      galleryHeaderLeftContent={filterComponent}
     />
   );
 }

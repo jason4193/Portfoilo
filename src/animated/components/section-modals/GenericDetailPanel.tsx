@@ -2,6 +2,7 @@ import { getMediaUrl } from "@shared/utils/media";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import useEmblaCarousel from "embla-carousel-react";
 import type { Media, Link } from "@shared/types/content";
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -33,6 +34,12 @@ export function GenericDetailPanel<T extends Record<string, any>>({
   const detailCardRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLParagraphElement>(null);
+
+  const [emblaRef] = useEmblaCarousel({
+    align: "start",
+    dragFree: true,
+    containScroll: "trimSnaps",
+  });
 
   const images = (item.media ?? []).filter((m: any) => m.type === "image");
   const hero = images[0];
@@ -308,15 +315,18 @@ export function GenericDetailPanel<T extends Record<string, any>>({
                 </div>
               )}
               {images.length > 1 && (
-                <div className="grid grid-cols-3 gap-2">
-                  {images.slice(1, 4).map((img: any) => (
-                    <img
-                      key={img.src}
-                      src={getMediaUrl(img.src)}
-                      alt={img.alt ?? title}
-                      className="h-16 w-full rounded-xl object-cover sm:h-20"
-                    />
-                  ))}
+                <div className="overflow-hidden mt-3 select-none cursor-grab active:cursor-grabbing" ref={emblaRef}>
+                  <div className="flex -ml-2">
+                    {images.slice(1).map((img: any) => (
+                      <div key={img.src} className="min-w-0 shrink-0 grow-0 pl-2 basis-[40%] sm:basis-[33%]">
+                        <img
+                          src={getMediaUrl(img.src)}
+                          alt={img.alt ?? title}
+                          className="h-20 w-full rounded-xl object-cover sm:h-28 border border-white/5"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
