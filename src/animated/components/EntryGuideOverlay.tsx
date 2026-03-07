@@ -113,20 +113,20 @@ export function EntryGuideOverlay({
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-60 flex items-center justify-center px-6 py-10 text-text-panel bg-surface-animated border-2 border-card-primary/30"
+      className="fixed inset-0 z-60 flex items-center justify-center px-6 py-10 text-detail-text bg-surface-animated border-2 border-card-primary/30"
     >
       <div
         className="w-full max-w-xs sm:max-w-sm text-left"
         role="dialog"
         aria-modal="true"
       >
-        <div className="uppercase tracking-widest text-[0.7rem] text-text-panel/70 mb-3">
+        <div className="uppercase tracking-widest text-[0.7rem] text-detail-text/70 mb-3">
           Entry Guide
         </div>
-        <h2 className="text-3xl mb-2 leading-tight text-text-panel font-bold">
+        <h2 className="text-3xl mb-2 leading-tight text-detail-text font-bold">
           Hi, I am Jason.
         </h2>
-        <p className="text-text-panel/75 mb-5 leading-loose text-base">
+        <p className="text-detail-text/75 mb-5 leading-loose text-base">
           You are landing on my animated portfolio. Click Enter to receive my
           business card.
         </p>
@@ -135,7 +135,7 @@ export function EntryGuideOverlay({
           {TIPS.map((tip) => (
             <li
               key={tip}
-              className="flex items-center gap-2 text-text-panel/70 text-sm before:content-['▸'] before:text-card-secondary before:font-bold"
+              className="flex items-center gap-2 text-detail-text/70 text-sm before:content-['▸'] before:text-card-secondary before:font-bold"
             >
               {tip}
             </li>
@@ -144,7 +144,7 @@ export function EntryGuideOverlay({
 
         <button
           type="button"
-          className="rounded-full bg-text-panel px-8 py-2 text-surface-animated font-bold uppercase tracking-widest shadow-md hover:opacity-90 transition-opacity"
+          className="rounded-full bg-detail-text px-8 py-2 text-surface-animated font-bold uppercase tracking-widest shadow-md hover:opacity-90 transition-opacity"
           onClick={handleEnter}
         >
           Enter

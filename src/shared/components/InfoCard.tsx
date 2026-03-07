@@ -125,7 +125,7 @@ export function InfoCard({
                 aria-hidden
               />
               <span className="rounded-full px-3 py-1.5 bg-card-secondary">
-                <span className="font-semibold sm:text-xs text-sm text-surface-animated">
+                <span className="font-semibold sm:text-xs text-sm text-detail-text">
                   {header}
                 </span>
               </span>

@@ -168,16 +168,16 @@
     --color-pre-border: #30363d;
 
     /* Animated Mode - Canvas Colors */
-    --color-animated-bg-light: #ededed;
+    --color-animated-bg-light: #0a2136;
 
     /* Animated Mode - Panel/Modal Colors */
-    --color-panel-bg: #0a0a0a;
-    --color-panel-bg-deep: #171717;
-    --color-panel-text: #e0e0e0;
-    --color-panel-text-muted: rgba(224, 224, 224, 0.7);
-    --color-panel-text-subtle: rgba(224, 224, 224, 0.85);
-    --color-panel-border: rgba(255, 255, 255, 0.1);
-    --color-panel-btn: #d0d0d0;
+    --color-panel-bg: rgba(5, 20, 34, 0.95);
+    --color-panel-bg-deep: rgba(2, 10, 19, 0.95);
+    --color-panel-text: #dcfcff;
+    --color-panel-text-muted: rgba(192, 249, 255, 0.8);
+    --color-panel-text-subtle: rgba(192, 249, 255, 0.95);
+    --color-panel-border: rgba(4, 138, 191, 0.3);
+    --color-panel-btn: #dcfcff;
     --color-panel-header-bg-deep: #6b0000;
     /* Deep garnet magenta */
     --color-panel-text-on-deep: #d0d0d0;
@@ -196,11 +196,11 @@
     --color-section-education: #048abf;
 
     /* Shared - InfoCard */
-    --color-infocard-content-bg: #1f1f1f;
+    --color-infocard-content-bg: rgba(20, 30, 45, 0.95);
 
     /* Detail Panel */
     --color-detail-bg: rgba(14, 68, 115, 0.95);
-    --color-detail-text: #72e5f2;
+    --color-detail-text: #dcfcff;
     --color-detail-pill-bg: rgba(4, 138, 191, 0.3);
     --color-detail-pill-bg-hover: rgba(4, 138, 191, 0.5);
     --color-detail-border: rgba(4, 138, 191, 0.2);
