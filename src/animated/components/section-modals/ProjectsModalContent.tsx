@@ -1,7 +1,6 @@
 import { type RefObject } from "react";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
-import { getProjectSpriteCellStyle } from "@shared/utils/sprites";
 import { InfoCard } from "@shared/components/InfoCard";
 import { GenericModalContent } from "./GenericModalContent";
 import projectIcon from "@animated/assets/ProjectsSectionIcon.webp";
@@ -27,25 +26,12 @@ function ProjectIcon({ className }: { className?: string }) {
 
 function renderProjectCard(item: Project, _placement: any, index?: number) {
   const firstImage = item.media?.find((m) => m.type === "image");
-  const isGridImage = firstImage?.src === "Projects.webp";
-  const spriteStyle =
-    isGridImage && index !== undefined
-      ? getProjectSpriteCellStyle(index)
-      : undefined;
 
   return (
     <InfoCard
       className="size-full"
-      imageClassName={isGridImage ? "aspect-square max-h-[55%]" : "max-h-[55%]"}
-      imgClassName={isGridImage ? "" : "h-full w-full"}
-      isGridImage={isGridImage}
-      imgStyle={
-        isGridImage && spriteStyle
-          ? {
-            backgroundPosition: spriteStyle.backgroundPosition,
-          }
-          : undefined
-      }
+      imageClassName="max-h-[55%]"
+      imgClassName="h-full w-full object-contain"
       image={
         firstImage
           ? {

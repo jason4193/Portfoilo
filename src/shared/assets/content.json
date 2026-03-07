@@ -27,7 +27,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_LinuxServer.webp",
           "alt": "Linux Home Server Development"
         }
       ]
@@ -53,7 +53,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_SecurityAnalyzer.webp",
           "alt": "AI Security Analysis for Assembly & C Code"
         }
       ]
@@ -61,7 +61,13 @@
     {
       "title": "Network Vulnerability Investigation",
       "date": "Sep - Nov 2024",
-      "techStack": ["Express", "Python", "Docker", "PHP", "JavaScript"],
+      "techStack": [
+        "Express",
+        "Python",
+        "Docker",
+        "PHP",
+        "JavaScript"
+      ],
       "description": "A collection of CTF based demo challenges for practicing common network security vulnerabilities",
       "achievements": [
         "Understood the Network OSI Model, how it works and what possible security threats can be caused by each layer",
@@ -78,7 +84,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_NetworkVulnerability.webp",
           "alt": "Network Vulnerability Investigation"
         }
       ]
@@ -114,7 +120,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_CareerPathway.webp",
           "alt": "Career Pathway Mapping Tool"
         }
       ]
@@ -122,7 +128,12 @@
     {
       "title": "Linux Kali Investigation",
       "date": "Aug 2021 - Apr 2024",
-      "techStack": ["Linux", "WireShark", "Ghidra", "Splunk"],
+      "techStack": [
+        "Linux",
+        "WireShark",
+        "Ghidra",
+        "Splunk"
+      ],
       "description": "An exploration of cyber security and penetration testing through CTF compeition using Kali Linux.",
       "achievements": [
         "Improved knowledge of Linux OS and cyber security tools",
@@ -132,7 +143,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_KaliLinux.webp",
           "alt": "Kali Linux CTF Investigation"
         }
       ]
@@ -140,7 +151,12 @@
     {
       "title": "Evolutionary TSP Algorithm",
       "date": "Jul 2023",
-      "techStack": ["Python", "tsplib95", "Matplotlib", "PyPy"],
+      "techStack": [
+        "Python",
+        "tsplib95",
+        "Matplotlib",
+        "PyPy"
+      ],
       "description": "A implementation of the Genetic Algorithm to solve the Traveling Salesman Problem (TSP) with a focus on performance and scalability.",
       "achievements": [
         "Led a 6-person team and applied the Evolutionary Algorithm with the use of python pypy interpreter to solve the TSP problem",
@@ -150,7 +166,7 @@
       "media": [
         {
           "type": "image",
-          "src": "Projects.webp",
+          "src": "Project_TSPAlgorithm.webp",
           "alt": "Genetic TSP Algorithm"
         }
       ]
