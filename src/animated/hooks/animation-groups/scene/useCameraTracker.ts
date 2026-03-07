@@ -11,7 +11,7 @@ interface CameraPoseTrackerOptions {
 
 export function useCameraTracker({
   fps = 30,
-  epsilon = 0.001,
+  epsilon = 0.01,
 }: CameraPoseTrackerOptions = {}) {
   const { camera } = useThree();
   const setCameraPosition = useCameraPoseStore(
@@ -23,7 +23,7 @@ export function useCameraTracker({
 
   const updatesThisSecondRef = useRef(0);
   const lastResetRef = useRef(0);
-  
+
   // Memoize epsilon squared to avoid repeated multiplications
   const epsilonSq = useRef(epsilon * epsilon);
 
@@ -42,7 +42,7 @@ export function useCameraTracker({
     const dy = y - ly;
     const dz = z - lz;
     const distSq = dx * dx + dy * dy + dz * dz;
-    
+
     if (distSq < epsilonSq.current) {
       return;
     }

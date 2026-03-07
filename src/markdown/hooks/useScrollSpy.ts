@@ -75,15 +75,15 @@ export function useScrollSpy(tocItems: TocItem[]) {
     // Initial update
     updateScrollState();
 
-    // Throttle scroll events for performance
-    let ticking = false;
+    // Throttle scroll events for performance (max ~20 updates per sec)
+    let throttleTimer: number | null = null;
+
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
+      if (throttleTimer === null) {
+        throttleTimer = window.setTimeout(() => {
           updateScrollState();
-          ticking = false;
-        });
-        ticking = true;
+          throttleTimer = null;
+        }, 50);
       }
     };
 
