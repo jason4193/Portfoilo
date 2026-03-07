@@ -52,19 +52,22 @@ export function GridCardLayout<T>({
         };
     }, [items]);
 
-    // Force 1 or 2 columns, but ensure they take up equal height
-    const gridCols = items.length === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2";
+    // Force 1 or 2 columns. When there's only a single card,
+    // let it size to its content height instead of stretching to fill.
+    const isSingleItem = items.length === 1;
+    const gridCols = isSingleItem ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2";
+    const gridHeightClasses = isSingleItem ? "items-start" : "h-full items-stretch";
 
     return (
         <div
             ref={containerRef}
-            className={`grid ${gridCols} gap-6 w-full h-full items-stretch ${className}`}
+            className={`grid ${gridCols} gap-6 w-full ${gridHeightClasses} ${className}`}
         >
             {items.slice(0, 2).map((item, index) => (
                 <div
                     key={getItemKey(item, index)}
                     data-grid-item
-                    className="relative w-full h-full overflow-hidden rounded-2xl bg-white/5 border border-white/10 flex flex-col"
+                    className={`relative w-full overflow-hidden rounded-2xl bg-white/5 border border-white/10 flex flex-col ${isSingleItem ? "" : "h-full"}`}
                 >
                     <div className="h-full pb-4 select-none pointer-events-none *:pointer-events-auto">
                         {renderCard(item, {}, index)}
