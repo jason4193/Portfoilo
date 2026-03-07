@@ -48,6 +48,7 @@ export default function PortfolioCardModel({
     return [-offset.x, -offset.y, -offset.z];
   }, [cardCenter]);
   const modelRef = useRef<THREE.Group | null>(null);
+  const isFocused = useSectionSelectionStore((state) => state.isFocused);
   const setSelectedSection = useSectionSelectionStore(
     (state) => state.setSelectedSection,
   );
@@ -87,7 +88,7 @@ export default function PortfolioCardModel({
 
   // Smooth card material transitions
   useFrame((_, delta) => {
-    if (lerpTimer.current >= 2.0) return; // Stop burning CPU after 2 seconds
+    if (lerpTimer.current >= 2.0 || isFocused) return; // Stop burning CPU after 2 seconds or if panel is open
     lerpTimer.current += delta;
 
     const t = Math.min(1, delta * CARD_LERP_SPEED);

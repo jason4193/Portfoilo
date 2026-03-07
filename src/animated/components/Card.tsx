@@ -108,7 +108,7 @@ function createCardIdleResumeAnimation(cardGroup: Group) {
   const backIsVisible = isBackFaceVisible(cardGroup);
   const targetRotationY = backIsVisible
     ? // rotate toward back side
-      BASE_ROTATION_Y + Math.PI
+    BASE_ROTATION_Y + Math.PI
     : BASE_ROTATION_Y; // Already facing front, just reset to base Y
 
   // Ease back toward the base pose with some variation, and reset position
@@ -176,7 +176,7 @@ export function Card({
       Math.min(
         1,
         (width - VIEWPORT_WIDTH_MIN) /
-          (VIEWPORT_WIDTH_MAX - VIEWPORT_WIDTH_MIN),
+        (VIEWPORT_WIDTH_MAX - VIEWPORT_WIDTH_MIN),
       ),
     );
     return CARD_SCALE_MIN + (CARD_SCALE_MAX - CARD_SCALE_MIN) * t;
@@ -187,7 +187,7 @@ export function Card({
   const { isInteracting, clearRotationVelocity } = useObjectRotation({
     object: groupRef,
     domElement: gl.domElement,
-    enabled: rotationEnabled,
+    enabled: rotationEnabled && !isSectionFocused,
     rotateSpeed: 0.5,
     dampingFactor: 0.05,
   });

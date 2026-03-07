@@ -8,7 +8,7 @@ import { CartoonShoesModel } from "./model/CartoonShoesModel";
 import { PomPomModel } from "./model/PomPomModel";
 import { SumireModel } from "./model/SumireModel";
 import { ClickableGroup } from "./ClickableGroup";
-import { useDebugStore, useThemeStore } from "../../shared/stores";
+import { useDebugStore, useThemeStore, useSectionSelectionStore } from "../../shared/stores";
 
 interface FloatingItemProps {
     children: React.ReactNode;
@@ -49,6 +49,7 @@ function FloatingItem({
     const timeRef = useRef(Math.random() * Math.PI * 2);
     const debugEnabled = useDebugStore((state) => state.enabled);
     const theme = useThemeStore((state) => state.theme);
+    const isFocused = useSectionSelectionStore((state) => state.isFocused);
     const isDark = theme === "dark";
 
     useHelper(
@@ -59,7 +60,7 @@ function FloatingItem({
     );
 
     useFrame((_, delta) => {
-        if (!groupRef.current) return;
+        if (!groupRef.current || isFocused) return;
 
         timeRef.current += delta;
 

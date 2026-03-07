@@ -12,6 +12,7 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
+import { useSectionSelectionStore } from '../../../shared/stores'
 
 import modelUrl from '../../assets/pom-pom.glb?url'
 
@@ -19,6 +20,7 @@ export function PomPomModel(props: React.JSX.IntrinsicElements['group']) {
   const { scene } = useGLTF(modelUrl)
   const groupRef = useRef<THREE.Group>(null)
   const timeRef = useRef(0)
+  const isFocused = useSectionSelectionStore((state) => state.isFocused)
 
   const clonedScene = useMemo(() => {
     const clone = scene.clone(true)
@@ -32,7 +34,7 @@ export function PomPomModel(props: React.JSX.IntrinsicElements['group']) {
   }, [scene])
 
   useFrame((_, delta) => {
-    if (!groupRef.current) return
+    if (!groupRef.current || isFocused) return
     timeRef.current += delta
     // Gentle left-right rocking — oscillates ±0.12 radians (~7°) at a slow pace
     groupRef.current.rotation.z = Math.sin(timeRef.current * 1.2) * 0.12

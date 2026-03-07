@@ -28,7 +28,7 @@ import {
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "@animated/constants/scene";
 import { useCameraPoseTracker } from "@animated/hooks";
-import { useDebugStore, useThemeStore } from "../../shared/stores";
+import { useDebugStore, useThemeStore, useSectionSelectionStore } from "../../shared/stores";
 import { LIGHTING_PRESETS } from "@animated/constants/scene";
 
 interface SceneRigProps {
@@ -41,6 +41,7 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const debugRotationMode = useDebugStore((state) => state.rotationMode);
   const debugEnabled = useDebugStore((state) => state.enabled);
   const theme = useThemeStore((state) => state.theme);
+  const isFocused = useSectionSelectionStore((state) => state.isFocused);
   const {
     ambient: baseAmbientIntensity,
     key: baseKeyIntensity,
@@ -291,6 +292,7 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
         enablePan={true}
         enableZoom={true}
         enableRotate={debugRotationMode === "orbit"}
+        enabled={!isFocused}
         minDistance={minDistance}
         maxDistance={maxDistance}
         autoRotate={false}

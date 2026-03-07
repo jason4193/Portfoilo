@@ -1,7 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 
-import { useCameraPoseStore } from "@shared/stores";
+import { useCameraPoseStore, useSectionSelectionStore } from "@shared/stores";
 import { debugPerf } from "@shared/utils/debug";
 
 interface CameraPoseTrackerOptions {
@@ -17,6 +17,7 @@ export function useCameraTracker({
   const setCameraPosition = useCameraPoseStore(
     (state) => state.setCameraPosition,
   );
+  const isFocused = useSectionSelectionStore((state) => state.isFocused);
   const lastPositionRef = useRef<[number, number, number]>([0, 0, 0]);
   const elapsedRef = useRef(0);
   const interval = 1 / fps;
@@ -28,6 +29,8 @@ export function useCameraTracker({
   const epsilonSq = useRef(epsilon * epsilon);
 
   useFrame((_, delta) => {
+    if (isFocused) return;
+
     elapsedRef.current += delta;
     if (elapsedRef.current < interval) return;
     elapsedRef.current = 0;
