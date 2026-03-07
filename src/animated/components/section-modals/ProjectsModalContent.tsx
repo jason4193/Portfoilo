@@ -1,7 +1,6 @@
 import { type RefObject } from "react";
 import { content } from "@shared/data/content";
 import { getMediaUrl } from "@shared/utils/media";
-import { getProjectSpriteCellStyle } from "@shared/utils/sprites";
 import { InfoCard } from "@shared/components/InfoCard";
 import { GenericModalContent } from "./GenericModalContent";
 import projectIcon from "@animated/assets/ProjectsSectionIcon.webp";
@@ -25,37 +24,24 @@ function ProjectIcon({ className }: { className?: string }) {
   );
 }
 
-function renderProjectCard(item: Project, _placement: any, index?: number) {
+function renderProjectCard(item: Project, _placement: any, _index?: number) {
   const firstImage = item.media?.find((m) => m.type === "image");
-  const isGridImage = firstImage?.src === "Projects.webp";
-  const spriteStyle =
-    isGridImage && index !== undefined
-      ? getProjectSpriteCellStyle(index)
-      : undefined;
 
   return (
     <InfoCard
       className="size-full"
-      imageClassName={isGridImage ? "aspect-square max-h-[55%]" : "max-h-[55%]"}
-      imgClassName={isGridImage ? "" : "h-full w-full"}
-      isGridImage={isGridImage}
-      imgStyle={
-        isGridImage && spriteStyle
-          ? {
-              backgroundPosition: spriteStyle.backgroundPosition,
-            }
-          : undefined
-      }
+      imageClassName="max-h-[55%]"
+      imgClassName="h-full w-full object-contain"
       image={
         firstImage
           ? {
-              src: getMediaUrl(firstImage.src),
-              alt: firstImage.alt ?? item.title,
-            }
+            src: getMediaUrl(firstImage.src),
+            alt: firstImage.alt ?? item.title,
+          }
           : undefined
       }
       header={item.date}
-      contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
+      contentSectionClassName="rounded-b-3xl bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4"
     >
       <h3
         className="!mt-0 mb-1 font-bold !text-sm sm:text-base"
@@ -76,7 +62,7 @@ function renderProjectCard(item: Project, _placement: any, index?: number) {
               key={tech}
               className="text-xs px-2 py-0.5 rounded-full"
               style={{
-                backgroundColor: "var(--color-card-yellow, #FCD34D)",
+                backgroundColor: "var(--color-card-secondary)",
                 color: "var(--color-panel-bg)",
                 opacity: 0.7,
               }}

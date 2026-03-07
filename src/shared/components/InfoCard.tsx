@@ -69,12 +69,12 @@ export function InfoCard({
 
   const gridBackgroundStyle: React.CSSProperties | undefined = isGridImage
     ? {
-        backgroundImage: image ? `url(${image.src})` : undefined,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: `${spriteColumns * 100}% ${spriteRows * 100}%`,
-        backgroundPosition: "0% 0%",
-        ...imgStyle,
-      }
+      backgroundImage: image ? `url(${image.src})` : undefined,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: `${spriteColumns * 100}% ${spriteRows * 100}%`,
+      backgroundPosition: "0% 0%",
+      ...imgStyle,
+    }
     : undefined;
 
   return (
@@ -121,16 +121,16 @@ export function InfoCard({
           {header && (
             <div className="flex items-center justify-center gap-3 mb-3 shrink-0">
               <span
-                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-secondary"
                 aria-hidden
               />
-              <span className="rounded-full px-3 py-1.5 bg-card-yellow">
-                <span className="font-semibold sm:text-xs text-sm text-surface-animated">
+              <span className="rounded-full px-3 py-1.5 bg-card-secondary">
+                <span className="font-semibold sm:text-xs text-sm text-detail-text">
                   {header}
                 </span>
               </span>
               <span
-                className="h-0.5 flex-1 max-w-8 shrink bg-card-yellow"
+                className="h-0.5 flex-1 max-w-8 shrink bg-card-secondary"
                 aria-hidden
               />
             </div>

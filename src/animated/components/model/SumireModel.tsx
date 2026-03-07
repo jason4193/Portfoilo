@@ -12,11 +12,13 @@ import { useGLTF, useAnimations } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import type { Group } from 'three'
+import { useSectionSelectionStore } from '../../../shared/stores'
 
 import modelUrl from '../../assets/sumire_model.glb?url'
 
 export function SumireModel(props: React.JSX.IntrinsicElements['group']) {
   const groupRef = useRef<Group>(null)
+  const isFocused = useSectionSelectionStore((state) => state.isFocused)
   const { scene, animations } = useGLTF(modelUrl)
   const { actions } = useAnimations(animations, groupRef)
 
@@ -32,11 +34,12 @@ export function SumireModel(props: React.JSX.IntrinsicElements['group']) {
     const firstAction = Object.values(actions)[0]
     if (firstAction) {
       firstAction.reset().fadeIn(0.5).play()
+      firstAction.paused = isFocused
     }
     return () => {
       if (firstAction) firstAction.fadeOut(0.5)
     }
-  }, [actions])
+  }, [actions, isFocused])
 
   return (
     <group ref={groupRef} {...props} dispose={null}>

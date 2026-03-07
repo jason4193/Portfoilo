@@ -48,7 +48,7 @@ export function CardStackIndicator({
         gsap.to(dot, {
           scale: 1.2,
           width: "1.5rem", // 24px
-          backgroundColor: "#0B2B4C", // Active color
+          backgroundColor: "var(--color-panel-text)", // Active color
           duration: 0.4,
           ease: "back.out(1.7)",
         });
@@ -57,7 +57,7 @@ export function CardStackIndicator({
         gsap.to(dot, {
           scale: 1,
           width: "0.5rem", // 8px
-          backgroundColor: "#CBD5E1", // Inactive gray
+          backgroundColor: "var(--color-panel-border)", // Inactive gray
           duration: 0.3,
           ease: "power2.out",
         });
@@ -82,7 +82,7 @@ export function CardStackIndicator({
           className="h-2 rounded-full cursor-pointer border-0 transition-colors"
           style={{
             width: index === currentIndex ? "1.5rem" : "0.5rem",
-            backgroundColor: index === currentIndex ? "#0B2B4C" : "#CBD5E1",
+            backgroundColor: index === currentIndex ? "var(--color-panel-text)" : "var(--color-panel-border)",
           }}
           role="tab"
           aria-selected={index === currentIndex}

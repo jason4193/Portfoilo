@@ -8,14 +8,22 @@
   :root {
     /* ========== Typography ========== */
     /* Font Sizes */
-    --font-size-xs: 0.75rem; /* 12px */
-    --font-size-sm: 0.875rem; /* 14px */
-    --font-size-base: 1rem; /* 16px */
-    --font-size-lg: 1.125rem; /* 18px */
-    --font-size-xl: 1.25rem; /* 20px */
-    --font-size-2xl: 1.5rem; /* 24px */
-    --font-size-3xl: 1.875rem; /* 30px */
-    --font-size-4xl: 2.25rem; /* 36px */
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px */
+    --font-size-base: 1rem;
+    /* 16px */
+    --font-size-lg: 1.125rem;
+    /* 18px */
+    --font-size-xl: 1.25rem;
+    /* 20px */
+    --font-size-2xl: 1.5rem;
+    /* 24px */
+    --font-size-3xl: 1.875rem;
+    /* 30px */
+    --font-size-4xl: 2.25rem;
+    /* 36px */
 
     /* Line Heights */
     --line-height-tight: 1.25;
@@ -30,18 +38,30 @@
     --font-weight-bold: 700;
 
     /* ========== Spacing Scale ========== */
-    --spacing-1: 0.25rem; /* 4px */
-    --spacing-2: 0.5rem; /* 8px */
-    --spacing-3: 0.75rem; /* 12px */
-    --spacing-4: 1rem; /* 16px */
-    --spacing-5: 1.25rem; /* 20px */
-    --spacing-6: 1.5rem; /* 24px */
-    --spacing-8: 2rem; /* 32px */
-    --spacing-10: 2.5rem; /* 40px */
-    --spacing-12: 3rem; /* 48px */
-    --spacing-16: 4rem; /* 64px */
-    --spacing-20: 5rem; /* 80px */
-    --spacing-24: 6rem; /* 96px */
+    --spacing-1: 0.25rem;
+    /* 4px */
+    --spacing-2: 0.5rem;
+    /* 8px */
+    --spacing-3: 0.75rem;
+    /* 12px */
+    --spacing-4: 1rem;
+    /* 16px */
+    --spacing-5: 1.25rem;
+    /* 20px */
+    --spacing-6: 1.5rem;
+    /* 24px */
+    --spacing-8: 2rem;
+    /* 32px */
+    --spacing-10: 2.5rem;
+    /* 40px */
+    --spacing-12: 3rem;
+    /* 48px */
+    --spacing-16: 4rem;
+    /* 64px */
+    --spacing-20: 5rem;
+    /* 80px */
+    --spacing-24: 6rem;
+    /* 96px */
 
     /* ========== Colors - Light Theme ========== */
     /* Markdown Mode - Surface Colors */
@@ -49,20 +69,25 @@
     --color-bg-secondary: #f6f8fa;
 
     /* Markdown Mode - Text Colors */
-    --color-text-primary: #24292f; /* 4.5:1 contrast on white */
-    --color-text-secondary: #57606a; /* 4.5:1 contrast on white */
+    --color-text-primary: #24292f;
+    /* 4.5:1 contrast on white */
+    --color-text-secondary: #57606a;
+    /* 4.5:1 contrast on white */
 
     /* Markdown Mode - Border Colors */
     --color-border: #d0d7de;
 
     /* Markdown Mode - Interactive Colors */
-    --color-link: #0969da; /* 4.5:1 contrast on white */
-    --color-link-hover: #0860ca; /* 4.5:1 contrast on white */
+    --color-link: #0969da;
+    /* 4.5:1 contrast on white */
+    --color-link-hover: #0860ca;
+    /* 4.5:1 contrast on white */
     --color-accent: #0969da;
 
     /* Markdown Mode - Code Colors */
     --color-code-bg: rgba(175, 184, 193, 0.2);
-    --color-code-text: #24292f; /* 4.5:1 contrast on code bg */
+    --color-code-text: #24292f;
+    /* 4.5:1 contrast on code bg */
     --color-pre-bg: #f6f8fa;
     --color-pre-border: #d0d7de;
 
@@ -71,16 +96,20 @@
 
     /* Animated Mode - Panel/Modal Colors */
     --color-panel-bg: #f2dac4;
+    --color-panel-bg-deep: rgba(0, 0, 0, 0.05);
     --color-panel-text: #4b433f;
     --color-panel-text-muted: rgba(75, 67, 63, 0.8);
     --color-panel-text-subtle: rgba(75, 67, 63, 0.95);
     --color-panel-border: rgba(75, 67, 63, 0.1);
     --color-panel-btn: #4b433f;
+    --color-panel-header-bg-deep: #c44536;
+    /* Deepened light mode red */
+    --color-panel-text-on-deep: #ffffff;
 
     /* Animated Mode - 3D Card Material Colors */
-    --color-card-navy: #b4bf9b;
-    --color-card-yellow: #f2a679;
-    --color-card-coral: #d98162;
+    --color-card-primary: #b4bf9b;
+    --color-card-secondary: #f2a679;
+    --color-card-accent: #d98162;
 
     /* Section accent colors (modal headers) */
     --color-section-aboutMe: #f2a679;
@@ -92,6 +121,13 @@
 
     /* Shared - InfoCard */
     --color-infocard-content-bg: rgba(255, 251, 235, 0.9);
+
+    /* Detail Panel */
+    --color-detail-bg: rgba(255, 251, 235, 0.95);
+    --color-detail-text: #4b433f;
+    --color-detail-pill-bg: rgba(242, 166, 121, 0.25);
+    --color-detail-pill-bg-hover: rgba(242, 166, 121, 0.45);
+    --color-detail-border: rgba(75, 67, 63, 0.12);
 
     /* ========== Text Shadows (Fake Bold) ========== */
     --text-shadow-bold:
@@ -109,20 +145,25 @@
     --color-bg-secondary: #161b22;
 
     /* Markdown Mode - Text Colors */
-    --color-text-primary: #c9d1d9; /* 4.5:1 contrast on dark bg */
-    --color-text-secondary: #8b949e; /* 4.5:1 contrast on dark bg */
+    --color-text-primary: #c9d1d9;
+    /* 4.5:1 contrast on dark bg */
+    --color-text-secondary: #8b949e;
+    /* 4.5:1 contrast on dark bg */
 
     /* Markdown Mode - Border Colors */
     --color-border: #30363d;
 
     /* Markdown Mode - Interactive Colors */
-    --color-link: #58a6ff; /* 4.5:1 contrast on dark bg */
-    --color-link-hover: #79c0ff; /* 4.5:1 contrast on dark bg */
+    --color-link: #58a6ff;
+    /* 4.5:1 contrast on dark bg */
+    --color-link-hover: #79c0ff;
+    /* 4.5:1 contrast on dark bg */
     --color-accent: #58a6ff;
 
     /* Markdown Mode - Code Colors */
     --color-code-bg: rgba(110, 118, 129, 0.4);
-    --color-code-text: #c9d1d9; /* 4.5:1 contrast on code bg */
+    --color-code-text: #c9d1d9;
+    /* 4.5:1 contrast on code bg */
     --color-pre-bg: #161b22;
     --color-pre-border: #30363d;
 
@@ -130,61 +171,82 @@
     --color-animated-bg-light: #0a2136;
 
     /* Animated Mode - Panel/Modal Colors */
-    --color-panel-bg: rgba(14, 68, 115, 0.95);
-    --color-panel-text: #72e5f2;
-    --color-panel-text-muted: rgba(114, 229, 242, 0.8);
-    --color-panel-text-subtle: rgba(114, 229, 242, 0.95);
+    --color-panel-bg: rgba(5, 20, 34, 0.95);
+    --color-panel-bg-deep: rgba(2, 10, 19, 0.95);
+    --color-panel-text: #dcfcff;
+    --color-panel-text-muted: rgba(192, 249, 255, 0.8);
+    --color-panel-text-subtle: rgba(192, 249, 255, 0.95);
     --color-panel-border: rgba(4, 138, 191, 0.3);
-    --color-panel-btn: #72e5f2;
+    --color-panel-btn: #dcfcff;
+    --color-panel-header-bg-deep: #6b0000;
+    /* Deep garnet magenta */
+    --color-panel-text-on-deep: #d0d0d0;
 
     /* Animated Mode - 3D Card Material Colors (Dark Theme) */
-    --color-card-navy: #048abf;
-    --color-card-yellow: #0e3a73;
-    --color-card-coral: #0a2740;
+    --color-card-primary: #048abf;
+    --color-card-secondary: #0e3a73;
+    --color-card-accent: #0a2740;
 
-    /* Section accent colors (modal headers) */
-    --color-section-aboutMe: #0e3a73;
-    --color-section-community: #0a2740;
+    /* Section accent colors (modal headers) — uses neon emissive glow colours */
+    --color-section-aboutMe: #ff006e;
+    --color-section-community: #8b00ff;
     --color-section-awards: #048abf;
-    --color-section-projects: #0e3a73;
-    --color-section-working: #0a2740;
+    --color-section-projects: #ff006e;
+    --color-section-working: #8b00ff;
     --color-section-education: #048abf;
-
-    /* Animated Mode - Accent Colors (Dark Theme Only) */
-    --color-accent-cyan: #048abf;
-    --color-accent-purple: #0e3a73;
 
     /* Shared - InfoCard */
     --color-infocard-content-bg: rgba(20, 30, 45, 0.95);
+
+    /* Detail Panel */
+    --color-detail-bg: rgba(14, 68, 115, 0.95);
+    --color-detail-text: #dcfcff;
+    --color-detail-pill-bg: rgba(4, 138, 191, 0.3);
+    --color-detail-pill-bg-hover: rgba(4, 138, 191, 0.5);
+    --color-detail-border: rgba(4, 138, 191, 0.2);
   }
 
   /* ========== Responsive Typography Scaling ========== */
   @media (max-width: 40rem) {
+
     /* Mobile */
     :root {
-      --font-size-4xl: 1.875rem; /* 30px */
-      --font-size-3xl: 1.5rem; /* 24px */
-      --font-size-2xl: 1.25rem; /* 20px */
-      --font-size-xl: 1.125rem; /* 18px */
-      --spacing-8: 1.5rem; /* 24px */
-      --spacing-6: 1.25rem; /* 20px */
+      --font-size-4xl: 1.875rem;
+      /* 30px */
+      --font-size-3xl: 1.5rem;
+      /* 24px */
+      --font-size-2xl: 1.25rem;
+      /* 20px */
+      --font-size-xl: 1.125rem;
+      /* 18px */
+      --spacing-8: 1.5rem;
+      /* 24px */
+      --spacing-6: 1.25rem;
+      /* 20px */
     }
   }
 
   @media (min-width: 40.0625rem) and (max-width: 64rem) {
+
     /* Tablet */
     :root {
-      --font-size-4xl: 2rem; /* 32px */
-      --font-size-3xl: 1.75rem; /* 28px */
-      --font-size-2xl: 1.375rem; /* 22px */
+      --font-size-4xl: 2rem;
+      /* 32px */
+      --font-size-3xl: 1.75rem;
+      /* 28px */
+      --font-size-2xl: 1.375rem;
+      /* 22px */
     }
   }
 
   @media (min-width: 160rem) {
+
     /* Large desktop: scale up for readability */
     :root {
-      --font-size-base: 1.125rem; /* 18px */
-      --font-size-lg: 1.25rem; /* 20px */
+      --font-size-base: 1.125rem;
+      /* 18px */
+      --font-size-lg: 1.25rem;
+      /* 20px */
     }
   }
 }

@@ -7,6 +7,7 @@
 @import "./tokens.css";
 
 @layer base {
+
   /* Base typography styles */
   body {
     font-family:
@@ -112,7 +113,7 @@
   }
 
   /* Inline code */
-  :not(pre) > code {
+  :not(pre)>code {
     background-color: var(--color-code-bg);
     padding: 0.2em 0.4em;
     border-radius: 0.25rem;
@@ -155,6 +156,7 @@
 
   /* Responsive container widths */
   @media (max-width: 40rem) {
+
     /* Mobile: full width with padding */
     .max-w-4xl {
       max-width: 100%;
@@ -188,6 +190,7 @@
   }
 
   @media (min-width: 40.0625rem) and (max-width: 64rem) {
+
     /* Tablet: constrained width */
     .max-w-4xl {
       max-width: 48rem;
@@ -195,6 +198,7 @@
   }
 
   @media (min-width: 64.0625rem) {
+
     /* Desktop: optimal reading width */
     .max-w-4xl {
       max-width: 56rem;
@@ -210,6 +214,7 @@
 }
 
 @layer components {
+
   /* About Me panel (animated version) – scoped typography, no markdown preset */
   .about-me-panel {
     isolation: isolate;
@@ -249,23 +254,19 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(
-      90deg,
-      #ff6b6b,
-      #feca57,
-      #48dbfb,
-      #1dd1a1,
-      #5f27cd,
-      #ff6b6b
-    );
+    background: linear-gradient(90deg,
+        #ff6b6b,
+        #feca57,
+        #48dbfb,
+        #1dd1a1,
+        #5f27cd,
+        #ff6b6b);
     opacity: 0.7;
     transition: opacity 0.2s ease;
     pointer-events: none;
-    mask-image: radial-gradient(
-      2.25rem 2.25rem at var(--rx) var(--ry),
-      #000 0%,
-      transparent 75%
-    );
+    mask-image: radial-gradient(2.25rem 2.25rem at var(--rx) var(--ry),
+        #000 0%,
+        transparent 75%);
   }
 
   .rainbow-hover-wrapper:hover .rainbow-hover-border {
@@ -373,7 +374,7 @@
 
   .image-frame {
     @apply rounded-2xl p-3;
-    background-color: #ffffff;
+    background-color: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-panel-border);
     box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgb(0 0 0 / 0.1);
   }
@@ -428,8 +429,7 @@
   .entry-guide-overlay {
     @apply fixed inset-0 z-60 flex items-center justify-center px-6 py-10 text-text-panel;
     background-color: var(--color-animated-bg-light);
-    border: 0.125rem solid
-      color-mix(in srgb, var(--color-card-navy) 30%, transparent);
+    border: 0.125rem solid color-mix(in srgb, var(--color-card-primary) 30%, transparent);
     border-radius: 0;
   }
 
@@ -477,7 +477,7 @@
 
   .entry-guide-tip::before {
     content: "▸";
-    color: var(--color-card-yellow);
+    color: var(--color-card-secondary);
     font-size: 0.9rem;
   }
 
@@ -548,21 +548,17 @@
     width: min(18rem, 80vw);
     height: 0.45rem;
     border-radius: 999rem;
-    background-color: color-mix(
-      in srgb,
-      var(--color-panel-text) 12%,
-      transparent
-    );
+    background-color: color-mix(in srgb,
+        var(--color-panel-text) 12%,
+        transparent);
     overflow: hidden;
   }
 
   .animated-loading-fill {
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      var(--color-card-yellow),
-      var(--color-card-coral)
-    );
+    background: linear-gradient(90deg,
+        var(--color-card-secondary),
+        var(--color-card-accent));
     transition: width 0.3s ease-out;
   }
 
@@ -612,8 +608,7 @@
     @apply bg-surface-primary;
     opacity: 0.85;
     backdrop-filter: blur(1.5rem);
-    border: 0.0625rem solid
-      color-mix(in srgb, var(--color-border) 50%, transparent);
+    border: 0.0625rem solid color-mix(in srgb, var(--color-border) 50%, transparent);
     border-radius: 1.5rem;
   }
 
@@ -629,4 +624,3 @@
     transform: rotate(360deg);
   }
 }
-

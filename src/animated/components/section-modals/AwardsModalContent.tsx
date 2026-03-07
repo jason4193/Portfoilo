@@ -37,13 +37,13 @@ function renderAwardCard(
         image={
           firstImage
             ? {
-                src: getMediaUrl(firstImage.src),
-                alt: firstImage.alt ?? item.title,
-              }
+              src: getMediaUrl(firstImage.src),
+              alt: firstImage.alt ?? item.title,
+            }
             : undefined
         }
         header={item.award || item.role || item.date}
-        contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
+        contentSectionClassName="rounded-b-3xl bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4"
       >
         <p
           className="!mt-0 mb-1 font-bold text-lg"
@@ -64,13 +64,13 @@ function renderAwardCard(
       image={
         firstImage
           ? {
-              src: getMediaUrl(firstImage.src),
-              alt: firstImage.alt ?? item.title,
-            }
+            src: getMediaUrl(firstImage.src),
+            alt: firstImage.alt ?? item.title,
+          }
           : undefined
       }
       header={item.award || item.role || item.date}
-      contentSectionClassName="rounded-b-3xl bg-amber-50/90 px-3 py-3 sm:px-4 sm:py-4"
+      contentSectionClassName="rounded-b-3xl bg-surface-infocard px-3 py-3 sm:px-4 sm:py-4"
     >
       <p
         className="!mt-0 mb-1 font-bold text-lg"

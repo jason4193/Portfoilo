@@ -1,6 +1,6 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useControls } from "leva";
 import {
@@ -28,7 +28,7 @@ import {
   ORBIT_MIN_DISTANCE_MOBILE,
 } from "@animated/constants/scene";
 import { useCameraPoseTracker } from "@animated/hooks";
-import { useDebugStore, useThemeStore } from "../../shared/stores";
+import { useDebugStore, useThemeStore, useSectionSelectionStore } from "../../shared/stores";
 import { LIGHTING_PRESETS } from "@animated/constants/scene";
 
 interface SceneRigProps {
@@ -41,6 +41,7 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   const debugRotationMode = useDebugStore((state) => state.rotationMode);
   const debugEnabled = useDebugStore((state) => state.enabled);
   const theme = useThemeStore((state) => state.theme);
+  const isFocused = useSectionSelectionStore((state) => state.isFocused);
   const {
     ambient: baseAmbientIntensity,
     key: baseKeyIntensity,
@@ -203,9 +204,17 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
   // Temp Color objects for lerping
   const targetColor = useMemo(() => new THREE.Color(), []);
   const LERP_SPEED = 3; // higher = faster transition
+  const lerpTimer = useRef(2.0);
+
+  useEffect(() => {
+    lerpTimer.current = 0;
+  }, [theme, debugEnabled]);
 
   // Smooth lighting transitions via useFrame
   useFrame((_, delta) => {
+    if (lerpTimer.current >= 2.0) return;
+    lerpTimer.current += delta;
+
     const t = Math.min(1, delta * LERP_SPEED);
 
     // Ambient
@@ -263,8 +272,8 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
       <directionalLight
         ref={keyLightRef}
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
         shadow-camera-left={-8}
         shadow-camera-right={8}
         shadow-camera-top={8}
@@ -283,6 +292,7 @@ export function SceneRig({ controlsRef, cardRef }: SceneRigProps) {
         enablePan={true}
         enableZoom={true}
         enableRotate={debugRotationMode === "orbit"}
+        enabled={!isFocused}
         minDistance={minDistance}
         maxDistance={maxDistance}
         autoRotate={false}
